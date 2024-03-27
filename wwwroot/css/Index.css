@@ -1,0 +1,36 @@
+﻿body {
+    background-image: url(../img/image1Copy.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.BioKudiWelcome {
+    text-align: center;
+    color: white;
+    margin-top: 30%;
+}
+
+    .BioKudiWelcome h1,
+    .BioKudiWelcome h2 {
+        opacity: 1; /* Initially hidden */
+        font-size: 100%; /* Start with 50% font size */
+        transition: all 0.8s ease-in-out; /* Animation properties */
+    }
+
+        .BioKudiWelcome h1.active {
+            font-size: 128px;
+            font-family: "Bitter", serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+            font-weight: bold;
+            opacity: 1;
+        }
+
+        .BioKudiWelcome h2.active {
+            font-size: 40px;
+            font-family: "Asul", serif;
+            font-weight: bold;
+            font-style: normal;
+            opacity: 1;
+        }

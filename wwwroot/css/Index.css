@@ -5,10 +5,15 @@
     background-position: center;
 }
 
+
 .BioKudiWelcome {
     text-align: center;
     color: white;
-    margin-top: 30%;
+    display: flex; /* Enable Flexbox */
+    min-height: 100vh; /* Set minimum body height */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    text-align: center; /* Center text horizontally */
 }
 
     .BioKudiWelcome h1,

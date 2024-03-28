@@ -17,7 +17,7 @@
         <div class="logo">
             <ul>
                 <li><img src="~/img/favicon.png" alt="Logo BioKudi"></li>
-				<li><a asp-action="Index">BioKudi</a></li>
+				<li><a asp-controller="Home" asp-action="Index">BioKudi</a></li>
             </ul>
         </div>
         <div class="menu">
@@ -29,7 +29,7 @@
                         <i class="fa-regular fa-envelope"></i>
                     </a>
                 <li>
-                    <a href="#">
+                    <a asp-controller="User" asp-action="Login">
                         <i class="fa fa-user"></i>
                     </a>
                  </li>

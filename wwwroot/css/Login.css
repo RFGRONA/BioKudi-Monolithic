@@ -7,10 +7,9 @@
     margin-right: 27%;
     margin-top: 5%;
     min-height: 600px;
-    display: flex;
-    flex-direction: column;
     justify-content: center;
-    border-radius: 15px
+    border-radius: 15px;
+    margin-bottom: 15%;
 }
 
     .login h1 {
@@ -20,6 +19,7 @@
         font-style: normal;
         font-weight: bold;
         font-size: 40px;
+        margin-top: 5%;
     }
 
     .login form {

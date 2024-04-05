@@ -10,7 +10,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border-radius: 15px
+    border-radius: 15px;
+    margin-bottom: 15%;
 }
 
     .register h1 {

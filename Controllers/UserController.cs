@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BioKudi.Models;
 using System.Diagnostics;
+using BioKudi.dto;
 namespace BioKudi.Controllers
 {
-	public class UserController : Controller
+    public class UserController : Controller
 	{
 		private readonly ILogger<UserController> _logger;
 

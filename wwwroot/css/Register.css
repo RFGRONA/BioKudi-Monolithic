@@ -29,7 +29,6 @@
         margin-right: 20%;
         margin-top: 5%;
         margin-bottom: 5%;
-        border: 1px solid #ccc;
         font-size: 24px;
         font-family: "Inter", sans-serif;
         font-optical-sizing: auto;
@@ -55,7 +54,7 @@
 
     .register p {
         text-align: center;
-        margin-top: 10%;
+        margin-top: 1%;
         font-family: "Inter", sans-serif;
         font-optical-sizing: auto;
         font-style: normal;

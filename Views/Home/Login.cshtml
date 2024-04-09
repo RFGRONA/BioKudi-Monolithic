@@ -6,6 +6,10 @@
 	<link rel="stylesheet" href="~/css/login.css" />
 	<script src="~/js/login.js"></script>
 </head>
+
+<form asp-controller="Admin" asp-action="IndexAdmin" method="post">
+<button type="submit" class="btn btn-primary">Ingresar</button>
+</form>
 <div class="login">
 	<h1>Iniciar Sesión</h1>
 	<form asp-controller="User" asp-action="Login" method="post">
@@ -20,6 +24,6 @@
 		</div>
 		<button type="submit" class="btn btn-primary">Ingresar</button>
 	</form>
-	<p>¿No tienes una cuenta? <a asp-controller="User" asp-action="Register"><i>Ingresa aqui</i></a></p>
+	<p>¿No tienes una cuenta? <a asp-controller="Home" asp-action="Register"><i>Ingresa aqui</i></a></p>
 
 </div>

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using BioKudi.dto;
 
-namespace BioKudi.dto;
+namespace BioKudi.Models;
 
 public partial class Place
 {
-    public int PlaceId { get; set; }
+    public int IdPlace { get; set; }
 
     public string NamePlace { get; set; } = null!;
 
@@ -18,6 +19,10 @@ public partial class Place
     public string Description { get; set; } = null!;
 
     public string Link { get; set; } = null!;
+
+    public int? StateId { get; set; }
+
+    public virtual State? State { get; set; }
 
     public virtual ICollection<Activity> Activities { get; set; } = new List<Activity>();
 

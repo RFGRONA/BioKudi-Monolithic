@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using BioKudi.Models;
 
 namespace BioKudi.dto;
 
 public partial class Activity
 {
-    public int ActivityId { get; set; }
+    public int IdActivity { get; set; }
 
     public string Type { get; set; } = null!;
 

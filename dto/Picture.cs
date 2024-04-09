@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BioKudi.dto;
+namespace BioKudi.Models;
 
 public partial class Picture
 {
-    public int PictureId { get; set; }
+    public int IdPicture { get; set; }
 
     public string Name { get; set; } = null!;
 

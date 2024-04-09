@@ -1,8 +1,5 @@
-using BioKudi.dto;
 using BioKudi.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-
 namespace BioKudi.Controllers
 {
     public class HomeController : Controller

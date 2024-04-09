@@ -2,7 +2,7 @@
 
 namespace BioKudi.Services
 {
-    public class service : Controller
+    public class Service : Controller
     {
         public IActionResult Index()
         {

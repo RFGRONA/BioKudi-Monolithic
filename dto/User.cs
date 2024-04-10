@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BioKudi.dto;
+namespace BioKudi.Models;
 
 public partial class User
 {
-    public int UserId { get; set; }
+    public int IdUser { get; set; }
 
     public string NameUser { get; set; } = null!;
 
@@ -15,11 +15,13 @@ public partial class User
 
     public int RoleId { get; set; }
 
-    public virtual ICollection<Audit> Audits { get; set; } = new List<Audit>();
+    public int? StateId { get; set; }
 
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
     public virtual Role Role { get; set; } = null!;
+
+    public virtual State? State { get; set; }
 
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 }

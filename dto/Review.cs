@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BioKudi.dto;
+namespace BioKudi.Models;
 
 public partial class Review
 {
-    public int ReviewId { get; set; }
+    public int IdReview { get; set; }
 
     public float Rate { get; set; }
 

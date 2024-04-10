@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BioKudi.dto;
+namespace BioKudi.Models;
 
 public partial class Ticket
 {
-    public int TicketId { get; set; }
+    public int IdTicket { get; set; }
 
     public string Type { get; set; } = null!;
 

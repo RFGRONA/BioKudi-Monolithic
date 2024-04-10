@@ -1,6 +1,5 @@
 using BioKudi.Models;
 using Microsoft.AspNetCore.Mvc;
-
 namespace BioKudi.Controllers
 {
     public class HomeController : Controller

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BioKudi.dto;
+namespace BioKudi.Models;
 
 public partial class Role
 {
-    public int RoleId { get; set; }
+    public int IdRole { get; set; }
 
     public string NameRole { get; set; } = null!;
 

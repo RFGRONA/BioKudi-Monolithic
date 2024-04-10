@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BioKudi.dto;
+namespace BioKudi.Models;
 
 public partial class Audit
 {

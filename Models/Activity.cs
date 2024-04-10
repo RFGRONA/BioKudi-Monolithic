@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using BioKudi.Models;
 
-namespace BioKudi.dto;
+namespace BioKudi.Models;
 
 public partial class Activity
 {

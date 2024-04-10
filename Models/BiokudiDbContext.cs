@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using BioKudi.dto;
 using Microsoft.EntityFrameworkCore;
 
 namespace BioKudi.Models;

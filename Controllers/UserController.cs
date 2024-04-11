@@ -2,6 +2,7 @@
 using BioKudi.Models;
 using System.Diagnostics;
 using BioKudi.dto;
+using BioKudi.Repository;
 namespace BioKudi.Controllers
 {
     public class UserController : Controller
@@ -12,6 +13,12 @@ namespace BioKudi.Controllers
 		public UserController(ILogger<UserController> logger)
 		{
 			_logger = logger;
+		}
+		public IActionResult Create(UserDto user)
+		{
+			//Mandar a UserRepository el user para crearlo
+			UserRepository userRepository = new Create(user);
+			return View();
 		}
 
 		

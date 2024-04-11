@@ -1,3 +1,4 @@
+using BioKudi.dto;
 using BioKudi.Models;
 using Microsoft.AspNetCore.Mvc;
 namespace BioKudi.Controllers
@@ -21,7 +22,8 @@ namespace BioKudi.Controllers
         }
         public IActionResult Register()
         {
-            return View();
+            UserDto user = new UserDto();
+            return View(user);
         }
 
 

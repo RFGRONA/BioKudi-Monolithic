@@ -1,4 +1,6 @@
-﻿@{
+﻿@using BioKudi.dto
+@model UserDto
+@{
 	ViewData["Title"] = "Registro";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -7,18 +9,18 @@
 </head>
 <div class="register">
 	<h1>Crear Usuario</h1>
-	<form asp-controller="User" asp-action="Login" method="post">
+	<form asp-controller="User" asp-action="Create" method="post">
 		<div class="form-group">
-			<label for="name">Nombre</label>
-			<input id="name" class="form-control" type="text" required placeholder="Jose Perez"/>
+			<label asp-for="NameUser">Nombre</label>
+			<input asp-for="NameUser" class="form-control" type="text" required placeholder="Jose Perez" />
 		</div>
 		<div class="form-group">
-			<label for="email">Correo Electronico</label>
-			<input id="email" class="form-control" type="email" required placeholder="alguien@dominio.com"/>
+			<label asp-for="Email">Correo Electronico</label>
+			<input asp-for="Email" class="form-control" type="email" required placeholder="alguien@dominio.com"/>
 		</div>
 		<div class="form-group">
-			<label for="password">Contraseña</label>
-			<input id="password" class="form-control" type="password" required minlength="8"/>
+			<label asp-for="Password">Contraseña</label>
+			<input asp-for="Password" class="form-control" type="password" required minlength="8"/>
 			<span class="text-danger"></span>
 		</div>
 		<button type="submit" class="btn btn-primary" asp-controller="User" asp-action="Create">Crear</button>

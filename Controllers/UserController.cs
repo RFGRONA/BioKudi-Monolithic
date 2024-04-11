@@ -16,8 +16,24 @@ namespace BioKudi.Controllers
 		}
 		public IActionResult Create(UserDto user)
 		{
-			//Mandar a UserRepository el user para crearlo
-			UserRepository userRepository = new Create(user);
+			if(ModelState.IsValid)
+			{
+				var userRepo = new UserRepository(new BiokudiDbContext());
+				var result = userRepo.Create(user);
+				if(result != null)
+				{
+					return RedirectToAction("User", "IndexUser");
+				}
+				else
+				{
+					ModelState.AddModelError("Email", "Email already exists");
+				}	
+
+			}
+			return View(user);
+		}
+		public IActionResult IndexUser()
+		{
 			return View();
 		}
 

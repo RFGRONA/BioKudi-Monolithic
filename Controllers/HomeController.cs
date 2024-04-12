@@ -1,5 +1,6 @@
 using BioKudi.dto;
 using BioKudi.Models;
+using BioKudi.Repository;
 using Microsoft.AspNetCore.Mvc;
 namespace BioKudi.Controllers
 {
@@ -18,16 +19,45 @@ namespace BioKudi.Controllers
         }
         public IActionResult Login()
         {
-            return View();
+			UserDto user = new UserDto();
+			return View(user);
         }
+        [HttpPost]
+        public IActionResult Login(UserDto user)
+        {
+            if (ModelState.IsValid)
+            {
+				var userRepo = new UserRepository(new BiokudiDbContext());
+				var result = userRepo.login(user, ModelState);
+				if (result != null)
+                {
+					return RedirectToAction("IndexUser", "User");
+				}
+			}
+			return View(user);
+		}
+
         public IActionResult Register()
         {
             UserDto user = new UserDto();
             return View(user);
         }
+		[HttpPost]
+		public IActionResult Register(UserDto user)
+		{
+			if (ModelState.IsValid)
+			{
+				var userRepo = new UserRepository(new BiokudiDbContext());
+				var result = userRepo.Create(user, ModelState);
+				if (result != null)
+				{
+					return RedirectToAction("IndexUser", "User");
+				}
+			}
+			return View(user);
+		}
 
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = System.Diagnostics.Activity.Current?.Id ?? HttpContext.TraceIdentifier });

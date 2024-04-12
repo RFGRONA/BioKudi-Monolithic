@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BioKudi</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
     <link rel="icon" href="~/img/favicon.png" />
+    <link href="~/css/siteadmin.css" rel="stylesheet" />
 </head>
 <body>
     <header>
@@ -22,6 +22,15 @@
         </div>
         <div class="menu">
             <ul>
+                <li><a asp-controller="Admin" asp-action="">Gestión</a>
+                <ul>
+                    <li><a href="#">CRUD</a></li>
+                    <li><a href="#">CRUD</a></li>
+                    <li><a href="#">CRUD</a></li>
+                    <li><a href="#">CRUD</a></li>
+                    <li><a href="#">CRUD</a></li>
+                </ul>
+                </li>
                 <li><a href="#">Actividades</a></li>
                 <li><a href="#">Mapa</a></li>
                 <li>
@@ -29,7 +38,7 @@
                         <i class="fa-regular fa-envelope"></i>
                     </a>
                 <li>
-                    <a asp-controller="Home" asp-action="Login">
+                    <a asp-controller="User" asp-action="Login">
                         <i class="fa fa-user"></i>
                     </a>
                  </li>

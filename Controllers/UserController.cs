@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BioKudi.Models;
+using System.Diagnostics;
+using BioKudi.dto;
+using BioKudi.Repository;
 namespace BioKudi.Controllers
 {
     public class UserController : Controller
@@ -11,15 +14,14 @@ namespace BioKudi.Controllers
 		{
 			_logger = logger;
 		}
+		
+		public IActionResult IndexUser()
+		{
+			return View();
+		}
 
-		public IActionResult Login()
-		{
-			return View();
-		}
-		public IActionResult Register()
-		{
-			return View();
-		}
+		
+		
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()

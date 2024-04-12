@@ -1,0 +1,29 @@
+﻿@using BioKudi.dto;
+@model UserDto;
+@{
+	ViewData["Title"] = "Login";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+	<link rel="stylesheet" href="~/css/login.css" />
+	<script src="~/js/login.js"></script>
+</head>
+
+<div class="login">
+	<h1>Iniciar Sesión</h1>
+	<form asp-controller="Home" asp-action="Login" method="post">
+		<div class="form-group">
+			<label asp-for="Email">Correo Electronico</label>
+			<input asp-for="Email" class="form-control" type="email" required/>
+		</div>
+		<div class="form-group">
+			<label asp-for="Password">Contraseña</label>
+			<input asp-for="Password" class="form-control" type="password" required/>
+			<span asp-validation-for="Password" class="text-danger"></span>
+		</div>
+		<div class="text-danger">@Html.ValidationMessage("Password")</div>
+		<button type="submit" class="btn btn-primary">Ingresar</button>
+	</form>
+	<p>¿No tienes una cuenta? <a asp-controller="Home" asp-action="Register"><i>Ingresa aqui</i></a></p>
+
+</div>

@@ -15,7 +15,10 @@ public partial class BiokudiDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Activity> Activities { get; set; }
+    //Data base connection string
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("server=FREDY\\MSSQLSERVER01; database=BIOKUDI-DB; integrated security=true; TrustServerCertificate=Yes;");
+
+	public virtual DbSet<Activity> Activities { get; set; }
 
     public virtual DbSet<Audit> Audits { get; set; }
 
@@ -41,10 +44,13 @@ public partial class BiokudiDbContext : DbContext
 
             entity.ToTable("ACTIVITY");
 
-            entity.Property(e => e.IdActivity).HasColumnName("id_activity");
+            entity.Property(e => e.IdActivity)
+                .HasComment("Unique identifier of the activity (integer).")
+                .HasColumnName("id_activity");
             entity.Property(e => e.Type)
                 .HasMaxLength(128)
                 .IsUnicode(false)
+                .HasComment("Type of activity (character string, maximum 128).")
                 .HasColumnName("type");
         });
 
@@ -54,12 +60,19 @@ public partial class BiokudiDbContext : DbContext
 
             entity.ToTable("AUDIT");
 
-            entity.Property(e => e.IdAudit).HasColumnName("id_audit");
-            entity.Property(e => e.Action).HasColumnName("action");
-            entity.Property(e => e.Date).HasColumnName("date");
+            entity.Property(e => e.IdAudit)
+                .HasComment("Unique identifier of the audit (integer).")
+                .HasColumnName("id_audit");
+            entity.Property(e => e.Action)
+                .HasComment("Action performed (integer).")
+                .HasColumnName("action");
+            entity.Property(e => e.Date)
+                .HasComment("Date of the audit (date).")
+                .HasColumnName("date");
             entity.Property(e => e.ViewAction)
                 .HasMaxLength(50)
                 .IsUnicode(false)
+                .HasComment("Action of viewing performed (character string, maximum 50).")
                 .HasColumnName("view_action");
         });
 
@@ -69,14 +82,18 @@ public partial class BiokudiDbContext : DbContext
 
             entity.ToTable("PICTURE");
 
-            entity.Property(e => e.IdPicture).HasColumnName("id_picture");
+            entity.Property(e => e.IdPicture)
+                .HasComment("Unique identifier of the picture (integer).")
+                .HasColumnName("id_picture");
             entity.Property(e => e.Link)
                 .HasMaxLength(255)
                 .IsUnicode(false)
+                .HasComment("Link of the picture (character string, maximum 255).")
                 .HasColumnName("link");
             entity.Property(e => e.Name)
                 .HasMaxLength(128)
                 .IsUnicode(false)
+                .HasComment("Name of the picture (character string, maximum 128).")
                 .HasColumnName("name");
         });
 
@@ -86,26 +103,42 @@ public partial class BiokudiDbContext : DbContext
 
             entity.ToTable("PLACE");
 
-            entity.Property(e => e.IdPlace).HasColumnName("id_place");
+            entity.Property(e => e.IdPlace)
+                .HasComment("Unique identifier of the place (integer).")
+                .HasColumnName("id_place");
             entity.Property(e => e.Address)
-                .HasMaxLength(64)
+                .HasMaxLength(128)
                 .IsUnicode(false)
+                .HasComment("Address of the place (character string, maximum 128).")
                 .HasColumnName("address");
             entity.Property(e => e.Description)
                 .HasMaxLength(560)
                 .IsUnicode(false)
+                .HasComment("Description of the place (character string, maximum 560).")
                 .HasColumnName("description");
-            entity.Property(e => e.Latitude).HasColumnName("latitude");
+            entity.Property(e => e.Latitude)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasComment("Latitude of the place (character string, maximum 20 digits).")
+                .HasColumnName("latitude");
             entity.Property(e => e.Link)
                 .HasMaxLength(255)
                 .IsUnicode(false)
+                .HasComment("Link related to the place (character string, maximum 255).")
                 .HasColumnName("link");
-            entity.Property(e => e.Longitude).HasColumnName("longitude");
+            entity.Property(e => e.Longitude)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasComment("Longitude of the place (character string, maximum 20 digits).")
+                .HasColumnName("longitude");
             entity.Property(e => e.NamePlace)
                 .HasMaxLength(80)
                 .IsUnicode(false)
+                .HasComment("Name of the place (character string, maximum 80).")
                 .HasColumnName("name_place");
-            entity.Property(e => e.StateId).HasColumnName("state_id");
+            entity.Property(e => e.StateId)
+                .HasComment("ID of the state to which the place belongs (integer).")
+                .HasColumnName("state_id");
 
             entity.HasOne(d => d.State).WithMany(p => p.Places)
                 .HasForeignKey(d => d.StateId)
@@ -126,8 +159,12 @@ public partial class BiokudiDbContext : DbContext
                     {
                         j.HasKey("PlaceId", "ActivityId").HasName("PK__ACTIVITY__9BA9939C1918C499");
                         j.ToTable("ACTIVITY_PLACE");
-                        j.IndexerProperty<int>("PlaceId").HasColumnName("place_id");
-                        j.IndexerProperty<int>("ActivityId").HasColumnName("activity_id");
+                        j.IndexerProperty<int>("PlaceId")
+                            .HasComment("ID of the place associated with the activity (integer).")
+                            .HasColumnName("place_id");
+                        j.IndexerProperty<int>("ActivityId")
+                            .HasComment("ID of the activity associated with the place (integer).")
+                            .HasColumnName("activity_id");
                     });
 
             entity.HasMany(d => d.Pictures).WithMany(p => p.Places)
@@ -145,8 +182,12 @@ public partial class BiokudiDbContext : DbContext
                     {
                         j.HasKey("PlaceId", "PictureId").HasName("PK__PICTURE___64F9E9DAEA8FA6DB");
                         j.ToTable("PICTURE_PLACE");
-                        j.IndexerProperty<int>("PlaceId").HasColumnName("place_id");
-                        j.IndexerProperty<int>("PictureId").HasColumnName("picture_id");
+                        j.IndexerProperty<int>("PlaceId")
+                            .HasComment("ID of the place associated with the picture (integer).")
+                            .HasColumnName("place_id");
+                        j.IndexerProperty<int>("PictureId")
+                            .HasComment("ID of the picture associated with the place (integer).")
+                            .HasColumnName("picture_id");
                     });
 
             entity.HasMany(d => d.Reviews).WithMany(p => p.Places)
@@ -164,8 +205,12 @@ public partial class BiokudiDbContext : DbContext
                     {
                         j.HasKey("PlaceId", "ReviewId").HasName("PK__REVIEW_P__A923EB93308825A1");
                         j.ToTable("REVIEW_PLACE");
-                        j.IndexerProperty<int>("PlaceId").HasColumnName("place_id");
-                        j.IndexerProperty<int>("ReviewId").HasColumnName("review_id");
+                        j.IndexerProperty<int>("PlaceId")
+                            .HasComment("ID of the place associated with the review (integer).")
+                            .HasColumnName("place_id");
+                        j.IndexerProperty<int>("ReviewId")
+                            .HasComment("ID of the review associated with the place (integer).")
+                            .HasColumnName("review_id");
                     });
         });
 
@@ -175,13 +220,20 @@ public partial class BiokudiDbContext : DbContext
 
             entity.ToTable("REVIEW");
 
-            entity.Property(e => e.IdReview).HasColumnName("id_review");
+            entity.Property(e => e.IdReview)
+                .HasComment("Unique identifier of the review (integer).")
+                .HasColumnName("id_review");
             entity.Property(e => e.Comment)
                 .HasMaxLength(255)
                 .IsUnicode(false)
+                .HasComment("Comment of the review (character string, maximum 255).")
                 .HasColumnName("comment");
-            entity.Property(e => e.Rate).HasColumnName("rate");
-            entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.Rate)
+                .HasComment("Rating of the review (float, precision of 2 digits).")
+                .HasColumnName("rate");
+            entity.Property(e => e.UserId)
+                .HasComment("ID of the user who made the review (integer).")
+                .HasColumnName("user_id");
 
             entity.HasOne(d => d.User).WithMany(p => p.Reviews)
                 .HasForeignKey(d => d.UserId)
@@ -195,10 +247,13 @@ public partial class BiokudiDbContext : DbContext
 
             entity.ToTable("ROLE");
 
-            entity.Property(e => e.IdRole).HasColumnName("id_role");
+            entity.Property(e => e.IdRole)
+                .HasComment("Unique identifier of the role (integer).")
+                .HasColumnName("id_role");
             entity.Property(e => e.NameRole)
                 .HasMaxLength(50)
                 .IsUnicode(false)
+                .HasComment("Name of the role (character string, maximum 50).")
                 .HasColumnName("name_role");
         });
 
@@ -208,10 +263,13 @@ public partial class BiokudiDbContext : DbContext
 
             entity.ToTable("STATE");
 
-            entity.Property(e => e.IdState).HasColumnName("id_state");
+            entity.Property(e => e.IdState)
+                .HasComment("Unique identifier of the state (integer).")
+                .HasColumnName("id_state");
             entity.Property(e => e.NameState)
                 .HasMaxLength(30)
                 .IsUnicode(false)
+                .HasComment("Name of the state (character string, maximum 30).")
                 .HasColumnName("name_state");
         });
 
@@ -221,19 +279,26 @@ public partial class BiokudiDbContext : DbContext
 
             entity.ToTable("TICKET");
 
-            entity.Property(e => e.IdTicket).HasColumnName("id_ticket");
+            entity.Property(e => e.IdTicket)
+                .HasComment("Unique identifier of the ticket (integer).")
+                .HasColumnName("id_ticket");
             entity.Property(e => e.Affair)
                 .HasMaxLength(1024)
                 .IsUnicode(false)
+                .HasComment("Subject of the ticket (character string, maximum 1024).")
                 .HasColumnName("affair");
             entity.Property(e => e.State)
                 .HasMaxLength(1)
+                .HasComment("State of the ticket (binary, single character).")
                 .HasColumnName("state");
             entity.Property(e => e.Type)
                 .HasMaxLength(50)
                 .IsUnicode(false)
+                .HasComment("Type of ticket (character string, maximum 50).")
                 .HasColumnName("type");
-            entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.UserId)
+                .HasComment("ID of the user associated with the ticket (integer).")
+                .HasColumnName("user_id");
 
             entity.HasOne(d => d.User).WithMany(p => p.Tickets)
                 .HasForeignKey(d => d.UserId)
@@ -247,21 +312,30 @@ public partial class BiokudiDbContext : DbContext
 
             entity.ToTable("USER");
 
-            entity.Property(e => e.IdUser).HasColumnName("id_user");
+            entity.Property(e => e.IdUser)
+                .HasComment("Unique identifier of the user (integer).")
+                .HasColumnName("id_user");
             entity.Property(e => e.Email)
                 .HasMaxLength(75)
                 .IsUnicode(false)
+                .HasComment("Email address of the user (character string, maximum 75).")
                 .HasColumnName("email");
             entity.Property(e => e.NameUser)
                 .HasMaxLength(65)
                 .IsUnicode(false)
+                .HasComment("Name of the user (character string, maximum 65).")
                 .HasColumnName("name_user");
             entity.Property(e => e.Password)
                 .HasMaxLength(128)
                 .IsUnicode(false)
+                .HasComment("Password of the user (character string, maximum 128).")
                 .HasColumnName("password");
-            entity.Property(e => e.RoleId).HasColumnName("role_id");
-            entity.Property(e => e.StateId).HasColumnName("state_id");
+            entity.Property(e => e.RoleId)
+                .HasComment("ID of the user's role (integer).")
+                .HasColumnName("role_id");
+            entity.Property(e => e.StateId)
+                .HasComment("ID of the user's state (integer).")
+                .HasColumnName("state_id");
 
             entity.HasOne(d => d.Role).WithMany(p => p.Users)
                 .HasForeignKey(d => d.RoleId)

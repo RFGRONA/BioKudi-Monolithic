@@ -13,5 +13,7 @@ public partial class UserDto
     public string Password { get; set; } = null!;
 
     public int RoleId { get; set; }
+    public int? StateId { get; set; }
+    public string? message { get; set; }
 
 }

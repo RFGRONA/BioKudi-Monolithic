@@ -1,4 +1,6 @@
-﻿namespace BioKudi.Services
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace BioKudi.Utilities
 {
 	public class PasswordService
 	{

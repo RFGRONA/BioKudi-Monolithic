@@ -1,4 +1,6 @@
-﻿@{
+﻿@using BioKudi.dto;
+@model UserDto;
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <head>
@@ -15,7 +17,7 @@
 				<td><h1>Biokudi</h1></td>
 			</tr>
 			<tr>
-				<td><h2>Conectando a Cundinamarca con las personas</h2></td>
+				<td><h2>Bienvenido @Model.NameUser!</h2></td>
 			</tr>
 		</table>
 	</div>

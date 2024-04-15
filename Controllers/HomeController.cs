@@ -51,7 +51,7 @@ namespace BioKudi.Controllers
 				var result = userRepo.Create(user, ModelState);
 				if (result != null)
 				{
-					return RedirectToAction("IndexUser", "User");
+					return RedirectToAction("IndexUser", "User", user);
 				}
 			}
 			return View(user);

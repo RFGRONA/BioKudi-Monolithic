@@ -16,9 +16,9 @@ public partial class BiokudiDbContext : DbContext
     }
 
     //Data base connection string
-	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("server=FREDY\\MSSQLSERVER01; database=BIOKUDI-DB; integrated security=true; TrustServerCertificate=Yes;");
-
-	public virtual DbSet<Activity> Activities { get; set; }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("server=localhost; database=BIOKUDI-DB; user id=sysbiokudi; password=BK2a2; TrustServerCertificate=Yes;");
+    
+    public virtual DbSet<Activity> Activities { get; set; }
 
     public virtual DbSet<Audit> Audits { get; set; }
 
@@ -320,19 +320,27 @@ public partial class BiokudiDbContext : DbContext
                 .IsUnicode(false)
                 .HasComment("Email address of the user (character string, maximum 75).")
                 .HasColumnName("email");
+            entity.Property(e => e.Key)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("key");
             entity.Property(e => e.NameUser)
                 .HasMaxLength(65)
                 .IsUnicode(false)
                 .HasComment("Name of the user (character string, maximum 65).")
                 .HasColumnName("name_user");
             entity.Property(e => e.Password)
-                .HasMaxLength(128)
+                .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasComment("Password of the user (character string, maximum 128).")
                 .HasColumnName("password");
             entity.Property(e => e.RoleId)
                 .HasComment("ID of the user's role (integer).")
                 .HasColumnName("role_id");
+            entity.Property(e => e.Salt)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("salt");
             entity.Property(e => e.StateId)
                 .HasComment("ID of the user's state (integer).")
                 .HasColumnName("state_id");
@@ -344,6 +352,7 @@ public partial class BiokudiDbContext : DbContext
 
             entity.HasOne(d => d.State).WithMany(p => p.Users)
                 .HasForeignKey(d => d.StateId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__USER__state_id__5629CD9C");
         });
 

@@ -33,13 +33,17 @@ public partial class User
     /// <summary>
     /// ID of the user&apos;s state (integer).
     /// </summary>
-    public int? StateId { get; set; }
+    public int StateId { get; set; }
+
+    public string Key { get; set; } = null!;
+
+    public string Salt { get; set; } = null!;
 
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
     public virtual Role Role { get; set; } = null!;
 
-    public virtual State? State { get; set; }
+    public virtual State State { get; set; } = null!;
 
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 }

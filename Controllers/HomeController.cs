@@ -1,12 +1,14 @@
 using BioKudi.dto;
 using BioKudi.Models;
 using BioKudi.Repository;
+using BioKudi.Services;
 using Microsoft.AspNetCore.Mvc;
 namespace BioKudi.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        //private UserService userService = new UserService();
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -17,18 +19,20 @@ namespace BioKudi.Controllers
         {
             return View();
         }
+
         public IActionResult Login()
         {
 			UserDto user = new UserDto();
 			return View(user);
         }
+
         [HttpPost]
         public IActionResult Login(UserDto user)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-				var userRepo = new UserRepository(new BiokudiDbContext());
-				var result = userRepo.login(user, ModelState);
+                var userService = new UserService();
+				var result = userService.LoginUser(user, ModelState);
 				if (result != null)
                 {
 					return RedirectToAction("IndexUser", "User");
@@ -42,14 +46,15 @@ namespace BioKudi.Controllers
             UserDto user = new UserDto();
             return View(user);
         }
+
 		[HttpPost]
 		public IActionResult Register(UserDto user)
 		{
-			if (ModelState.IsValid)
+			if (!ModelState.IsValid)
 			{
-				var userRepo = new UserRepository(new BiokudiDbContext());
-				var result = userRepo.Create(user, ModelState);
-				if (result != null)
+                var userService = new UserService();
+                var result = userService.RegisterUser(user, ModelState);
+                if (result != null)
 				{
 					return RedirectToAction("IndexUser", "User");
 				}

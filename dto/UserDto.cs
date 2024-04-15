@@ -12,8 +12,14 @@ public partial class UserDto
 
     public string Password { get; set; } = null!;
 
-    public int RoleId { get; set; }
-    public int? StateId { get; set; }
+    public string Key { get; set; } = null!;
+
+    public string Salt { get; set; } = null!;
+
+    public int RoleId { get; set; } = 0;
+
+    public int StateId { get; set; } = 0;
+
     public string? message { get; set; }
 
 }

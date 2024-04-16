@@ -9,21 +9,24 @@ namespace BioKudi.Services
 {
     public class UserService
     {
-        //private UserRepository userRepo = new UserRepository(new BiokudiDbContext());
-        //private PasswordUtility passwordUtility = new PasswordUtility();
+        private readonly UserRepository userRepo;
+        private readonly PasswordUtility passwordUtility;
 
-        public UserService() { }
+        public UserService(UserRepository userRepo, PasswordUtility passwordUtility)
+        {
+            this.userRepo = userRepo;
+            this.passwordUtility = passwordUtility;
+        }
+
         public UserDto RegisterUser(UserDto user, ModelStateDictionary model)
         {
-            var userRepo = new UserRepository(new BiokudiDbContext());
-            var passwordUtility = new PasswordUtility();
             user.Password = passwordUtility.CreatePassword(user.Password);
             user.Key = passwordUtility.GetKeySafe();
             user.Salt = passwordUtility.GetIv();
             user.RoleId = 1;
             user.StateId = 1;
             var result = userRepo.Create(user);
-            if (result!=null)
+            if (result==null)
             {
                 model.AddModelError("Email", "Correo ya en uso");
                 return null;
@@ -33,8 +36,7 @@ namespace BioKudi.Services
 
         public UserDto LoginUser(UserDto user, ModelStateDictionary model)
         {
-            var userRepo = new UserRepository(new BiokudiDbContext());
-            var passwordUtility = new PasswordUtility();
+            user = userRepo.FindUser(user);
             passwordUtility.SetIv(user.Salt);
             passwordUtility.SetKeySafe(user.Key);
             user.Password = passwordUtility.VerifyPassword(user.Password);

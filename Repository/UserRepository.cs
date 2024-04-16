@@ -35,6 +35,20 @@ namespace BioKudi.Repository
             var userEntity = _context.Users.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Password);
             if (userEntity == null)
                 return null;
+            user.UserId = userEntity.IdUser;
+            user.NameUser = userEntity.NameUser;
+            user.RoleId = userEntity.RoleId;
+            user.StateId = userEntity.StateId;
+            return user;
+        }
+
+        public UserDto FindUser(UserDto user)
+        {
+            var userEntity = _context.Users.FirstOrDefault(u => u.Email == user.Email);
+            if (userEntity == null)
+                return null;
+            user.Salt = userEntity.Salt;
+            user.Key = userEntity.Key;
             return user;
         }
     };

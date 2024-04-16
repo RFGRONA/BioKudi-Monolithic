@@ -2,6 +2,7 @@ using BioKudi.dto;
 using BioKudi.Models;
 using BioKudi.Repository;
 using BioKudi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace BioKudi.Controllers
 {
@@ -32,12 +33,13 @@ namespace BioKudi.Controllers
         {
             if (!ModelState.IsValid)
             {
-				var result = userService.LoginUser(user, ModelState);
-				if (result != null)
-                {
-					return RedirectToAction("IndexUser", "User", user);
-				}
-			}
+                var result = userService.LoginUser(user, ModelState);
+
+                if (result.RoleId == (int)UserRole.User) // User
+                    return RedirectToAction("IndexUser", "User", user);
+                if (result.RoleId == (int)UserRole.Admin) // Admin
+                    return RedirectToAction("IndexAdmin", "Admin", user);
+            }
 			return View(user);
 		}
 
@@ -66,5 +68,6 @@ namespace BioKudi.Controllers
         {
             return View(new ErrorViewModel { RequestId = System.Diagnostics.Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }

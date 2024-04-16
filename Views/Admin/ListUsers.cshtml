@@ -1,0 +1,56 @@
+﻿@model List<BioKudi.dto.UserDto>
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="~/css/listusers.css" rel="stylesheet" />
+    <script src="~/js/index.js"></script>
+
+</head>
+<body>
+    <p class="title">List of Users</p>
+    <table>
+        <thead>
+            <tr>
+                Id
+            </tr>
+            <tr>
+                Nombre
+            </tr>
+            <tr>
+               Correo
+            </tr>
+            <tr>
+                Rol
+            </tr>
+            <tr>
+                Estado
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>
+                        @user.UserId
+                    <td>
+                    <td>
+                        @user.NameUser
+                    <td>
+                    <td>
+                        @user.Email
+                    <td>
+                    <td>
+                        @user.RoleId
+                    <td>
+                    <td>
+                        @user.StateId
+                    <td>
+                </tr>
+            }
+        </tbody>
+</body>

@@ -17,19 +17,20 @@
         <div class="logo">
             <ul>
                 <li><img src="~/img/favicon.png" alt="Logo BioKudi"></li>
-				<li><a asp-controller="Home" asp-action="Index">BioKudi</a></li>
+                <li><a asp-controller="Home" asp-action="Index">BioKudi</a></li>
             </ul>
         </div>
         <div class="menu">
             <ul>
-                <li><a asp-controller="Admin" asp-action="">Gestión</a>
-                <ul>
-                    <li><a href="#">CRUD</a></li>
-                    <li><a href="#">CRUD</a></li>
-                    <li><a href="#">CRUD</a></li>
-                    <li><a href="#">CRUD</a></li>
-                    <li><a href="#">CRUD</a></li>
-                </ul>
+                <li>
+                    Gestión
+                    <ul>
+                        <li><a asp-controller="Admin" asp-action="ListUsers">Usuarios</a></li>
+                        <li><a asp-controller="Admin" asp-action="ListPlaces">Lugares</a></li>
+                        <li><a asp-controller="Admin" asp-action="ListActivities">Actividades</a></li>
+                        <li><a asp-controller="Admin" asp-action="ListPictures">Imagenes</a></li>
+                        <li><a asp-controller="Admin" asp-action="ListTickets">Tickets</a></li>
+                    </ul>
                 </li>
                 <li><a href="#">Actividades</a></li>
                 <li><a href="#">Mapa</a></li>
@@ -38,10 +39,13 @@
                         <i class="fa-regular fa-envelope"></i>
                     </a>
                 <li>
-                    <a asp-controller="Home" asp-action="Login">
-                        <i class="fa fa-user"></i>
-                    </a>
-                 </li>
+                    <i class="fa fa-user"></i>
+                    <div class="logout">
+                        <ul class="perfil">
+                            <li><a href="#">Logout</a></li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
         </div>
     </header>

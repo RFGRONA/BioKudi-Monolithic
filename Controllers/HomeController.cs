@@ -34,7 +34,10 @@ namespace BioKudi.Controllers
             if (!ModelState.IsValid)
             {
                 var result = userService.LoginUser(user, ModelState);
-
+                if(result == null)
+                {
+                    return View(user);
+                }   
                 if (result.RoleId == (int)UserRole.User) // User
                     return RedirectToAction("IndexUser", "User", user);
                 if (result.RoleId == (int)UserRole.Admin) // Admin

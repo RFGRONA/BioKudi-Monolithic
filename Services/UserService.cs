@@ -4,6 +4,7 @@ using BioKudi.Repository;
 using BioKudi.Utilities;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace BioKudi.Services
 {
@@ -50,5 +51,9 @@ namespace BioKudi.Services
             }
             return user;
         }
+        public IEnumerable<UserDto> GetAllUsers()
+        {
+			return userRepo.GetAll();
+		}
     }
 }

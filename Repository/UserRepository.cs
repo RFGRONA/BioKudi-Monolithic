@@ -1,6 +1,7 @@
 ﻿using BioKudi.dto;
 using BioKudi.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Collections;
 
 namespace BioKudi.Repository
 {
@@ -51,5 +52,23 @@ namespace BioKudi.Repository
             user.Key = userEntity.Key;
             return user;
         }
+
+        public IEnumerable<UserDto> GetAll()
+        {
+			var users = _context.Users;
+			var usersDto = new List<UserDto>();
+            foreach (var user in users)
+            {
+                var UserDto = new UserDto
+                {
+                    UserId = user.IdUser,
+                    NameUser = user.NameUser,
+                    Email = user.Email,
+                    RoleId = user.RoleId,
+                    StateId = user.StateId,
+                };
+			}
+			return usersDto;
+		}
     };
 }

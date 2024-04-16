@@ -46,6 +46,12 @@ header {
         .menu ul li {
             margin-right: 50px;
             transition: all 200ms ease;
+            color: #476930;
+            font-size: 36px;
+            text-decoration: none;
+            font-family: "Asul", serif;
+            font-weight: bold;
+            font-style: normal;
         }
 
             .menu ul li a {
@@ -56,15 +62,16 @@ header {
                 font-weight: bold;
                 font-style: normal;
             }
-                .menu ul li:hover {
-                    color: #476930;
-                    font-size: 36px;
-                    text-decoration: none;
-                    font-family: "Asul", serif;
-                    font-weight: bold;
-                    font-style: normal;
-                    transform: scale(1.1);
-                }
+
+            .menu ul li:hover {
+                color: #476930;
+                font-size: 36px;
+                text-decoration: none;
+                font-family: "Asul", serif;
+                font-weight: bold;
+                font-style: normal;
+                transform: scale(1.1);
+            }
 
             .menu ul li i {
                 color: #476930;
@@ -85,13 +92,14 @@ header {
                 opacity: 0;
                 z-index: 1;
                 transition: all 200ms ease;
+                
             }
 
-                .menu ul li:hover ul {
-                    visibility: visible;
-                    opacity: 1;
+            .menu ul li:hover ul {
+                visibility: visible;
+                opacity: 1;
+            }
 
-                }
             .menu ul li ul:before {
                 content: '';
                 position: absolute;
@@ -101,25 +109,28 @@ header {
                 top: -10px;
                 left: 35%;
             }
+
             .menu ul li ul a {
                 display: block;
                 color: white;
                 padding: 6px;
                 padding-left: 20px;
+                text-align: center;
                 margin-top: 6px;
-                font-size: 25px;
+                font-size: 20px;
                 font-family: "Asul", serif;
                 font-weight: bold;
                 font-style: normal;
                 text-transform: uppercase;
                 transition: all 200ms ease;
+
             }
-                    .menu ul li ul a:hover {
-                        color: white;
-                        transform: scale(1.1);
-                        text-align: center;
-                       
-                    }
+
+                .menu ul li ul a:hover {
+                    color: white;
+                    transform: scale(1.1);
+                    text-align: center;
+                }
 
 
 .logo {
@@ -169,4 +180,54 @@ footer {
         font-style: normal;
         font-weight: bold;
         margin: 0;
+    }
+
+.menu ul li ul.perfil {
+    position: absolute;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: #476930;
+    box-shadow: 0 0 10px 0px rgb(255, 0, 0, 0.5);
+    top: 60px;
+    transform: translateX(-80%);
+    visibility: hidden;
+    opacity: 0;
+    z-index: 1;
+    transition: all 200ms ease;
+}
+
+.menu ul li:hover ul.perfil {
+    visibility: visible;
+    opacity: 1;
+}
+
+.menu ul li ul.perfil:before {
+    content: '';
+    position: absolute;
+    border-right: 20px solid transparent;
+    border-left: 20px solid transparent;
+    border-bottom: 20px solid #476930;
+    top: -10px;
+    left: 78%;
+}
+
+.menu ul li ul.perfil a {
+    display: block;
+    color: white;
+    padding: 6px;
+    padding-left: 20px;
+    margin-top: 0px;
+    font-size: 20px;
+    font-family: "Asul", serif;
+    font-weight: bold;
+    font-style: normal;
+    text-transform: uppercase;
+    transition: all 200ms ease;
+}
+
+    .menu ul li ul.perfil a:hover {
+        color: white;
+        transform: scale(1.1);
+        text-align: center;
     }

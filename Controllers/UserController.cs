@@ -3,6 +3,7 @@ using BioKudi.Models;
 using System.Diagnostics;
 using BioKudi.dto;
 using BioKudi.Repository;
+using Microsoft.AspNetCore.Authorization;
 namespace BioKudi.Controllers
 {
     public class UserController : Controller

@@ -25,6 +25,7 @@ namespace BioKudi.Services
             user.Salt = passwordUtility.GetIv();
             user.RoleId = 1;
             user.StateId = 1;
+            user.Email = user.Email.ToLower();
             var result = userRepo.Create(user);
             if (result==null)
             {
@@ -36,6 +37,7 @@ namespace BioKudi.Services
 
         public UserDto LoginUser(UserDto user, ModelStateDictionary model)
         {
+            user.Email = user.Email.ToLower();
             user = userRepo.FindUser(user);
             passwordUtility.SetIv(user.Salt);
             passwordUtility.SetKeySafe(user.Key);

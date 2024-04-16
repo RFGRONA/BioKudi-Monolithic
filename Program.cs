@@ -1,12 +1,18 @@
 using BioKudi.Models;
+using BioKudi.Repository;
 using BioKudi.Services;
+using BioKudi.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container. Dependency Injection
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<BiokudiDbContext>();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<PasswordUtility>();
+builder.Services.AddScoped<UserService>();
 
 var app = builder.Build();
 

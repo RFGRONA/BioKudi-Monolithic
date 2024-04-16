@@ -56,7 +56,7 @@ namespace BioKudi.Controllers
                 var result = userService.RegisterUser(user, ModelState);
                 if (result != null)
 				{
-					return RedirectToAction("IndexUser", "User");
+					return RedirectToAction("IndexUser", "User", user);
 				}
 			}
 			return View(user);

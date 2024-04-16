@@ -15,9 +15,10 @@ namespace BioKudi.Controllers
 			_logger = logger;
 		}
 		
-		public IActionResult IndexUser()
+		public IActionResult IndexUser(UserDto user)
 		{
-			return View();
+
+			return View(user);
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

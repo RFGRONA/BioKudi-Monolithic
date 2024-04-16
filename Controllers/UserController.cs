@@ -17,7 +17,6 @@ namespace BioKudi.Controllers
 		
 		public IActionResult IndexUser(UserDto user)
 		{
-
 			return View(user);
 		}
 

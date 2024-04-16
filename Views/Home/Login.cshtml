@@ -19,9 +19,8 @@
 		<div class="form-group">
 			<label asp-for="Password">Contraseña</label>
 			<input asp-for="Password" class="form-control" type="password" required/>
-			<span asp-validation-for="Password" class="text-danger"></span>
+			<div class="text-danger">@Html.ValidationMessage("Password")</div>
 		</div>
-		<div class="text-danger">@Html.ValidationMessage("Password")</div>
 		<button type="submit" class="btn btn-primary">Ingresar</button>
 	</form>
 	<p>¿No tienes una cuenta? <a asp-controller="Home" asp-action="Register"><i>Ingresa aqui</i></a></p>

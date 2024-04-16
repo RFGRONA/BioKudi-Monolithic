@@ -8,11 +8,12 @@ namespace BioKudi.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        //private UserService userService = new UserService();
+        private readonly UserService userService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, UserService userService)
         {
             _logger = logger;
+            this.userService = userService;
         }
 
         public IActionResult Index()
@@ -31,11 +32,10 @@ namespace BioKudi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var userService = new UserService();
 				var result = userService.LoginUser(user, ModelState);
 				if (result != null)
                 {
-					return RedirectToAction("IndexUser", "User");
+					return RedirectToAction("IndexUser", "User", user);
 				}
 			}
 			return View(user);
@@ -52,7 +52,6 @@ namespace BioKudi.Controllers
 		{
 			if (!ModelState.IsValid)
 			{
-                var userService = new UserService();
                 var result = userService.RegisterUser(user, ModelState);
                 if (result != null)
 				{

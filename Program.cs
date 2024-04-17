@@ -2,6 +2,7 @@ using BioKudi.Models;
 using BioKudi.Repository;
 using BioKudi.Services;
 using BioKudi.Utilities;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -13,6 +14,15 @@ builder.Services.AddDbContext<BiokudiDbContext>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<PasswordUtility>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(option =>
+    {
+        option.LoginPath = "/Home/Login";
+        option.ExpireTimeSpan = TimeSpan.FromMinutes(120);
+        option.AccessDeniedPath = "/Acceso/Denied";
+    });
 
 var app = builder.Build();
 
@@ -29,6 +39,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

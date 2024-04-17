@@ -1,10 +1,12 @@
-﻿using BioKudi.Models;
+using BioKudi.Models;
+﻿using BioKudi.dto;
 using BioKudi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BioKudi.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly ILogger<AdminController> _logger;
@@ -38,8 +40,18 @@ namespace BioKudi.Controllers
             return View();
         }
         public IActionResult ListTickets()
+        private readonly UserService userService;
+
+        public AdminController(ILogger<AdminController> logger, UserService userService)
         {
-            return View();
+            _logger = logger;
+            this.userService = userService;
+        }
+
+        public IActionResult IndexAdmin(UserDto user)
+        {
+            user = userService.GetUser(user.UserId);
+            return View(user);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

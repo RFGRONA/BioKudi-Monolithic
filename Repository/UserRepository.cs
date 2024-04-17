@@ -51,5 +51,21 @@ namespace BioKudi.Repository
             user.Key = userEntity.Key;
             return user;
         }
+
+        public UserDto GetUser(int userId)
+        {
+            var userEntity = _context.Users.Find(userId);
+            if (userEntity == null)
+                return null;
+            var user = new UserDto
+            {
+                UserId = userEntity.IdUser,
+                NameUser = userEntity.NameUser,
+                Email = userEntity.Email,
+                RoleId = userEntity.RoleId,
+                StateId = userEntity.StateId
+            };
+            return user;
+        }
     };
 }

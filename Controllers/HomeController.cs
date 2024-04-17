@@ -2,6 +2,8 @@ using BioKudi.dto;
 using BioKudi.Models;
 using BioKudi.Repository;
 using BioKudi.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace BioKudi.Controllers
@@ -28,26 +30,34 @@ namespace BioKudi.Controllers
 			return View(user);
         }
 
+        public IActionResult Register()
+        {
+            UserDto user = new UserDto();
+            return View(user);
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
+        }
+
         [HttpPost]
         public IActionResult Login(UserDto user)
         {
             if (!ModelState.IsValid)
             {
                 var result = userService.LoginUser(user, ModelState);
+                UserService.AuthUser(HttpContext, user);
 
                 if (result.RoleId == (int)UserRole.User) // User
-                    return RedirectToAction("IndexUser", "User", user);
+                    return RedirectToAction("IndexUser", "User", new { userId = user.UserId });
                 if (result.RoleId == (int)UserRole.Admin) // Admin
-                    return RedirectToAction("IndexAdmin", "Admin", user);
+                    return RedirectToAction("IndexAdmin", "Admin", new { userId = user.UserId });
             }
 			return View(user);
 		}
 
-        public IActionResult Register()
-        {
-            UserDto user = new UserDto();
-            return View(user);
-        }
 
 		[HttpPost]
 		public IActionResult Register(UserDto user)
@@ -63,7 +73,7 @@ namespace BioKudi.Controllers
 			return View(user);
 		}
 
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = System.Diagnostics.Activity.Current?.Id ?? HttpContext.TraceIdentifier });

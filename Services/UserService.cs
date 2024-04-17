@@ -30,7 +30,7 @@ namespace BioKudi.Services
             var result = userRepo.Create(user);
             if (result==null)
             {
-                model.AddModelError("Email", "Correo ya en uso");
+                model.AddModelError("Email", "Este correo ya esta registrado");
                 return null;
             }
             return user;

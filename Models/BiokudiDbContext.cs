@@ -16,7 +16,7 @@ public partial class BiokudiDbContext : DbContext
     }
 
     //Data base connection string
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("server=FREDYPC\\MSSQLSERVER01; database=BIOKUDI-DB;Integrated Security=True; TrustServerCertificate=Yes;");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("server=FREDY\\MSSQLSERVER01; database=BIOKUDI-DB;Integrated Security=True; TrustServerCertificate=Yes;");
     
     public virtual DbSet<Activity> Activities { get; set; }
 

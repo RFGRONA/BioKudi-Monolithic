@@ -123,6 +123,7 @@ header {
                 font-style: normal;
                 text-transform: uppercase;
                 transition: all 200ms ease;
+
             }
 
                 .menu ul li ul a:hover {
@@ -230,3 +231,4 @@ footer {
         transform: scale(1.1);
         text-align: center;
     }
+

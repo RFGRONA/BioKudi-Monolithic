@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
     <link rel="icon" href="~/img/favicon.png" />
-    <link href="~/css/siteadmin.css" rel="stylesheet" />
+    <link href="~/css/siteUser.css" rel="stylesheet" />
     <script>
         history.pushState(null, null, location.href);
         window.onpopstate = function () {
@@ -23,21 +23,11 @@
         <div class="logo">
             <ul>
                 <li><img src="~/img/favicon.png" alt="Logo BioKudi"></li>
-                <li><a asp-controller="Admin" asp-action="IndexAdmin">BioKudi</a></li>
+                <li><a asp-controller="Home" asp-action="Index">BioKudi</a></li>
             </ul>
         </div>
         <div class="menu">
             <ul>
-                <li>
-                    Gestión
-                    <ul>
-                        <li><a asp-controller="Admin" asp-action="ListUsers">Usuarios</a></li>
-                        <li><a asp-controller="Admin" asp-action="ListPlaces">Lugares</a></li>
-                        <li><a asp-controller="Admin" asp-action="ListActivities">Actividades</a></li>
-                        <li><a asp-controller="Admin" asp-action="ListPictures">Imagenes</a></li>
-                        <li><a asp-controller="Admin" asp-action="ListTickets">Tickets</a></li>
-                    </ul>
-                </li>
                 <li><a href="#">Actividades</a></li>
                 <li><a href="#">Mapa</a></li>
                 <li>

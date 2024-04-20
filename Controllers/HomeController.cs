@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 namespace BioKudi.Controllers
 {
     public class HomeController : Controller
@@ -23,11 +24,15 @@ namespace BioKudi.Controllers
         {
             return View();
         }
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
 
         public IActionResult Login()
         {
-			UserDto user = new UserDto();
-			return View(user);
+            UserDto user = new UserDto();
+            return View(user);
         }
 
         public IActionResult Register()
@@ -48,34 +53,28 @@ namespace BioKudi.Controllers
             if (!ModelState.IsValid)
             {
                 var result = userService.LoginUser(user, ModelState);
-                if(result == null)
-                {
+                if (result == null)
                     return View(user);
-                }   
                 UserService.AuthUser(HttpContext, user);
-
                 if (result.RoleId == (int)UserRole.User) // User
                     return RedirectToAction("IndexUser", "User", new { userId = user.UserId });
                 if (result.RoleId == (int)UserRole.Admin) // Admin
                     return RedirectToAction("IndexAdmin", "Admin", new { userId = user.UserId });
             }
-			return View(user);
-		}
+            return View(user);
+        }
 
-
-		[HttpPost]
-		public IActionResult Register(UserDto user)
-		{
-			if (!ModelState.IsValid)
-			{
+        [HttpPost]
+        public IActionResult Register(UserDto user)
+        {
+            if (!ModelState.IsValid)
+            {
                 var result = userService.RegisterUser(user, ModelState);
                 if (result != null)
-				{
-					return RedirectToAction("IndexUser", "User", user);
-				}
-			}
-			return View(user);
-		}
+                    return RedirectToAction("IndexUser", "User", new { userId = user.UserId });
+            }
+            return View(user);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -83,5 +82,19 @@ namespace BioKudi.Controllers
             return View(new ErrorViewModel { RequestId = System.Diagnostics.Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+    }
+    public class NoCacheAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuted(ActionExecutedContext context)
+        {
+            if (context.Result is ViewResult)
+            {
+                context.HttpContext.Response.Headers["Cache-Control"] = "no-cache, no-store";
+                context.HttpContext.Response.Headers["Pragma"] = "no-cache";
+                context.HttpContext.Response.Headers["Expires"] = "-1";
+            }
+
+            base.OnActionExecuted(context);
+        }
     }
 }

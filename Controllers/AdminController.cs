@@ -1,11 +1,14 @@
 using BioKudi.Models;
 ﻿using BioKudi.dto;
+using BioKudi.Models;
 using BioKudi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace BioKudi.Controllers
 {
+    [NoCache]   
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
@@ -19,6 +22,13 @@ namespace BioKudi.Controllers
 			this.userService = userService;
             this.activityService = activityService;
 		}
+		}
+
+		public IActionResult IndexAdmin(UserDto user)
+        {
+            user = userService.GetUser(user.UserId);
+            return View(user);
+        }
         public IActionResult ListUsers()
         {
             var users = userService.GetAllUsers();
@@ -46,6 +56,7 @@ namespace BioKudi.Controllers
             user = userService.GetUser(user.UserId);
             return View(user);
         }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

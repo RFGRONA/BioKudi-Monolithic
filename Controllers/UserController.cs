@@ -5,8 +5,10 @@ using BioKudi.dto;
 using BioKudi.Repository;
 using Microsoft.AspNetCore.Authorization;
 using BioKudi.Services;
+using Microsoft.AspNetCore.Mvc.Filters;
 namespace BioKudi.Controllers
 {
+    [Authorize]
     public class UserController : Controller
 	{
 		private readonly ILogger<UserController> _logger;
@@ -24,7 +26,7 @@ namespace BioKudi.Controllers
             return View(user);
 		}
 
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{
 			return View(new ErrorViewModel { RequestId = System.Diagnostics.Activity.Current?.Id ?? HttpContext.TraceIdentifier });

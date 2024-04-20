@@ -92,7 +92,7 @@ header {
                 opacity: 0;
                 z-index: 1;
                 transition: all 200ms ease;
-                
+                width: 27vh;
             }
 
             .menu ul li:hover ul {
@@ -114,16 +114,15 @@ header {
                 display: block;
                 color: white;
                 padding: 6px;
-                padding-left: 20px;
+                padding-left: 16px;
                 text-align: center;
                 margin-top: 6px;
-                font-size: 20px;
+                font-size: 16px;
                 font-family: "Asul", serif;
                 font-weight: bold;
                 font-style: normal;
                 text-transform: uppercase;
                 transition: all 200ms ease;
-
             }
 
                 .menu ul li ul a:hover {
@@ -218,7 +217,7 @@ footer {
     padding: 6px;
     padding-left: 20px;
     margin-top: 0px;
-    font-size: 20px;
+    font-size: 16px;
     font-family: "Asul", serif;
     font-weight: bold;
     font-style: normal;

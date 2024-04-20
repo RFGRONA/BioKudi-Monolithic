@@ -28,6 +28,7 @@ namespace BioKudi.Repository
                 return null;
             _context.Users.Add(userEntity);
             _context.SaveChanges();
+            user.UserId = userEntity.IdUser;
             return user;
         }
 

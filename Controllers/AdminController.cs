@@ -4,28 +4,31 @@ using BioKudi.Models;
 using BioKudi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace BioKudi.Controllers
 {
+    [NoCache]   
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly ILogger<AdminController> _logger;
-		private readonly UserService _userService;
+		private readonly UserService userService;
 
 		public AdminController(ILogger<AdminController> logger, UserService userService)
 		{
 			_logger = logger;
-			_userService = userService;
+			this.userService = userService;
 		}
 
-		public IActionResult IndexAdmin()
+		public IActionResult IndexAdmin(UserDto user)
         {
-            return View();
+            user = userService.GetUser(user.UserId);
+            return View(user);
         }
         public IActionResult ListUsers()
         {
-            var users = _userService.GetAllUsers();
+            var users = userService.GetAllUsers();
             return View(users);
         }
         public IActionResult ListPlaces()
@@ -41,19 +44,10 @@ namespace BioKudi.Controllers
             return View();
         }
         public IActionResult ListTickets()
-        private readonly UserService userService;
-
-        public AdminController(ILogger<AdminController> logger, UserService userService)
         {
-            _logger = logger;
-            this.userService = userService;
+            return View();
         }
 
-        public IActionResult IndexAdmin(UserDto user)
-        {
-            user = userService.GetUser(user.UserId);
-            return View(user);
-        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

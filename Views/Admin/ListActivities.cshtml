@@ -1,4 +1,4 @@
-﻿@model List<BioKudi.dto.UserDto>
+﻿@model List<BioKudi.dto.ActivityDto>
 @{
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -12,5 +12,27 @@
 
 </head>
 <body>
-    <p class="title">List of Places</p>
+    <p class="title">List of Activities</p>
+    <table>
+        <thead>
+            <tr>
+                Id
+            </tr>
+            <tr>
+                Type
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var activity in Model)
+            {
+                <tr>
+                    <td>
+                        @activity.IdActivity
+                    </td>
+                    <td>
+                        @activity.Type
+					</td>
+                </tr>
+            }
+        </tbody>
 </body>

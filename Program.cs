@@ -15,6 +15,8 @@ builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<PasswordUtility>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ActivityRepository>();
+builder.Services.AddScoped<ActivityService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(option =>

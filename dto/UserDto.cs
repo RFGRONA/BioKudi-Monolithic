@@ -18,6 +18,7 @@ public partial class UserDto
 
     public int RoleId { get; set; } = 0;
 
+
     public int StateId { get; set; } = 0;
 
     public string? message { get; set; }

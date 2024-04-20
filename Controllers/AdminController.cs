@@ -10,21 +10,18 @@ namespace BioKudi.Controllers
     public class AdminController : Controller
     {
         private readonly ILogger<AdminController> _logger;
-		private readonly UserService _userService;
+		private readonly UserService userService;
+        private readonly ActivityService activityService;
 
-		public AdminController(ILogger<AdminController> logger, UserService userService)
+		public AdminController(ILogger<AdminController> logger, UserService userService, ActivityService activityService)
 		{
 			_logger = logger;
-			_userService = userService;
+			this.userService = userService;
+            this.activityService = activityService;
 		}
-
-		public IActionResult IndexAdmin()
-        {
-            return View();
-        }
         public IActionResult ListUsers()
         {
-            var users = _userService.GetAllUsers();
+            var users = userService.GetAllUsers();
             return View(users);
         }
         public IActionResult ListPlaces()
@@ -33,21 +30,17 @@ namespace BioKudi.Controllers
         }
         public IActionResult ListActivities()
         {
-            return View();
+            var activities = activityService.GetAllActivities();
+            return View(activities);
         }
         public IActionResult ListPictures()
         {
             return View();
         }
         public IActionResult ListTickets()
-        private readonly UserService userService;
-
-        public AdminController(ILogger<AdminController> logger, UserService userService)
         {
-            _logger = logger;
-            this.userService = userService;
+            return View();
         }
-
         public IActionResult IndexAdmin(UserDto user)
         {
             user = userService.GetUser(user.UserId);

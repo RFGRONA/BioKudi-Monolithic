@@ -64,9 +64,11 @@ namespace BioKudi.Repository
                     UserId = user.IdUser,
                     NameUser = user.NameUser,
                     Email = user.Email,
+
                     RoleId = user.RoleId,
                     StateId = user.StateId,
                 };
+                usersDto.Add(UserDto);
 			}
 			return usersDto;
 		}

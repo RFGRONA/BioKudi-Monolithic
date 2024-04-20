@@ -2,9 +2,12 @@
 using BioKudi.Models;
 using BioKudi.Repository;
 using BioKudi.Utilities;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace BioKudi.Services
 {
@@ -12,11 +15,13 @@ namespace BioKudi.Services
     {
         private readonly UserRepository userRepo;
         private readonly PasswordUtility passwordUtility;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public UserService(UserRepository userRepo, PasswordUtility passwordUtility)
+        public UserService(UserRepository userRepo, PasswordUtility passwordUtility, IHttpContextAccessor httpContextAccessor)
         {
             this.userRepo = userRepo;
             this.passwordUtility = passwordUtility;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public UserDto RegisterUser(UserDto user, ModelStateDictionary model)
@@ -51,9 +56,40 @@ namespace BioKudi.Services
             }
             return user;
         }
+        
         public IEnumerable<UserDto> GetAllUsers()
         {
-			return userRepo.GetAll();
+			return userRepo.GetListUser();
 		}
+
+        public UserDto GetUser(int userId)
+        {
+            return userRepo.GetUser(userId);
+        }
+
+        static public void AuthUser(HttpContext httpContext, UserDto user)
+        {
+            UserRole userRole = (UserRole)user.RoleId;
+            string roleName = Enum.GetName(typeof(UserRole), userRole);
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.NameUser),
+                new Claim(ClaimTypes.Role, roleName),
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
+            };
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var authProperties = new AuthenticationProperties()
+            {
+                AllowRefresh = true
+            };
+
+            httpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                authProperties).Wait();
+        }
     }
 }

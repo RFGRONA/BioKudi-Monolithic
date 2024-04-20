@@ -11,6 +11,12 @@
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
     <link rel="icon" href="~/img/favicon.png" />
     <link href="~/css/siteadmin.css" rel="stylesheet" />
+    <script>
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
+    </script>
 </head>
 <body>
     <header>
@@ -42,7 +48,7 @@
                     <i class="fa fa-user"></i>
                     <div class="logout">
                         <ul class="perfil">
-                            <li><a href="#">Logout</a></li>
+                            <li><a asp-controller="Home" asp-action="Logout">Cerrar sesión</a></li>
                         </ul>
                     </div>
                 </li>

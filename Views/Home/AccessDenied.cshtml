@@ -1,38 +1,26 @@
-﻿@model ErrorViewModel
-@{
+﻿@{
+    ViewData["Title"] = "AccessDenied";
     Layout = "";
 }
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Error</title>
+    <title>Acceso denegado</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="icon" href="~/img/favicon.png" />
-    <link rel="stylesheet" href="~/css/Error.css" />
+    <link rel="stylesheet" href="~/css/AccessDenied.css" />
 </head>
 <body>
-    <div class="error-container">
-        <h1>Error</h1>
-        <p>Ha ocurrido un error mientras se procesaba tu solicitud.</p>
-        @if (Model.ShowRequestId)
-        {
-            <p>
-                <strong>ID de solicitud:</strong> <br /><code>@Model.RequestId</code>
-            </p>
-        }
+    <div class="access-denied-container">
+        <h1>Acceso denegado</h1>
+        <p>No tienes permisos para acceder a esta página.</p>
         <img src="https://i.imgur.com/9kg0bpg.jpg" class="center-image" />
-        <p>
-            Lamentamos las molestias. <br />Si presentas este error con frecuencia, envia el ID de la solicitud a nuestro equipo de trabajo.
-        </p>
-        <p>
-            contactobiokudi@gmail.com
-        </p>
         <a asp-controller="Home" asp-action="Index">Volver al inicio</a>
     </div>
 </body>
 </html>
+

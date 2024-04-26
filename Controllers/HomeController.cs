@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using BioKudi.Utilities;
+using System.Security.Claims;
+
 namespace BioKudi.Controllers
 {
     public class HomeController : Controller
@@ -19,22 +23,23 @@ namespace BioKudi.Controllers
             this.userService = userService;
         }
 
-        public IActionResult Index()
+		[ValidateLogin]
+		public IActionResult Index()
+        {
+            return View();
+        }
+        public IActionResult AccessDenied()
         {
             return View();
         }
 
-        public IActionResult Login()
+		[ValidateLogin]
+		public IActionResult Login()
         {
 			UserDto user = new UserDto();
 			return View(user);
-        }
-
-        public IActionResult Register()
-        {
-            UserDto user = new UserDto();
-            return View(user);
-        }
+			
+		}
 
         public IActionResult Logout()
         {
@@ -48,36 +53,33 @@ namespace BioKudi.Controllers
             if (!ModelState.IsValid)
             {
                 var result = userService.LoginUser(user, ModelState);
+                if (result == null)
+                    return View(user);
                 UserService.AuthUser(HttpContext, user);
-
-                if (result.RoleId == (int)UserRole.User) // User
+                if (result.RoleName == "User") // User
                     return RedirectToAction("IndexUser", "User", new { userId = user.UserId });
-                if (result.RoleId == (int)UserRole.Admin) // Admin
+                if (result.RoleName == "Admin") // Admin
                     return RedirectToAction("IndexAdmin", "Admin", new { userId = user.UserId });
             }
-			return View(user);
-		}
+            return View(user);
+        }
 
-
-		[HttpPost]
-		public IActionResult Register(UserDto user)
-		{
-			if (!ModelState.IsValid)
-			{
+        [HttpPost]
+        public IActionResult Register(UserDto user)
+        {
+            if (!ModelState.IsValid)
+            {
                 var result = userService.RegisterUser(user, ModelState);
                 if (result != null)
-				{
-					return RedirectToAction("IndexUser", "User", user);
-				}
-			}
-			return View(user);
-		}
+                    return RedirectToAction("Login", "Home");
+            }
+            return View(user);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = System.Diagnostics.Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
     }
 }

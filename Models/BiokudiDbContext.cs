@@ -17,7 +17,7 @@ public partial class BiokudiDbContext : DbContext
 
     //Data base connection string
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("server=localhost; database=BIOKUDI-DB; user id=sysbiokudi; password=BK2a2; TrustServerCertificate=Yes;");
-    
+
     public virtual DbSet<Activity> Activities { get; set; }
 
     public virtual DbSet<Audit> Audits { get; set; }
@@ -42,7 +42,7 @@ public partial class BiokudiDbContext : DbContext
         {
             entity.HasKey(e => e.IdActivity).HasName("PK__ACTIVITY__BBF4A24791BDEC3C");
 
-            entity.ToTable("ACTIVITY");
+            entity.ToTable("ACTIVITY", tb => tb.HasTrigger("tr_AuditActivity"));
 
             entity.Property(e => e.IdActivity)
                 .HasComment("Unique identifier of the activity (integer).")
@@ -56,23 +56,19 @@ public partial class BiokudiDbContext : DbContext
 
         modelBuilder.Entity<Audit>(entity =>
         {
-            entity.HasKey(e => e.IdAudit).HasName("PK__AUDIT__5BC2526A0750825F");
+            entity.HasKey(e => e.Id).HasName("PK__AUDIT__3213E83F45F049A7");
 
             entity.ToTable("AUDIT");
 
-            entity.Property(e => e.IdAudit)
-                .HasComment("Unique identifier of the audit (integer).")
-                .HasColumnName("id_audit");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Action)
-                .HasComment("Action performed (integer).")
+                .HasMaxLength(250)
                 .HasColumnName("action");
             entity.Property(e => e.Date)
-                .HasComment("Date of the audit (date).")
+                .HasColumnType("datetime")
                 .HasColumnName("date");
             entity.Property(e => e.ViewAction)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasComment("Action of viewing performed (character string, maximum 50).")
+                .HasMaxLength(250)
                 .HasColumnName("view_action");
         });
 
@@ -80,7 +76,7 @@ public partial class BiokudiDbContext : DbContext
         {
             entity.HasKey(e => e.IdPicture).HasName("PK__PICTURE__E967C4E5B8BC69DF");
 
-            entity.ToTable("PICTURE");
+            entity.ToTable("PICTURE", tb => tb.HasTrigger("tr_AuditPicture"));
 
             entity.Property(e => e.IdPicture)
                 .HasComment("Unique identifier of the picture (integer).")
@@ -101,7 +97,7 @@ public partial class BiokudiDbContext : DbContext
         {
             entity.HasKey(e => e.IdPlace).HasName("PK__PLACE__04D478F42E9BE1F1");
 
-            entity.ToTable("PLACE");
+            entity.ToTable("PLACE", tb => tb.HasTrigger("tr_AuditPlace"));
 
             entity.Property(e => e.IdPlace)
                 .HasComment("Unique identifier of the place (integer).")
@@ -218,7 +214,7 @@ public partial class BiokudiDbContext : DbContext
         {
             entity.HasKey(e => e.IdReview).HasName("PK__REVIEW__2F79F8C79EE9DCBF");
 
-            entity.ToTable("REVIEW");
+            entity.ToTable("REVIEW", tb => tb.HasTrigger("tr_AuditReview"));
 
             entity.Property(e => e.IdReview)
                 .HasComment("Unique identifier of the review (integer).")
@@ -245,7 +241,7 @@ public partial class BiokudiDbContext : DbContext
         {
             entity.HasKey(e => e.IdRole).HasName("PK__ROLE__3D48441DA7587008");
 
-            entity.ToTable("ROLE");
+            entity.ToTable("ROLE", tb => tb.HasTrigger("tr_AuditRole"));
 
             entity.Property(e => e.IdRole)
                 .HasComment("Unique identifier of the role (integer).")
@@ -261,7 +257,7 @@ public partial class BiokudiDbContext : DbContext
         {
             entity.HasKey(e => e.IdState).HasName("PK__STATE__12FD6C4991F75C26");
 
-            entity.ToTable("STATE");
+            entity.ToTable("STATE", tb => tb.HasTrigger("tr_AudityState"));
 
             entity.Property(e => e.IdState)
                 .HasComment("Unique identifier of the state (integer).")
@@ -277,7 +273,7 @@ public partial class BiokudiDbContext : DbContext
         {
             entity.HasKey(e => e.IdTicket).HasName("PK__TICKET__48C6F52308C4296A");
 
-            entity.ToTable("TICKET");
+            entity.ToTable("TICKET", tb => tb.HasTrigger("tr_AudityTicket"));
 
             entity.Property(e => e.IdTicket)
                 .HasComment("Unique identifier of the ticket (integer).")
@@ -287,10 +283,7 @@ public partial class BiokudiDbContext : DbContext
                 .IsUnicode(false)
                 .HasComment("Subject of the ticket (character string, maximum 1024).")
                 .HasColumnName("affair");
-            entity.Property(e => e.State)
-                .HasMaxLength(1)
-                .HasComment("State of the ticket (binary, single character).")
-                .HasColumnName("state");
+            entity.Property(e => e.State).HasColumnName("state");
             entity.Property(e => e.Type)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -299,6 +292,11 @@ public partial class BiokudiDbContext : DbContext
             entity.Property(e => e.UserId)
                 .HasComment("ID of the user associated with the ticket (integer).")
                 .HasColumnName("user_id");
+
+            entity.HasOne(d => d.StateNavigation).WithMany(p => p.Tickets)
+                .HasForeignKey(d => d.State)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TICKET_STATE");
 
             entity.HasOne(d => d.User).WithMany(p => p.Tickets)
                 .HasForeignKey(d => d.UserId)
@@ -310,7 +308,7 @@ public partial class BiokudiDbContext : DbContext
         {
             entity.HasKey(e => e.IdUser).HasName("PK__USER__D2D1463726DE95DA");
 
-            entity.ToTable("USER");
+            entity.ToTable("USER", tb => tb.HasTrigger("tr_AudityUser"));
 
             entity.Property(e => e.IdUser)
                 .HasComment("Unique identifier of the user (integer).")

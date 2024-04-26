@@ -21,14 +21,13 @@ public partial class Ticket
     public string Affair { get; set; } = null!;
 
     /// <summary>
-    /// State of the ticket (binary, single character).
-    /// </summary>
-    public byte[] State { get; set; } = null!;
-
-    /// <summary>
     /// ID of the user associated with the ticket (integer).
     /// </summary>
     public int UserId { get; set; }
+
+    public int State { get; set; }
+
+    public virtual State StateNavigation { get; set; } = null!;
 
     public virtual User User { get; set; } = null!;
 }

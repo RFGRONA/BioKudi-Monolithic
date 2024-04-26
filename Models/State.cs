@@ -17,5 +17,7 @@ public partial class State
 
     public virtual ICollection<Place> Places { get; set; } = new List<Place>();
 
+    public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
+
     public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

@@ -45,7 +45,7 @@ namespace BioKudi.Controllers
         {
             return View();
         }
-        public IActionResult ListTickets()
+        public IActionResult ListTickets(UserDto user)
         {
             user = userService.GetUser(user.UserId);
             return View(user);

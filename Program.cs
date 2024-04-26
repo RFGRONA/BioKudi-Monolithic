@@ -3,36 +3,57 @@ using BioKudi.Repository;
 using BioKudi.Services;
 using BioKudi.Utilities;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container. Dependency Injection
-builder.Services.AddControllersWithViews();
+// Add services to the container. Dependency 
 builder.Services.AddDbContext<BiokudiDbContext>();
+builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddAuthorization();
+builder.Services.AddLogging();
+builder.Services.AddRazorPages();
+
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<PasswordUtility>();
 builder.Services.AddScoped<UserService>();
-builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ActivityRepository>();
+builder.Services.AddScoped<ActivityService>();
+builder.Services.AddScoped<RoleRepository>();
+builder.Services.AddScoped<StateRepository>();
+
+builder.Services.AddHsts(options =>
+{
+    options.Preload = true;
+    options.IncludeSubDomains = true;
+    options.MaxAge = TimeSpan.FromDays(60);
+});
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(option =>
     {
         option.LoginPath = "/Home/Login";
-        option.ExpireTimeSpan = TimeSpan.FromMinutes(120);
-        option.AccessDeniedPath = "/Acceso/Denied";
-    });
+        option.AccessDeniedPath = "/Home/AccessDenied";
+        option.Cookie.HttpOnly = true;
+        option.Cookie.SameSite = SameSiteMode.Strict; 
+        option.Cookie.IsEssential = true; 
+        option.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+	});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+else app.UseDeveloperExceptionPage();
+app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

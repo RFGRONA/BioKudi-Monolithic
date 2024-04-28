@@ -41,7 +41,13 @@ namespace BioKudi.Controllers
 			
 		}
 
-        public IActionResult Logout()
+		public IActionResult Register()
+		{
+			UserDto user = new UserDto();
+			return View(user);
+		}
+
+		public IActionResult Logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");

@@ -5,20 +5,44 @@ namespace BioKudi.Models;
 
 public partial class Place
 {
+    /// <summary>
+    /// Unique identifier of the place (integer).
+    /// </summary>
     public int IdPlace { get; set; }
 
+    /// <summary>
+    /// Name of the place (character string, maximum 80).
+    /// </summary>
     public string NamePlace { get; set; } = null!;
 
-    public float Latitude { get; set; }
+    /// <summary>
+    /// Latitude of the place (character string, maximum 20 digits).
+    /// </summary>
+    public string? Latitude { get; set; }
 
-    public float Longitude { get; set; }
+    /// <summary>
+    /// Longitude of the place (character string, maximum 20 digits).
+    /// </summary>
+    public string? Longitude { get; set; }
 
-    public string Address { get; set; } = null!;
+    /// <summary>
+    /// Address of the place (character string, maximum 128).
+    /// </summary>
+    public string? Address { get; set; }
 
+    /// <summary>
+    /// Description of the place (character string, maximum 560).
+    /// </summary>
     public string Description { get; set; } = null!;
 
+    /// <summary>
+    /// Link related to the place (character string, maximum 255).
+    /// </summary>
     public string Link { get; set; } = null!;
 
+    /// <summary>
+    /// ID of the state to which the place belongs (integer).
+    /// </summary>
     public int? StateId { get; set; }
 
     public virtual State? State { get; set; }

@@ -44,7 +44,12 @@ header {
     }
 
         .menu ul li {
-            margin-right: 50px
+            margin-right: 50px;
+            transition: all 200ms ease;
+        }
+        .menu ul li:hover {
+            margin-right: 50px;
+            transform: scale(1.1);
         }
 
             .menu ul li a {

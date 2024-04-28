@@ -5,11 +5,11 @@ namespace BioKudi.Models;
 
 public partial class Audit
 {
-    public int IdAudit { get; set; }
+    public int Id { get; set; }
 
-    public DateOnly? Date { get; set; }
+    public DateTime? Date { get; set; }
 
-    public string ViewAction { get; set; } = null!;
+    public string? ViewAction { get; set; }
 
-    public int Action { get; set; }
+    public string? Action { get; set; }
 }

@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BioKudi</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="icon" href="~/img/favicon.png" />
+    <link href="~/css/siteadmin.css" rel="stylesheet" />
+    <script src="~/js/reload.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <ul>
+                <li><img src="~/img/favicon.png" alt="Logo BioKudi"></li>
+                <li><a asp-controller="Admin" asp-action="IndexAdmin">BioKudi</a></li>
+            </ul>
+        </div>
+        <div class="menu">
+            <ul>
+                <li>
+                    Gestión
+                    <ul>
+                        <li><a asp-controller="Admin" asp-action="ListUsers">Usuarios</a></li>
+                        <li><a asp-controller="Admin" asp-action="ListPlaces">Lugares</a></li>
+                        <li><a asp-controller="Admin" asp-action="ListActivities">Actividades</a></li>
+                        <li><a asp-controller="Admin" asp-action="ListPictures">Imagenes</a></li>
+                        <li><a asp-controller="Admin" asp-action="ListTickets">Tickets</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Actividades</a></li>
+                <li><a href="#">Mapa</a></li>
+                <li>
+                    <a href="#">
+                        <i class="fa-regular fa-envelope"></i>
+                    </a>
+                <li>
+                    <i class="fa fa-user"></i>
+                    <div class="logout">
+                        <ul class="perfil">
+                            <li><a asp-controller="Home" asp-action="Logout">Cerrar sesión</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <div class="container">
+        @RenderBody()
+    </div>
+    <footer>
+        <p> BioKudi</p>
+        <p> &copy;2024</p>
+    </footer>
+</body>
+</html>

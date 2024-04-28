@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Elfie.Serialization;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -18,7 +19,13 @@ public partial class BiokudiDbContext : DbContext
 	}
 
 	//Data base connection string
-	//protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("");
+	public static string ConnectionString = "Data Source=biokudi-server.database.windows.net,1433;Initial Catalog=biokudi-database;User ID=biokudi-server-admin;Password=8Zc3nq1B$xAUlb4R";
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+		if (!optionsBuilder.IsConfigured)
+			optionsBuilder.UseSqlServer(ConnectionString);
+        base.OnConfiguring(optionsBuilder);
+	}
 
 	public virtual DbSet<Activity> Activities { get; set; }
 	public virtual DbSet<Audit> Audits { get; set; }

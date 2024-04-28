@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container. Dependency 
 builder.Services.AddDbContext<BiokudiDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("LOCAL_CONNECTION")));
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthorization();

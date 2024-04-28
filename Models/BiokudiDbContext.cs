@@ -18,8 +18,7 @@ public partial class BiokudiDbContext : DbContext
 	}
 
 	//Data base connection string
-	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("Data Source = biokudi - server.database.windows.net, 1433; Initial Catalog = biokudi - database; User ID = biokudi - server - admin; Password=8Zc3nq1B$xAUlb4R");
-
+	//protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("");
 
 	public virtual DbSet<Activity> Activities { get; set; }
 	public virtual DbSet<Audit> Audits { get; set; }

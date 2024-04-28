@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Elfie.Serialization;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BioKudi.Models;
 
@@ -11,18 +13,17 @@ public partial class BiokudiDbContext : DbContext
     }
 
     public BiokudiDbContext(DbContextOptions<BiokudiDbContext> options)
-        : base(options)
-    {
-    }
+	: base(options)
+	{
+	}
 
-    //Data base connection string
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("server=localhost; database=BIOKUDI-DB; user id=sysbiokudi; password=BK2a2; TrustServerCertificate=Yes;");
+	//Data base connection string
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer("Data Source = biokudi - server.database.windows.net, 1433; Initial Catalog = biokudi - database; User ID = biokudi - server - admin; Password=8Zc3nq1B$xAUlb4R");
 
-    public virtual DbSet<Activity> Activities { get; set; }
 
-    public virtual DbSet<Audit> Audits { get; set; }
-
-    public virtual DbSet<Picture> Pictures { get; set; }
+	public virtual DbSet<Activity> Activities { get; set; }
+	public virtual DbSet<Audit> Audits { get; set; }
+	public virtual DbSet<Picture> Pictures { get; set; }
 
     public virtual DbSet<Place> Places { get; set; }
 

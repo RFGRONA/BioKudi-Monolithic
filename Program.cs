@@ -27,6 +27,8 @@ builder.Services.AddScoped<ActivityRepository>();
 builder.Services.AddScoped<ActivityService>();
 builder.Services.AddScoped<RoleRepository>();
 builder.Services.AddScoped<StateRepository>();
+builder.Services.AddScoped<PlaceRepository>();
+builder.Services.AddScoped<PlacesService>();
 
 builder.Services.AddHsts(options =>
 {

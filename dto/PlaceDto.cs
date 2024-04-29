@@ -10,7 +10,8 @@
         public string Description { get; set; } = null!;
         public string Link { get; set; } = null!;
         public int? StateId { get; set; }
-        public List<int> ActivityId { get; set; } = new List<int>();
+		public string StateName { get; set; }
+		public List<int> ActivityId { get; set; } = new List<int>();
         public List<int> PictureId { get; set; } = new List<int>();
         public List<int> ReviewId { get; set; } = new List<int>();
 

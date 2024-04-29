@@ -50,22 +50,23 @@ namespace BioKudi.Repository
 
         public List<PlaceDto> GetListPlace()
         {
-            var placeEntities = _context.Places;
+			var states = _context.States.ToDictionary(s => s.IdState, s => s.NameState);
+			var placeEntities = _context.Places;
             var places = new List<PlaceDto>();
-            foreach (var placeEntity in placeEntities)
+            foreach (var place in placeEntities)
             {
-                var place = new PlaceDto
+                var placeDto = new PlaceDto
                 {
-                    IdPlace = placeEntity.IdPlace,
-                    NamePlace = placeEntity.NamePlace,
-                    Latitude = placeEntity.Latitude,
-                    Longitude = placeEntity.Longitude,
-                    Address = placeEntity.Address,
-                    Description = placeEntity.Description,
-                    Link = placeEntity.Link,
-                    StateId = placeEntity.StateId
-                };
-                places.Add(place);
+                    IdPlace = place.IdPlace,
+                    NamePlace = place.NamePlace,
+                    Latitude = place.Latitude,
+                    Longitude = place.Longitude,
+                    Address = place.Address,
+                    Description = place.Description,
+                    Link = place.Link,
+                    StateName = states.ContainsKey((int)place.StateId) ? states[(int)place.StateId] : null
+				};
+                places.Add(placeDto);
             }
             return places;
         }

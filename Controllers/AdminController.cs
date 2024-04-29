@@ -7,19 +7,21 @@ using BioKudi.Utilities;
 
 namespace BioKudi.Controllers
 {
-	[ValidateAuthentications]
+	[ValidateAuthentication]
 	[Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly ILogger<AdminController> _logger;
 		private readonly UserService userService;
         private readonly ActivityService activityService;
+        private readonly PlacesService PlacesService;
 
-		public AdminController(ILogger<AdminController> logger, UserService userService, ActivityService activityService)
+		public AdminController(ILogger<AdminController> logger, UserService userService, ActivityService activityService, PlacesService placesService)
 		{
 			_logger = logger;
 			this.userService = userService;
             this.activityService = activityService;
+            this.PlacesService = placesService;
 		}
 
 		public IActionResult IndexAdmin(UserDto user)
@@ -34,7 +36,8 @@ namespace BioKudi.Controllers
         }
         public IActionResult ListPlaces()
         {
-            return View();
+            var places = PlacesService.GetAllPlaces();
+            return View(places);
         }
         public IActionResult ListActivities()
         {

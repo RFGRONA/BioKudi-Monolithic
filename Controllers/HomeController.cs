@@ -23,8 +23,8 @@ namespace BioKudi.Controllers
             this.userService = userService;
         }
 
-		[ValidateLogin]
-		public IActionResult Index()
+        [ValidateLogin]
+        public IActionResult Index()
         {
             return View();
         }
@@ -32,26 +32,22 @@ namespace BioKudi.Controllers
         {
             return View();
         }
-        public IActionResult AccessDenied()
+
+        [ValidateLogin]
+        public IActionResult Login()
         {
-            return View();
+            UserDto user = new UserDto();
+            return View(user);
+
         }
 
-		[ValidateLogin]
-		public IActionResult Login()
+        public IActionResult Register()
         {
-			UserDto user = new UserDto();
-			return View(user);
-			
-		}
+            UserDto user = new UserDto();
+            return View(user);
+        }
 
-		public IActionResult Register()
-		{
-			UserDto user = new UserDto();
-			return View(user);
-		}
-
-		public IActionResult Logout()
+        public IActionResult Logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
@@ -92,6 +88,4 @@ namespace BioKudi.Controllers
             return View(new ErrorViewModel { RequestId = System.Diagnostics.Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
-    public class NoCacheAttribute : ActionFilterAttribute
-    {
-        public override void OnActionExecuted(ActionExecutedContext context)
+}

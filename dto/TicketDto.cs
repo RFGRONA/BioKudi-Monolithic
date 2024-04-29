@@ -7,5 +7,6 @@
         public string Affair { get; set; } = null!;
         public int UserId { get; set; }
         public int State { get; set; }
-    }
+		public string StateName { get; set; } = null!;
+	}
 }

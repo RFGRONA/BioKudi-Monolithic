@@ -44,7 +44,7 @@ header {
     }
 
         .menu ul li {
-            margin-right: 50px;
+            margin-right: 35px;
             transition: all 200ms ease;
             color: #476930;
             font-size: 36px;
@@ -92,7 +92,7 @@ header {
                 opacity: 0;
                 z-index: 1;
                 transition: all 200ms ease;
-                width: 27vh;
+                width: 29vh;
             }
 
             .menu ul li:hover ul {
@@ -215,7 +215,7 @@ footer {
     display: block;
     color: white;
     padding: 6px;
-    padding-left: 20px;
+    padding-left: 10px;
     margin-top: 0px;
     font-size: 16px;
     font-family: "Asul", serif;

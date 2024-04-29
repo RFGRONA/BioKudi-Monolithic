@@ -16,6 +16,7 @@ namespace BioKudi.Services
         private readonly UserRepository userRepo;
         private readonly PasswordUtility passwordUtility;
         private readonly IHttpContextAccessor httpContextAccessor;
+        private static readonly RoleRepository roleRepository = new RoleRepository(new BiokudiDbContext());
 
         public UserService(UserRepository userRepo, PasswordUtility passwordUtility, IHttpContextAccessor httpContextAccessor)
         {
@@ -46,13 +47,18 @@ namespace BioKudi.Services
         {
             user.Email = user.Email.ToLower();
             user = userRepo.FindUser(user);
+            if (user == null)
+            {
+                model.AddModelError("Email", "Correo incorrecto");
+                return null;
+            }
             passwordUtility.SetIv(user.Salt);
             passwordUtility.SetKeySafe(user.Key);
             user.Password = passwordUtility.VerifyPassword(user.Password);
             var result = userRepo.Login(user);
             if (result == null)
             {
-                model.AddModelError("Password", "Correo o contraseña incorrectos");
+                model.AddModelError("Password", "Contraseña incorrecta");
                 return null;
             }
             return user;
@@ -70,13 +76,11 @@ namespace BioKudi.Services
 
         static public void AuthUser(HttpContext httpContext, UserDto user)
         {
-            UserRole userRole = (UserRole)user.RoleId;
-            string roleName = Enum.GetName(typeof(UserRole), userRole);
-
+            user.RoleName = roleRepository.GetRole(user.RoleId).NameRole;
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.NameUser),
-                new Claim(ClaimTypes.Role, roleName),
+                new Claim(ClaimTypes.Role, user.RoleName),
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
             };
 
@@ -84,10 +88,12 @@ namespace BioKudi.Services
 
             var authProperties = new AuthenticationProperties()
             {
-                AllowRefresh = true
-            };
+                AllowRefresh = true,
+				IsPersistent = user.StayLogged,
+                ExpiresUtc = DateTimeOffset.UtcNow.AddYears(1)
+			};
 
-            httpContext.SignInAsync(
+			httpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity),
                 authProperties).Wait();

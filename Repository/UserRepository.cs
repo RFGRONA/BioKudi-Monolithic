@@ -8,10 +8,15 @@ namespace BioKudi.Repository
     public class UserRepository
     {
         private readonly BiokudiDbContext _context;
-        public UserRepository(BiokudiDbContext context)
+        private readonly RoleRepository _roleRepository;
+        private readonly StateRepository _stateRepository;
+        public UserRepository(BiokudiDbContext context, RoleRepository roleRepository, StateRepository stateRepository)
         {
             _context = context;
+            _roleRepository = roleRepository;
+            _stateRepository = stateRepository;
         }
+
         public UserDto Create(UserDto user)
         {
             var userEntity = new User
@@ -40,6 +45,7 @@ namespace BioKudi.Repository
             user.UserId = userEntity.IdUser;
             user.NameUser = userEntity.NameUser;
             user.RoleId = userEntity.RoleId;
+            user.RoleName = _roleRepository.GetRole(userEntity.RoleId).NameRole;
             user.StateId = userEntity.StateId;
             return user;
         }
@@ -65,15 +71,21 @@ namespace BioKudi.Repository
                 NameUser = userEntity.NameUser,
                 Email = userEntity.Email,
                 RoleId = userEntity.RoleId,
-                StateId = userEntity.StateId
+                RoleName = _roleRepository.GetRole(userEntity.RoleId).NameRole,
+                StateId = userEntity.StateId,
+                StateName = _stateRepository.GetState(userEntity.StateId).NameState
             };
             return user;
         }
 
         public IEnumerable<UserDto> GetListUser()
         {
-			var users = _context.Users;
-			var usersDto = new List<UserDto>();
+            var users = _context.Users.ToList();
+            var roles = _context.Roles.ToDictionary(r => r.IdRole, r => r.NameRole);
+            var states = _context.States.ToDictionary(s => s.IdState, s => s.NameState);
+
+            var usersDto = new List<UserDto>();
+
             foreach (var user in users)
             {
                 var UserDto = new UserDto
@@ -81,13 +93,15 @@ namespace BioKudi.Repository
                     UserId = user.IdUser,
                     NameUser = user.NameUser,
                     Email = user.Email,
-
                     RoleId = user.RoleId,
+                    RoleName = roles.ContainsKey(user.RoleId) ? roles[user.RoleId] : null,
                     StateId = user.StateId,
+                    StateName = states.ContainsKey(user.StateId) ? states[user.StateId] : null
                 };
                 usersDto.Add(UserDto);
-			}
-			return usersDto;
-		}
+            }
+
+            return usersDto;
+        }
     };
 }

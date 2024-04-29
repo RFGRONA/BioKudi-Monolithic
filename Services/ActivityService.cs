@@ -34,14 +34,14 @@ namespace BioKudi.Services
 			return activityRepo.GetActivity(activityId);
 		}
 
-		//public ActivityDto UpdateActivity(ActivityDto activity)
-		//{
-		//	var result = activityRepo.Update(activity);
-		//	if (result == null)
-		//	{
-		//		return null;
-		//	}
-		//	return activity;
-		//}
+		/*public ActivityDto UpdateActivity(ActivityDto activity)
+		{
+			var result = activityRepo.Update(activity);
+			if (result == null)
+			{
+				return null;
+			}
+			return activity;
+		}*/
 	}
 }

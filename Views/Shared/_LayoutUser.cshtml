@@ -11,19 +11,14 @@
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
     <link rel="icon" href="~/img/favicon.png" />
     <link href="~/css/siteUser.css" rel="stylesheet" />
-    <script>
-        history.pushState(null, null, location.href);
-        window.onpopstate = function () {
-            history.go(1);
-        };
-    </script>
+    <script src="~/js/reload.js"></script>
 </head>
 <body>
     <header>
         <div class="logo">
             <ul>
                 <li><img src="~/img/favicon.png" alt="Logo BioKudi"></li>
-                <li><a asp-controller="Home" asp-action="Index">BioKudi</a></li>
+                <li><a asp-controller="User" asp-action="IndexUser">BioKudi</a></li>
             </ul>
         </div>
         <div class="menu">

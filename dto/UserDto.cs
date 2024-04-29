@@ -18,9 +18,14 @@ public partial class UserDto
 
     public int RoleId { get; set; } = 0;
 
+    public string RoleName { get; set; } = null!;
 
     public int StateId { get; set; } = 0;
 
+    public string StateName { get; set; } = null!;
+
     public string? message { get; set; }
+
+    public bool StayLogged { get; set; } = false;
 
 }

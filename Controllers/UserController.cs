@@ -6,9 +6,12 @@ using BioKudi.Repository;
 using Microsoft.AspNetCore.Authorization;
 using BioKudi.Services;
 using Microsoft.AspNetCore.Mvc.Filters;
+using BioKudi.Utilities;
+
 namespace BioKudi.Controllers
 {
-    [Authorize]
+	[ValidateAuthentication]
+	[Authorize(Roles = "User")]
     public class UserController : Controller
 	{
 		private readonly ILogger<UserController> _logger;

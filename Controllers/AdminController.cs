@@ -48,6 +48,14 @@ namespace BioKudi.Controllers
         {
             return View();
         }
+
+        public IActionResult CreatePicture()
+        {
+            var places = PlacesService.GetNameId(); 
+            ViewBag.Places = places;
+            return View();
+        }
+
         public IActionResult ListTickets(UserDto user)
         {
             user = userService.GetUser(user.UserId);

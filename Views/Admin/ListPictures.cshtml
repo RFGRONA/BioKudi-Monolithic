@@ -1,6 +1,6 @@
 ﻿@model List<BioKudi.dto.UserDto>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Imagenes";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <head>
@@ -12,5 +12,6 @@
 
 </head>
 <body>
-    <p class="title">List of Places</p>
+    <a asp-controller="Admin" asp-action="CreatePicture">Subir imagen</a>
+    <p class="title">Lista de imagenes</p>
 </body>

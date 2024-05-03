@@ -71,6 +71,40 @@ namespace BioKudi.Repository
             return places;
         }
 
+        public List<PlaceDto> GetMarkers()
+        {
+            var placeEntities = _context.Places;
+            var places = new List<PlaceDto>();
+            foreach (var place in placeEntities)
+            {
+                var placeDto = new PlaceDto
+                {
+                    IdPlace = place.IdPlace,
+                    NamePlace = place.NamePlace,
+                    Latitude = place.Latitude,
+                    Longitude = place.Longitude
+                };
+                places.Add(placeDto);
+            }
+            return places;
+        }
+
+        public List<PlaceDto> GetNameId()
+        {
+            var placeEntities = _context.Places;
+            var places = new List<PlaceDto>();
+            foreach (var place in placeEntities)
+            {
+                var placeDto = new PlaceDto
+                {
+                    IdPlace = place.IdPlace,
+                    NamePlace = place.NamePlace,
+                };
+                places.Add(placeDto);
+            }
+            return places;
+        }
+
         public PlaceDto Update(PlaceDto place)
         {
             var placeEntity = _context.Places.Find(place.IdPlace);

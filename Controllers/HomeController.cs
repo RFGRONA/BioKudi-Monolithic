@@ -16,11 +16,13 @@ namespace BioKudi.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly UserService userService;
+        private readonly PlacesService placeService;
 
-        public HomeController(ILogger<HomeController> logger, UserService userService)
+        public HomeController(ILogger<HomeController> logger, UserService userService, PlacesService placeService)
         {
             _logger = logger;
             this.userService = userService;
+            this.placeService = placeService;
         }
 
         [ValidateLogin]
@@ -51,6 +53,17 @@ namespace BioKudi.Controllers
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult PublicMap()
+        {
+            var places = placeService.GetMarkers();
+			return View(places);
+		}
+
+        public ContentResult InfoMap(int idPlace)
+        {
+            return placeService.GetInfoPlace(idPlace); 
         }
 
         [HttpPost]

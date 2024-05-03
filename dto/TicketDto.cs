@@ -1,7 +1,10 @@
-﻿namespace BioKudi.dto
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BioKudi.dto
 {
     public class TicketDto
     {
+        [Key]
         public int IdTicket { get; set; }
         public string Type { get; set; } = null!;
         public string Affair { get; set; } = null!;

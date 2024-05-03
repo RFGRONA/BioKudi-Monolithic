@@ -35,8 +35,14 @@ public partial class User
     /// </summary>
     public int StateId { get; set; }
 
+    /// <summary>
+    /// Key of the user (character string, maximun 255).
+    /// </summary>
     public string Key { get; set; } = null!;
 
+    /// <summary>
+    /// Salt of the user (character string, maximun 255).
+    /// </summary>
     public string Salt { get; set; } = null!;
 
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();

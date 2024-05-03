@@ -15,5 +15,5 @@ public partial class Activity
     /// </summary>
     public string Type { get; set; } = null!;
 
-    public virtual ICollection<Place> Places { get; set; } = new List<Place>();
+    public virtual ICollection<Place> IdPlaces { get; set; } = new List<Place>();
 }

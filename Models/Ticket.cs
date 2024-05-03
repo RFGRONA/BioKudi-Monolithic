@@ -25,6 +25,9 @@ public partial class Ticket
     /// </summary>
     public int UserId { get; set; }
 
+    /// <summary>
+    /// ID of the state in which the ticket is located (integer).
+    /// </summary>
     public int State { get; set; }
 
     public virtual State StateNavigation { get; set; } = null!;

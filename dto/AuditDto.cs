@@ -5,7 +5,7 @@ namespace BioKudi.dto
     public class AuditDto
     {
         [Key]
-        public int Id { get; set; }
+        public int AuditId { get; set; }
 
         public DateTime? Date { get; set; }
 

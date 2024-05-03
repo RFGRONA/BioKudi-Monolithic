@@ -7,5 +7,6 @@ namespace BioKudi.dto
         [Key]
         public int StateId { get; set; }
         public string? NameState { get; set; }
+        public string? Table { get; set; }
     }
 }

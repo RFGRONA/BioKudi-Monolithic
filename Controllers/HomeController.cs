@@ -16,13 +16,13 @@ namespace BioKudi.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly UserService userService;
-        private readonly PlacesService placeService;
+        private readonly MapService mapService;
 
-        public HomeController(ILogger<HomeController> logger, UserService userService, PlacesService placeService)
+        public HomeController(ILogger<HomeController> logger, UserService userService, MapService mapService)
         {
             _logger = logger;
             this.userService = userService;
-            this.placeService = placeService;
+            this.mapService = mapService;
         }
 
         [ValidateLogin]
@@ -57,13 +57,13 @@ namespace BioKudi.Controllers
 
         public IActionResult PublicMap()
         {
-            var places = placeService.GetMarkers();
-			return View(places);
+            var markers = mapService.GetMarkers();
+			return View(markers);
 		}
 
         public ContentResult InfoMap(int idPlace)
         {
-            return placeService.GetInfoPlace(idPlace); 
+            return mapService.GetInfoPlace(idPlace); 
         }
 
         [HttpPost]

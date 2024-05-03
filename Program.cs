@@ -32,6 +32,9 @@ builder.Services.AddScoped<RoleRepository>();
 builder.Services.AddScoped<StateRepository>();
 builder.Services.AddScoped<PlaceRepository>();
 builder.Services.AddScoped<PlacesService>();
+builder.Services.AddScoped<PictureRepository>();
+builder.Services.AddScoped<PictureService>();
+builder.Services.AddScoped<MapService>();
 
 builder.Services.AddHsts(options =>
 {

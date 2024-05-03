@@ -15,7 +15,7 @@ namespace BioKudi.Repository
         {
             return _context.Audits.Select(a => new AuditDto
             {
-                Id = a.Id,
+                AuditId = a.IdAudit,
                 Action = a.Action,
                 Date = a.Date
             }).ToList();

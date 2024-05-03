@@ -10,7 +10,7 @@ using BioKudi.Utilities;
 
 namespace BioKudi.Controllers
 {
-	[ValidateAuthentication]
+    [ValidateAuthentication]
 	[Authorize(Roles = "User")]
     public class UserController : Controller
 	{

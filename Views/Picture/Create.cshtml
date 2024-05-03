@@ -1,15 +1,17 @@
 ﻿@model BioKudi.dto.PictureDto
 
 @{
-    ViewData["Title"] = "Subir Imagen";
+    ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Subir imagen</h1>
+<h1>Create</h1>
+
+<h4>PictureDto</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreatePicture">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -22,15 +24,15 @@
                 <span asp-validation-for="Link" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PlaceId" class="control-label"></label>
-                <select asp-for="PlaceId" class="form-control">
+                <label asp-for="Places" class="control-label"></label>
+                <select asp-for="Places" class="form-control">
                     <option value="">Selecciona un lugar</option>
-                    @foreach (var place in ViewBag.Places)
+                    @foreach (var place in ViewBag.BagPlaces)
                     {
-                        <option value="@place.PlaceId">@place.Name (@place.PlaceId)</option>
+                        <option value="@place.IdPlace">@($"{place.NamePlace} ({place.IdPlace})")</option>
                     }
                 </select>
-                <span asp-validation-for="PlaceId" class="text-danger"></span>
+                <span asp-validation-for="Places" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

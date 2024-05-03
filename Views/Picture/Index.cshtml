@@ -1,0 +1,59 @@
+﻿@model IEnumerable<BioKudi.dto.PictureDto>
+
+@{
+    ViewData["Title"] = "Imagenes";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="~/css/listusers.css" rel="stylesheet" />
+    <script src="~/js/index.js"></script>
+
+</head>
+
+<h1>Lista de imagenes</h1>
+
+<p>
+    <a asp-controller="Picture" asp-action="Create">Subir imagen</a>
+</p>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Link)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Places)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Link)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Places)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdPicture">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdPicture">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdPicture">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

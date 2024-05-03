@@ -1,5 +1,6 @@
 ﻿using BioKudi.dto;
 using BioKudi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BioKudi.Repository
 {
@@ -18,9 +19,21 @@ namespace BioKudi.Repository
                 Name = picture.Name,
                 Link = picture.Link
             };
+
             _context.Pictures.Add(pictureEntity);
             _context.SaveChanges();
             picture.IdPicture = pictureEntity.IdPicture;
+
+            foreach (var placeId in picture.Places)
+            {
+                var placeEntity = _context.Places.Find(placeId);
+                if (placeEntity != null)
+                {
+                    _context.Entry(pictureEntity).Collection(p => p.IdPlaces).Load();
+                    pictureEntity.IdPlaces.Add(placeEntity);
+                }
+            }
+            _context.SaveChanges();
             return picture;
         }
 
@@ -40,7 +53,7 @@ namespace BioKudi.Repository
 
         public List<PictureDto> GetListPicture()
         {
-            var pictureEntities = _context.Pictures;
+            var pictureEntities = _context.Pictures.Include(p => p.IdPlaces);
             var pictures = new List<PictureDto>();
             foreach (var pictureEntity in pictureEntities)
             {
@@ -48,7 +61,8 @@ namespace BioKudi.Repository
                 {
                     IdPicture = pictureEntity.IdPicture,
                     Name = pictureEntity.Name,
-                    Link = pictureEntity.Link
+                    Link = pictureEntity.Link,
+                    Places = pictureEntity.IdPlaces.Select(p => p.IdPlace).ToList()
                 };
                 pictures.Add(picture);
             }
@@ -84,3 +98,4 @@ namespace BioKudi.Repository
 
     }
 }
+    

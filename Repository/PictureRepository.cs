@@ -39,7 +39,7 @@ namespace BioKudi.Repository
 
         public PictureDto GetPicture(int id)
         {
-            var pictureEntity = _context.Pictures.Find(id);
+            var pictureEntity = _context.Pictures.Include(p => p.IdPlaces).FirstOrDefault(p => p.IdPicture == id);
             if (pictureEntity == null)
                 return null;
             var picture = new PictureDto
@@ -48,8 +48,23 @@ namespace BioKudi.Repository
                 Name = pictureEntity.Name,
                 Link = pictureEntity.Link
             };
+            var places = pictureEntity.IdPlaces;
+            foreach (var placeEntity in places)
+            {
+                var placeDto = new PlaceDto
+                {
+                    IdPlace = placeEntity.IdPlace,
+                    NamePlace = placeEntity.NamePlace
+                };
+                picture.PlacesData.Add(placeDto);
+            }
+            if (picture.PlacesData == null)
+            {
+                picture.PlacesData = new List<PlaceDto>();
+            }
             return picture;
         }
+
 
         public List<PictureDto> GetListPicture()
         {
@@ -71,7 +86,7 @@ namespace BioKudi.Repository
 
         public PictureDto Update(PictureDto picture)
         {
-            var pictureEntity = _context.Pictures.Find(picture.IdPicture);
+            var pictureEntity = _context.Pictures.Include(p => p.IdPlaces).FirstOrDefault(p => p.IdPicture == picture.IdPicture);
             if (pictureEntity == null)
                 return null;
             pictureEntity.Name = picture.Name;
@@ -80,20 +95,25 @@ namespace BioKudi.Repository
             return picture;
         }
 
-        public PictureDto Delete(int id)
+        public bool Delete(int id)
         {
-            var pictureEntity = _context.Pictures.Find(id);
+            var pictureEntity = _context.Pictures
+                .Include(p => p.IdPlaces)
+                .ThenInclude(p => p.IdPictures)
+                .SingleOrDefault(p => p.IdPicture == id);
+
             if (pictureEntity == null)
-                return null;
+                return false;
+
+            foreach (var place in pictureEntity.IdPlaces)
+            {
+                place.IdPictures.Remove(pictureEntity);
+            }
+
             _context.Pictures.Remove(pictureEntity);
             _context.SaveChanges();
-            var picture = new PictureDto
-            {
-                IdPicture = pictureEntity.IdPicture,
-                Name = pictureEntity.Name,
-                Link = pictureEntity.Link
-            };
-            return picture;
+
+            return true;
         }
 
     }

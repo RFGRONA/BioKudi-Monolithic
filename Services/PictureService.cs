@@ -14,6 +14,11 @@ namespace BioKudi.Services
             this.httpContextAccessor = httpContextAccessor;
         }
 
+        public PictureDto GetPicture(int id)
+        {
+            return picRepo.GetPicture(id);
+        }
+
         public IEnumerable<PictureDto> GetAllPictures()
         {
             return picRepo.GetListPicture();
@@ -27,6 +32,21 @@ namespace BioKudi.Services
                 return null;
             }
             return picture;
+        }
+
+        public PictureDto UpdatePicture(PictureDto picture)
+        {
+            var result = picRepo.Update(picture);
+            if (result == null)
+            {
+                return null;
+            }
+            return picture;
+        }
+
+        public bool DeletePicture(int id)
+        {
+            return picRepo.Delete(id);
         }
     }
 }

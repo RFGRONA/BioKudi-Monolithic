@@ -30,7 +30,8 @@ namespace BioKudi.Controllers
         // GET: PictureController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            PictureDto picture = pictureService.GetPicture(id);
+            return View(picture);
         }
 
         // GET: PictureController/Create
@@ -53,7 +54,7 @@ namespace BioKudi.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction("Error", "Admin");
             }
         }
 
@@ -74,14 +75,15 @@ namespace BioKudi.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction("Error", "Admin");
             }
         }
 
         // GET: PictureController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            PictureDto picture = pictureService.GetPicture(id);
+            return View(picture);
         }
 
         // POST: PictureController/Delete/5
@@ -91,11 +93,12 @@ namespace BioKudi.Controllers
         {
             try
             {
+                pictureService.DeletePicture(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return RedirectToAction("Error", "Admin");
             }
         }
     }

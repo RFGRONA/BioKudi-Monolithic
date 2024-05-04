@@ -1,0 +1,51 @@
+﻿@model BioKudi.dto.PictureDto
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>PictureDto</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Link)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Link)
+        </dd>
+        <dt class="col-sm-2">
+            Lugares
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.PlacesData == null || Model.PlacesData.Count == 0)
+            {
+                <p>Sin lugares asociados</p>
+            }
+            else
+            {
+                <ul>
+                    @foreach (var place in Model.PlacesData)
+                    {
+                        <li>
+                            @place.IdPlace - @place.NamePlace
+                        </li>
+                    }
+                </ul>
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdPicture">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

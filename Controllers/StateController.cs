@@ -1,4 +1,5 @@
-﻿using BioKudi.Services;
+﻿using BioKudi.dto;
+using BioKudi.Services;
 using BioKudi.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,14 +20,15 @@ namespace BioKudi.Controllers
         // GET: StateController
         public ActionResult Index()
         {
-            var states = stateService.GetStates();
+            var states = stateService.GetAllStates();
             return View(states);
         }
 
         // GET: StateController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var state = stateService.GetState(id);
+            return View(state);
         }
 
         // GET: StateController/Create
@@ -38,43 +40,37 @@ namespace BioKudi.Controllers
         // POST: StateController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(StateDto state)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = stateService.Create(state);
+            if (result == null)
+                return RedirectToAction("Error", "Admin");
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: StateController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var state = stateService.GetState(id);
+            return View(state);
         }
 
         // POST: StateController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(StateDto state)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = stateService.Update(state);
+            if (result == null)
+                return RedirectToAction("Error", "Admin");
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: StateController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var state = stateService.GetState(id);
+            return View(state);
         }
 
         // POST: StateController/Delete/5
@@ -82,14 +78,10 @@ namespace BioKudi.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = stateService.Delete(id);
+            if (!result)
+                return RedirectToAction("Error", "Admin");
+            return RedirectToAction(nameof(Index));
         }
     }
 }

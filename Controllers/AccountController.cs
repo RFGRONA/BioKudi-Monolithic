@@ -1,4 +1,5 @@
-﻿using BioKudi.Services;
+﻿using BioKudi.dto;
+using BioKudi.Services;
 using BioKudi.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,10 +12,14 @@ namespace BioKudi.Controllers
     public class AccountController : Controller
     {
         private readonly UserService userService;
+        private readonly StateService stateService;
+        private readonly RoleService roleService;
 
-        public AccountController(UserService userService)
+        public AccountController(UserService userService, StateService stateService, RoleService roleService)
         {
             this.userService = userService;
+            this.stateService = stateService;
+            this.roleService = roleService;
         }
 
         // GET: AccountController
@@ -27,55 +32,38 @@ namespace BioKudi.Controllers
         // GET: AccountController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
-        }
-
-        // GET: AccountController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: AccountController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            var user = userService.GetUser(id);
+            return View(user);
+        } 
 
         // GET: AccountController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var user = userService.GetUser(id);
+            var states = stateService.GetUserStates();
+            var roles = roleService.GetRoles();
+            ViewBag.BagPlaces = states;
+            ViewBag.BagRoles = roles;
+            return View(user);
         }
 
         // POST: AccountController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(UserDto user)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = userService.UpdateUser(user);
+            if (result == null)
+                return RedirectToAction("Error", "Admin");
+            return RedirectToAction(nameof(Index));
+            
         }
 
         // GET: AccountController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var user = userService.GetUser(id);
+            return View(user);
         }
 
         // POST: AccountController/Delete/5
@@ -83,14 +71,10 @@ namespace BioKudi.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = userService.DeleteUser(id);
+            if (!result)
+                return RedirectToAction("Error", "Admin");
+            return RedirectToAction(nameof(Index));
         }
     }
 }

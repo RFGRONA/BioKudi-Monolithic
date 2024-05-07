@@ -1,0 +1,36 @@
+﻿@model BioKudi.dto.StateDto
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>StateDto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NameState" class="control-label"></label>
+                <input asp-for="NameState" class="form-control" />
+                <span asp-validation-for="NameState" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Table" class="control-label"></label>
+                <input asp-for="Table" class="form-control" />
+                <span asp-validation-for="Table" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

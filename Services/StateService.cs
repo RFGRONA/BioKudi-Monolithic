@@ -13,11 +13,45 @@ namespace BioKudi.Services
             this.stateRepo = stateRepo;
             this.httpContextAccessor = httpContextAccessor;
         }
-        public IEnumerable<StateDto> GetStates()
+        public IEnumerable<StateDto> GetAllStates()
         {
-            return stateRepo.GetStates();
+            return stateRepo.GetAllStates();
         }
 
+        public StateDto GetState(int stateId)
+        {
+            return stateRepo.GetState(stateId);
+        }
+
+        public IEnumerable<StateDto> GetUserStates()
+        {
+            return stateRepo.GetUserStates();
+        }
+
+        public IEnumerable<StateDto> GetPlaceStates()
+        {
+            return stateRepo.GetPlaceStates();
+        }
+
+        public IEnumerable<StateDto> GetTicketStates()
+        {
+            return stateRepo.GetTicketStates();
+        }
+
+        public StateDto Create(StateDto state)
+        {
+            return stateRepo.Create(state);
+        }
+
+        public StateDto Update(StateDto state)
+        {
+            return stateRepo.Update(state);
+        }
+
+        public bool Delete(int stateId)
+        {
+            return stateRepo.Delete(stateId);
+        }
 
     }
 }

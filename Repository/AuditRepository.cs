@@ -1,4 +1,5 @@
 ﻿using BioKudi.dto;
+using BioKudi.dto.ViewModel;
 using BioKudi.Models;
 
 namespace BioKudi.Repository
@@ -21,5 +22,17 @@ namespace BioKudi.Repository
                 ViewAction = a.ViewAction
             }).ToList();
         }
+
+        public IEnumerable<ReportAuditViewModel> GetAuditReport()
+        {
+            return _context.Audits.Select(a => new ReportAuditViewModel
+            {
+                AuditId = a.IdAudit,
+                Action = a.Action,
+                Date = a.Date,
+                ViewAction = a.ViewAction
+            }).ToList();
+        }
+
     }
 }

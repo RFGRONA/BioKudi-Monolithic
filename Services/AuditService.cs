@@ -1,4 +1,5 @@
 ﻿using BioKudi.dto;
+using BioKudi.dto.ViewModel;
 using BioKudi.Repository;
 
 namespace BioKudi.Services
@@ -17,6 +18,21 @@ namespace BioKudi.Services
         public IEnumerable<AuditDto> GetAllAudits()
         {
             return auditRepo.GetListAudit();
+        }
+
+        public IEnumerable<ReportAuditViewModel> GetAuditReport(HttpContext httpContext)
+        {
+            var report = auditRepo.GetAuditReport();
+            var userName = httpContext.User.Identity.Name;
+            TimeZoneInfo timeZoneColombia = TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time");
+            DateTimeOffset dateTimeColombia = DateTimeOffset.Now.ToOffset(timeZoneColombia.GetUtcOffset(DateTime.Now));
+            if (report.Any())
+            {
+                var firstReport = report.First();
+                firstReport.TimePrint = dateTimeColombia.DateTime;
+                firstReport.UserName = userName;
+            }
+            return report;
         }
     }
 }

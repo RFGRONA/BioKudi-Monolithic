@@ -47,15 +47,10 @@ namespace BioKudi.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(PictureDto picture)
         {
-            try
-            {
-                pictureService.CreatePicture(picture);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+            var result = pictureService.CreatePicture(picture);
+            if (result == null)
                 return RedirectToAction("Error", "Admin");
-            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: PictureController/Edit/5
@@ -72,15 +67,10 @@ namespace BioKudi.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(PictureDto picture)
         {
-            try
-            {
-                pictureService.UpdatePicture(picture);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+            var result = pictureService.UpdatePicture(picture);
+            if (result == null)
                 return RedirectToAction("Error", "Admin");
-            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: PictureController/Delete/5
@@ -95,15 +85,10 @@ namespace BioKudi.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            try
-            {
-                pictureService.DeletePicture(id);
+                var result = pictureService.DeletePicture(id);
+                if (!result)
+                    return RedirectToAction("Error", "Admin");
                 return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return RedirectToAction("Error", "Admin");
-            }
         }
     }
 }

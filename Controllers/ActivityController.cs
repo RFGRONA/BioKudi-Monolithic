@@ -47,7 +47,7 @@ namespace BioKudi.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction("Error", "Admin");
             }
         }
 
@@ -68,7 +68,7 @@ namespace BioKudi.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction("Error", "Admin");
             }
         }
 
@@ -89,7 +89,7 @@ namespace BioKudi.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction("Error", "Admin");
             }
         }
     }

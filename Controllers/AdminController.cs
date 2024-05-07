@@ -1,5 +1,5 @@
 using BioKudi.dto;
-using BioKudi.Models;
+using BioKudi.dto.ViewModel;
 using BioKudi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

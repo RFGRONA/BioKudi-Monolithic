@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using BioKudi.dto;
+using BioKudi.dto.ViewModel;
 
 namespace BioKudi.Models;
 
@@ -396,4 +397,8 @@ public DbSet<BioKudi.dto.AuditDto> AuditDto { get; set; } = default!;
 public DbSet<BioKudi.dto.ReviewDto> ReviewDto { get; set; } = default!;
 
 public DbSet<BioKudi.dto.UserDto> UserDto { get; set; } = default!;
+
+public DbSet<BioKudi.dto.PlaceDto> PlaceDto { get; set; } = default!;
+
+public DbSet<BioKudi.dto.ViewModel.ReportAuditViewModel> ReportAuditViewModel { get; set; } = default!;
 }

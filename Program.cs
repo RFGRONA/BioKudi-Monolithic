@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.DotNet.Scaffolding.Shared;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.FileProviders;
+using Rotativa.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +39,7 @@ builder.Services.AddScoped<MapService>();
 builder.Services.AddScoped<AuditRepository>();
 builder.Services.AddScoped<AuditService>();
 builder.Services.AddScoped<StateService>();
+builder.Services.AddScoped<RoleService>();
 
 builder.Services.AddHsts(options =>
 {
@@ -84,5 +86,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseRotativa();
 
 app.Run();

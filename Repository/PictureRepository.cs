@@ -110,18 +110,14 @@ namespace BioKudi.Repository
                 .Include(p => p.IdPlaces)
                 .ThenInclude(p => p.IdPictures)
                 .SingleOrDefault(p => p.IdPicture == id);
-
             if (pictureEntity == null)
                 return false;
-
             foreach (var place in pictureEntity.IdPlaces)
             {
                 place.IdPictures.Remove(pictureEntity);
             }
-
             _context.Pictures.Remove(pictureEntity);
             _context.SaveChanges();
-
             return true;
         }
 

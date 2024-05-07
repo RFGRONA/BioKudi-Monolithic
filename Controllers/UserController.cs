@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using BioKudi.Models;
-using System.Diagnostics;
+using BioKudi.dto.ViewModel;
 using BioKudi.dto;
-using BioKudi.Repository;
 using Microsoft.AspNetCore.Authorization;
 using BioKudi.Services;
-using Microsoft.AspNetCore.Mvc.Filters;
 using BioKudi.Utilities;
 
 namespace BioKudi.Controllers

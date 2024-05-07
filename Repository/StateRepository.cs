@@ -46,7 +46,8 @@ namespace BioKudi.Repository
                 var state = new StateDto
                 {
                     StateId = stateEntity.IdState,
-                    NameState = stateEntity.NameState
+                    NameState = stateEntity.NameState,
+                    Table = stateEntity.Table
                 };
                 statesDto.Add(state);
             }

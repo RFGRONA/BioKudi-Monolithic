@@ -91,6 +91,15 @@ namespace BioKudi.Repository
                 return null;
             pictureEntity.Name = picture.Name;
             pictureEntity.Link = picture.Link;
+            pictureEntity.IdPlaces.Clear();
+            foreach (var placeId in picture.Places)
+            {
+                var placeEntity = _context.Places.Find(placeId);
+                if (placeEntity != null)
+                {
+                    pictureEntity.IdPlaces.Add(placeEntity);
+                }
+            }
             _context.SaveChanges();
             return picture;
         }

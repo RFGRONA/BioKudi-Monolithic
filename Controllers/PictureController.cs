@@ -61,16 +61,20 @@ namespace BioKudi.Controllers
         // GET: PictureController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            PictureDto picture = pictureService.GetPicture(id);
+            var places = placeService.GetNameId();
+            ViewBag.BagPlaces = places;
+            return View(picture);
         }
 
         // POST: PictureController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(PictureDto picture)
         {
             try
             {
+                pictureService.UpdatePicture(picture);
                 return RedirectToAction(nameof(Index));
             }
             catch

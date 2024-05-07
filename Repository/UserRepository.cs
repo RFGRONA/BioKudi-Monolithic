@@ -103,5 +103,26 @@ namespace BioKudi.Repository
 
             return usersDto;
         }
+
+        public UserDto UpdateUser(UserDto user)
+        {
+            var userEntity = _context.Users.Find(user.UserId);
+            if (userEntity == null)
+                return null;
+            userEntity.RoleId = user.RoleId;
+            userEntity.StateId = user.StateId;
+            _context.SaveChanges();
+            return user;
+        }
+
+        public bool DeleteUser(int userId)
+        {
+            var userEntity = _context.Users.Find(userId);
+            if (userEntity == null)
+                return false;
+            _context.Users.Remove(userEntity);
+            _context.SaveChanges();
+            return true;
+        }
     };
 }

@@ -1,0 +1,63 @@
+﻿@model BioKudi.dto.UserDto
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h1>Edit</h1>
+
+<h4>UserDto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserId" />
+            <div class="form-group">
+                <label asp-for="NameUser" class="control-label"></label>
+                <input asp-for="NameUser" class="form-control" readonly />
+                <span asp-validation-for="NameUser" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" readonly />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RoleId" class="control-label"></label>
+                <select asp-for="RoleId" class="form-control">
+                    <option value="">-- Select Role --</option>
+                    @foreach (var role in ViewBag.BagRoles)
+                    {
+                        <option value="@role.RoleId">@role.NameRole</option>
+                    }
+                </select>
+                <span asp-validation-for="RoleId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StateId" class="control-label"></label>
+                <select asp-for="StateId" class="form-control">
+                    <option value="">-- Select State --</option>
+                    @foreach (var state in ViewBag.BagPlaces)
+                    {
+                        <option value="@state.StateId">@state.NameState</option>
+                    }
+                </select>
+                <span asp-validation-for="StateId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+

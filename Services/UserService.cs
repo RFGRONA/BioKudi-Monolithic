@@ -74,6 +74,16 @@ namespace BioKudi.Services
             return userRepo.GetUser(userId);
         }
 
+        public UserDto UpdateUser(UserDto user)
+        {
+            return userRepo.UpdateUser(user);
+        }
+
+        public bool DeleteUser(int userId)
+        {
+            return userRepo.DeleteUser(userId);
+        }
+
         static public void AuthUser(HttpContext httpContext, UserDto user)
         {
             user.RoleName = roleRepository.GetRole(user.RoleId).NameRole;

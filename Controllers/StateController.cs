@@ -1,4 +1,5 @@
-﻿using BioKudi.Utilities;
+﻿using BioKudi.Services;
+using BioKudi.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,17 @@ namespace BioKudi.Controllers
     [Authorize(Roles = "Admin")]
     public class StateController : Controller
     {
+        private readonly StateService stateService;
+
+        public StateController(StateService stateService)
+        {
+            this.stateService = stateService;
+        }
         // GET: StateController
         public ActionResult Index()
         {
-            return View();
+            var states = stateService.GetStates();
+            return View(states);
         }
 
         // GET: StateController/Details/5

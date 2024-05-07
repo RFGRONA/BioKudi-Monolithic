@@ -1,42 +1,66 @@
 ﻿@model IEnumerable<BioKudi.dto.StateDto>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Estados";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<head>
+    <link rel="stylesheet" href="~/css/State.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NameState)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Table)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NameState)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Table)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.StateId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.StateId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.StateId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="body">
+
+
+    <h1>Index</h1>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.StateId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NameState)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Table)
+                </th>
+                <th>
+                    Acciones
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StateId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NameState)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Table)
+                    </td>
+                    <td class="acciones">
+                        @if (item.StateId != null)
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.StateId"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a asp-action="Details" asp-route-id="@item.StateId"><i class="fa-regular fa-file-lines"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.StateId"><i class="fa-solid fa-trash"></i></a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

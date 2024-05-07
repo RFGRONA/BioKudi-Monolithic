@@ -17,7 +17,8 @@ namespace BioKudi.Repository
             {
                 AuditId = a.IdAudit,
                 Action = a.Action,
-                Date = a.Date
+                Date = a.Date,
+                ViewAction = a.ViewAction
             }).ToList();
         }
     }

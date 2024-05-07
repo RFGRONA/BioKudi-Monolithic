@@ -35,6 +35,9 @@ builder.Services.AddScoped<PlacesService>();
 builder.Services.AddScoped<PictureRepository>();
 builder.Services.AddScoped<PictureService>();
 builder.Services.AddScoped<MapService>();
+builder.Services.AddScoped<AuditRepository>();
+builder.Services.AddScoped<AuditService>();
+builder.Services.AddScoped<StateService>();
 
 builder.Services.AddHsts(options =>
 {

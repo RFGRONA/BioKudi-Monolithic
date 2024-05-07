@@ -1,4 +1,4 @@
-namespace BioKudi.Models
+namespace BioKudi.dto.ViewModel
 {
     public class ErrorViewModel
     {

@@ -14,25 +14,40 @@ namespace BioKudi.Repository
 
         public IEnumerable<AuditDto> GetListAudit()
         {
-            return _context.Audits.Select(a => new AuditDto
+            try
             {
-                AuditId = a.IdAudit,
-                Action = a.Action,
-                Date = a.Date,
-                ViewAction = a.ViewAction
-            }).ToList();
+                return _context.Audits.Select(a => new AuditDto
+                {
+                    AuditId = a.IdAudit,
+                    Action = a.Action,
+                    Date = a.Date,
+                    ViewAction = a.ViewAction
+                }).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
 
         public IEnumerable<ReportAuditViewModel> GetAuditReport()
         {
-            return _context.Audits.Select(a => new ReportAuditViewModel
+            try
             {
-                AuditId = a.IdAudit,
-                Action = a.Action,
-                Date = a.Date,
-                ViewAction = a.ViewAction
-            }).OrderByDescending(a => a.Date).ToList();
+                return _context.Audits.Select(a => new ReportAuditViewModel
+                {
+                    AuditId = a.IdAudit,
+                    Action = a.Action,
+                    Date = a.Date,
+                    ViewAction = a.ViewAction
+                }).OrderByDescending(a => a.Date).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
-
     }
 }

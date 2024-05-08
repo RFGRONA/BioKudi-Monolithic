@@ -15,108 +15,144 @@ namespace BioKudi.Repository
 
         public ActivityDto Create(ActivityDto activity)
         {
-            var activityEntity = new Activity
+            try
             {
-                Type = activity.Type
-            };
-
-            _context.Activities.Add(activityEntity);
-            _context.SaveChanges();
-            activity.IdActivity = activityEntity.IdActivity;
-
-            foreach (var placeId in activity.Places)
-            {
-                var placeEntity = _context.Places.Find(placeId);
-                if (placeEntity != null)
+                var activityEntity = new Activity
                 {
-                    _context.Entry(activityEntity).Collection(a => a.IdPlaces).Load();
-                    activityEntity.IdPlaces.Add(placeEntity);
+                    Type = activity.Type
+                };
+
+                _context.Activities.Add(activityEntity);
+                _context.SaveChanges();
+                activity.IdActivity = activityEntity.IdActivity;
+
+                foreach (var placeId in activity.Places)
+                {
+                    var placeEntity = _context.Places.Find(placeId);
+                    if (placeEntity != null)
+                    {
+                        _context.Entry(activityEntity).Collection(a => a.IdPlaces).Load();
+                        activityEntity.IdPlaces.Add(placeEntity);
+                    }
                 }
+                _context.SaveChanges();
+                return activity;
             }
-            _context.SaveChanges();
-            return activity;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
 
         public ActivityDto GetActivity(int id)
         {
-            var activityEntity = _context.Activities.Include(a => a.IdPlaces).FirstOrDefault(a => a.IdActivity == id);
-            if (activityEntity == null)
-                return null;
-
-            var activity = new ActivityDto
+            try
             {
-                IdActivity = activityEntity.IdActivity,
-                Type = activityEntity.Type
-            };
-
-            var places = activityEntity.IdPlaces;
-            foreach (var placeEntity in places)
-            {
-                var placeDto = new PlaceDto
+                var activityEntity = _context.Activities.Include(a => a.IdPlaces).FirstOrDefault(a => a.IdActivity == id);
+                if (activityEntity == null)
+                    return null;
+                var activity = new ActivityDto
                 {
-                    IdPlace = placeEntity.IdPlace,
-                    NamePlace = placeEntity.NamePlace
+                    IdActivity = activityEntity.IdActivity,
+                    Type = activityEntity.Type
                 };
-                activity.PlacesData.Add(placeDto);
+                var places = activityEntity.IdPlaces;
+                foreach (var placeEntity in places)
+                {
+                    var placeDto = new PlaceDto
+                    {
+                        IdPlace = placeEntity.IdPlace,
+                        NamePlace = placeEntity.NamePlace
+                    };
+                    activity.PlacesData.Add(placeDto);
+                }
+                return activity;
             }
-
-            return activity;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
 
         public List<ActivityDto> GetListActivity()
         {
-            var activityEntities = _context.Activities.Include(a => a.IdPlaces);
-            var activities = new List<ActivityDto>();
-            foreach (var activityEntity in activityEntities)
+            try
             {
-                var activity = new ActivityDto
+                var activityEntities = _context.Activities.Include(a => a.IdPlaces);
+                var activities = new List<ActivityDto>();
+                foreach (var activityEntity in activityEntities)
                 {
-                    IdActivity = activityEntity.IdActivity,
-                    Type = activityEntity.Type,
-                    Places = activityEntity.IdPlaces.Select(p => p.IdPlace).ToList()
-                };
-                activities.Add(activity);
+                    var activity = new ActivityDto
+                    {
+                        IdActivity = activityEntity.IdActivity,
+                        Type = activityEntity.Type,
+                        Places = activityEntity.IdPlaces.Select(p => p.IdPlace).ToList()
+                    };
+                    activities.Add(activity);
+                }
+                return activities;
             }
-            return activities;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
 
         public ActivityDto Update(ActivityDto activity)
         {
-            var activityEntity = _context.Activities.Include(a => a.IdPlaces).FirstOrDefault(a => a.IdActivity == activity.IdActivity);
-            if (activityEntity == null)
-                return null;
-
-            activityEntity.Type = activity.Type;
-            activityEntity.IdPlaces.Clear();
-
-            foreach (var placeId in activity.Places)
+            try
             {
-                var placeEntity = _context.Places.Find(placeId);
-                if (placeEntity != null)
+                var activityEntity = _context.Activities
+                .Include(a => a.IdPlaces)
+                .FirstOrDefault(a => a.IdActivity == activity.IdActivity);
+                if (activityEntity == null)
+                    return null;
+                activityEntity.Type = activity.Type;
+                activityEntity.IdPlaces.Clear()
+            foreach (var placeId in activity.Places)
                 {
-                    activityEntity.IdPlaces.Add(placeEntity);
+                    var placeEntity = _context.Places.Find(placeId);
+                    if (placeEntity != null)
+                    {
+                        activityEntity.IdPlaces.Add(placeEntity);
+                    }
                 }
+                _context.SaveChanges();
+                return activity;
             }
-
-            _context.SaveChanges();
-            return activity;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
 
         public bool Delete(int id)
         {
-            var activityEntity = _context.Activities
+            try
+            {
+                var activityEntity = _context.Activities
                 .Include(p => p.IdPlaces)
                 .ThenInclude(p => p.IdActivities)
                 .SingleOrDefault(p => p.IdActivity == id);
-            if (activityEntity == null)
-                return false;
-            foreach (var place in activityEntity.IdPlaces)
-            {
-                place.IdActivities.Remove(activityEntity);
+                if (activityEntity == null)
+                    return false;
+                foreach (var place in activityEntity.IdPlaces)
+                {
+                    place.IdActivities.Remove(activityEntity);
+                }
+                _context.Activities.Remove(activityEntity);
+                _context.SaveChanges();
+                return true;
             }
-            _context.Activities.Remove(activityEntity);
-            _context.SaveChanges();
-            return true;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
         }
 
     }

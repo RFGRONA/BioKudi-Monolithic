@@ -1,4 +1,5 @@
-﻿using BioKudi.Utilities;
+﻿using BioKudi.Services;
+using BioKudi.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,20 @@ namespace BioKudi.Controllers
     [Authorize(Roles = "Admin")]
     public class TicketController : Controller
     {
+        private readonly TicketService ticketService;
         // GET: TicketController
+        public TicketController(TicketService ticketService)
+        {
+            this.ticketService = ticketService;
+        }
         public ActionResult Index()
         {
-            return View();
+            var tickets = ticketService.GetAllTickets();
+            if (tickets == null)
+            {
+                return NotFound();
+            }
+            return View(tickets);
         }
 
         // GET: TicketController/Details/5

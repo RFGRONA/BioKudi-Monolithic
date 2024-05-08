@@ -31,7 +31,7 @@ namespace BioKudi.Repository
                 Action = a.Action,
                 Date = a.Date,
                 ViewAction = a.ViewAction
-            }).ToList();
+            }).OrderByDescending(a => a.Date).ToList();
         }
 
     }

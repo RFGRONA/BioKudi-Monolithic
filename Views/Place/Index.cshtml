@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<BioKudi.dto.PlaceDto>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lugares";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <head>
@@ -14,34 +14,31 @@
 <div class="body">
 
 
-    <h1>Index</h1>
+    <h1>Lugares</h1>
 
     <p>
-        <a asp-action="Create">Create New</a>
+        <a asp-action="Create">Crear lugar</a>
     </p>
     <table>
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.NamePlace)
+                    Nombre Lugar
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Latitude)
+                    Coordenadas
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Longitude)
+                    Dirección
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Address)
+                    Descripción
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Description)
+                    Link
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Link)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StateName)
+                    Estado
                 </th>
                 <th>
                     Acciones
@@ -56,9 +53,7 @@
                         @Html.DisplayFor(modelItem => item.NamePlace)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Latitude)
-                    </td>
-                    <td>
+                        @Html.DisplayFor(modelItem => item.Latitude), 
                         @Html.DisplayFor(modelItem => item.Longitude)
                     </td>
                     <td>
@@ -67,16 +62,16 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
-                    <td>
+                    <td class="link">
                         @Html.DisplayFor(modelItem => item.Link)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.StateName)
                     </td>
                     <td class="acciones">
-                        <a asp-action="Edit" asp-route-id="@item.IdPlace">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.IdPlace">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.IdPlace">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@item.IdPlace"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a asp-action="Details" asp-route-id="@item.IdPlace"><i class="fa-regular fa-file-lines"></i></a>
+                        <a asp-action="Delete" asp-route-id="@item.IdPlace"><i class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>
             }

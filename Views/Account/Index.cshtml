@@ -1,54 +1,66 @@
 ﻿@model IEnumerable<BioKudi.dto.UserDto>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Usuarios";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<head>
+    <link href="~/css/User.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<div class="body">
 
-<h1>Index</h1>
+    <h1>Usuarios</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NameUser)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RoleName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StateName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NameUser)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoleName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StateName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <p>
+        <a asp-action="Create">Crear Usuario</a>
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Rol
+                </th>
+                <th>
+                    Estado
+                </th>
+                <th>
+                    Acciones
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NameUser)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoleName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StateName)
+                    </td>
+                    <td class="acciones">
+                        <a asp-action="Edit" asp-route-id="@item.UserId"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a asp-action="Details" asp-route-id="@item.UserId"><i class="fa-regular fa-file-lines"></i></a>
+                        <a asp-action="Delete" asp-route-id="@item.UserId"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -44,19 +44,20 @@ namespace BioKudi.Repository
 
         public List<TicketDto> GetListTicket()
         {
+            var states = _context.States.ToDictionary(s => s.IdState, s => s.NameState);
             var ticketEntities = _context.Tickets;
             var tickets = new List<TicketDto>();
-            foreach (var ticketEntity in ticketEntities)
+            foreach (var ticket in ticketEntities)
             {
-                var ticket = new TicketDto
+                var ticketDto = new TicketDto
                 {
-                    IdTicket = ticketEntity.IdTicket,
-                    Type = ticketEntity.Type,
-                    Affair = ticketEntity.Affair,
-                    UserId = ticketEntity.UserId,
-                    State = ticketEntity.State
+                    IdTicket = ticket.IdTicket,
+                    Type = ticket.Type,
+                    Affair = ticket.Affair,
+                    UserId = ticket.UserId,
+                    StateName = states.ContainsKey((int)ticket.State) ? states[(int)ticket.State] : null
                 };
-                tickets.Add(ticket);
+                tickets.Add(ticketDto);
             }
             return tickets;
         }

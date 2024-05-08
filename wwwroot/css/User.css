@@ -8,54 +8,50 @@
 .body {
     margin-top: 2%;
     margin-bottom: 16%;
+    
 }
 
 h1 {
+    margin-left: 10%;
     color: #476930;
     font-weight: bold;
     margin-bottom: 2%;
 }
 
 p {
+    margin-left: 10%;
 }
 
 table {
     overflow: hidden;
     border-radius: 10px;
-    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 80%;
 }
 
-td.link {
-    max-width: 200px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
+    table thead tr {
+        background-color: #4CAF50;
+        color: white;
+    }
 
-table thead tr {
-    background-color: #4CAF50;
-    color: white;
-}
+    table tbody tr {
+        background-color: #C8E6C9;
+    }
 
-table tbody tr {
-    background-color: #C8E6C9;
-}
-
-table td, th {
-    padding: 10px;
-    text-align: center;
-    border: none;
-}
-
+    table td, th {
+        padding: 10px;
+        text-align: center;
+        border: none;
+    }
 
 .acciones {
-    width: 200px;
 }
 
     .acciones i {
         color: #476930;
         margin: 0 5%;
     }
-
 p a {
     color: white;
     background-color: #F67924;
@@ -65,7 +61,6 @@ p a {
     font-weight: bold;
     transition: 0.2s;
 }
-
     p a:hover {
         background-color: #476930;
         color: white;

@@ -24,9 +24,6 @@
                     Tipo
                 </th>
                 <th>
-                    ID Actividad
-                </th>
-                <th>
                     Acciones
                 </th>
             </tr>
@@ -38,9 +35,6 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Type)
 
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PlaceId)
                     </td>
                     <td class="acciones">
                         <a asp-action="Edit" asp-route-id="@item.IdActivity"><i class="fa-solid fa-pen-to-square"></i></a>

@@ -40,6 +40,8 @@ builder.Services.AddScoped<AuditRepository>();
 builder.Services.AddScoped<AuditService>();
 builder.Services.AddScoped<StateService>();
 builder.Services.AddScoped<RoleService>();
+builder.Services.AddScoped<TicketRepository>();
+builder.Services.AddScoped<TicketService>();
 
 builder.Services.AddHsts(options =>
 {

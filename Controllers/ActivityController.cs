@@ -1,4 +1,5 @@
-﻿using BioKudi.Services;
+﻿using BioKudi.dto;
+using BioKudi.Services;
 using BioKudi.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,10 +12,12 @@ namespace BioKudi.Controllers
     public class ActivityController : Controller
     {
         private readonly ActivityService activityService;
+        private readonly PlacesService placeService;
 
-        public ActivityController(ActivityService activityService)
+        public ActivityController(PlacesService placeService, ActivityService activityService)
         {
             this.activityService = activityService;
+            this.placeService = placeService;
         }
 
         // GET: ActivityController
@@ -27,55 +30,54 @@ namespace BioKudi.Controllers
         // GET: ActivityController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var activity = activityService.GetActivity(id);
+            return View(activity);
         }
 
         // GET: ActivityController/Create
         public ActionResult Create()
         {
+            var places = placeService.GetNameId();
+            ViewBag.BagPlaces = places;
             return View();
         }
 
         // POST: ActivityController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(ActivityDto activity)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+            var result = activityService.CreateActivity(activity);
+            if (result == null)
                 return RedirectToAction("Error", "Admin");
-            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: ActivityController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var activity = activityService.GetActivity(id);
+            var places = placeService.GetNameId();
+            ViewBag.BagPlaces = places;
+            return View(activity);
         }
 
         // POST: ActivityController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(ActivityDto activity)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+            var result = activityService.UpdateActivity(activity);
+            if (result == null)
                 return RedirectToAction("Error", "Admin");
-            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: ActivityController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var activity = activityService.GetActivity(id);
+            return View(activity);
         }
 
         // POST: ActivityController/Delete/5
@@ -83,14 +85,10 @@ namespace BioKudi.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+            var result = activityService.DeleteActivity(id);
+            if (!result)
                 return RedirectToAction("Error", "Admin");
-            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

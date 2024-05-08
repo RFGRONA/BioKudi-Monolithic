@@ -34,7 +34,7 @@ namespace BioKudi.Services
 			return activityRepo.GetActivity(activityId);
 		}
 
-		/*public ActivityDto UpdateActivity(ActivityDto activity)
+		public ActivityDto UpdateActivity(ActivityDto activity)
 		{
 			var result = activityRepo.Update(activity);
 			if (result == null)
@@ -42,6 +42,11 @@ namespace BioKudi.Services
 				return null;
 			}
 			return activity;
-		}*/
-	}
+		}
+
+        public bool DeleteActivity(int activityId)
+        {
+            return activityRepo.Delete(activityId);
+        }
+    }
 }

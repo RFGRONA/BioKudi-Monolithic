@@ -1,5 +1,7 @@
 ﻿using BioKudi.dto;
 using BioKudi.Models;
+using Microsoft.EntityFrameworkCore;
+using Mono.TextTemplating;
 
 namespace BioKudi.Repository
 {
@@ -65,9 +67,16 @@ namespace BioKudi.Repository
 
         public bool Delete(int roleId)
         {
-            var roleEntity = _context.Roles.Find(roleId);
+            var roleEntity = _context.Roles
+                .Include(s => s.Users)
+                .SingleOrDefault(s => s.IdRole == roleId);
             if (roleEntity == null)
                 return false;
+            foreach (var user in roleEntity.Users)
+            {
+                user.RoleId = 1;
+            }
+            _context.SaveChanges();
             _context.Roles.Remove(roleEntity);
             _context.SaveChanges();
             return true;

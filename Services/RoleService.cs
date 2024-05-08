@@ -18,5 +18,25 @@ namespace BioKudi.Services
         {
             return roleRepository.GetRoles();
         }
+
+        public RoleDto GetRole(int roleId)
+        {
+            return roleRepository.GetRole(roleId);
+        }
+
+        public RoleDto CreateRole(RoleDto role)
+        {
+            return roleRepository.Create(role);
+        }
+
+        public RoleDto UpdateRole(RoleDto role)
+        {
+            return roleRepository.Update(role);
+        }
+
+        public bool DeleteRole(int roleId)
+        {
+            return roleRepository.Delete(roleId);
+        }
     }
 }

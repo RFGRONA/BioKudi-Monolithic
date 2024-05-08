@@ -1,8 +1,10 @@
 ﻿using BioKudi.dto;
+using BioKudi.Models;
 using BioKudi.Services;
 using BioKudi.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BioKudi.Controllers
@@ -26,6 +28,8 @@ namespace BioKudi.Controllers
         public ActionResult Index()
         {
             var users = userService.GetAllUsers();
+            if (users == null)
+                return RedirectToAction("Error", "Admin");
             return View(users);
         }
 
@@ -33,6 +37,8 @@ namespace BioKudi.Controllers
         public ActionResult Details(int id)
         {
             var user = userService.GetUser(id);
+            if (user == null)
+                return RedirectToAction("Error", "Admin");
             return View(user);
         } 
 
@@ -40,6 +46,8 @@ namespace BioKudi.Controllers
         public ActionResult Edit(int id)
         {
             var user = userService.GetUser(id);
+            if (user == null)
+                return RedirectToAction("Error", "Admin");
             var states = stateService.GetUserStates();
             var roles = roleService.GetRoles();
             ViewBag.BagPlaces = states;
@@ -63,6 +71,8 @@ namespace BioKudi.Controllers
         public ActionResult Delete(int id)
         {
             var user = userService.GetUser(id);
+            if (user == null)
+                return RedirectToAction("Error", "Admin");
             return View(user);
         }
 

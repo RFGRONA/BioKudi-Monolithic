@@ -23,6 +23,8 @@ namespace BioKudi.Controllers
 		public IActionResult IndexAdmin(UserDto user)
         {
 			user = userService.GetUser(user.UserId);
+            if (user == null)
+                return RedirectToAction("Error", "Admin");
             return View(user);
         }
 

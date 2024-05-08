@@ -1,9 +1,11 @@
 ﻿using BioKudi.dto;
+using BioKudi.Models;
 using BioKudi.Services;
 using BioKudi.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace BioKudi.Controllers
 {
@@ -24,6 +26,8 @@ namespace BioKudi.Controllers
         public ActionResult Index()
         {
             var activities = activityService.GetAllActivities();
+            if (activities == null)
+                return RedirectToAction("Error", "Admin");
             return View(activities);
         }
 
@@ -31,6 +35,8 @@ namespace BioKudi.Controllers
         public ActionResult Details(int id)
         {
             var activity = activityService.GetActivity(id);
+            if (activity == null)
+                return RedirectToAction("Error", "Admin");
             return View(activity);
         }
 
@@ -39,6 +45,8 @@ namespace BioKudi.Controllers
         {
             var places = placeService.GetNameId();
             ViewBag.BagPlaces = places;
+            if (places == null)
+                return RedirectToAction("Error", "Admin");
             return View();
         }
 
@@ -59,6 +67,8 @@ namespace BioKudi.Controllers
             var activity = activityService.GetActivity(id);
             var places = placeService.GetNameId();
             ViewBag.BagPlaces = places;
+            if (activity == null)
+                return RedirectToAction("Error", "Admin");
             return View(activity);
         }
 
@@ -77,6 +87,8 @@ namespace BioKudi.Controllers
         public ActionResult Delete(int id)
         {
             var activity = activityService.GetActivity(id);
+            if (activity == null)
+                return RedirectToAction("Error", "Admin");
             return View(activity);
         }
 

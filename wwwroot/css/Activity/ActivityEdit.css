@@ -36,6 +36,7 @@ label {
 .input-container {
     max-width: 70%;
     margin: 0 auto;
+    border-radius: 100px;
 }
 
 .submit {

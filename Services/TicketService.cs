@@ -28,5 +28,26 @@ namespace BioKudi.Services
         {
             return ticketRepo.GetListTicket();
         }
+
+        public TicketDto GetTicket(int id)
+        {
+            return ticketRepo.GetTicket(id);
+        }
+
+        public TicketDto UpdateTicket(TicketDto ticket)
+        {
+            var result = ticketRepo.Update(ticket);
+            if (result == null)
+            {
+                return null;
+            }
+            return ticket;
+        }
+
+        public bool DeleteTicket(int id)
+        {
+            return ticketRepo.Delete(id);
+        }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using BioKudi.Services;
+﻿using BioKudi.dto;
+using BioKudi.Services;
 using BioKudi.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,24 +12,30 @@ namespace BioKudi.Controllers
     public class TicketController : Controller
     {
         private readonly TicketService ticketService;
-        // GET: TicketController
-        public TicketController(TicketService ticketService)
+        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly StateService stateService;
+        public TicketController(TicketService ticketService, StateService stateService, IHttpContextAccessor httpContextAccessor)
         {
             this.ticketService = ticketService;
+            this.httpContextAccessor = httpContextAccessor;
+            this.stateService = stateService;
         }
+
+        // GET: TicketController
         public ActionResult Index()
         {
             var tickets = ticketService.GetAllTickets();
             if (tickets == null)
-            {
-                return NotFound();
-            }
+                return RedirectToAction("Error", "Admin");
             return View(tickets);
         }
 
         // GET: TicketController/Details/5
         public ActionResult Details(int id)
         {
+            var ticket = ticketService.GetTicket(id);
+            if (ticket == null)
+                return RedirectToAction("Error", "Admin");
             return View();
         }
 
@@ -41,43 +48,43 @@ namespace BioKudi.Controllers
         // POST: TicketController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(TicketDto ticket)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = ticketService.CreateTicket(ticket);
+            if (result == null)
+                return RedirectToAction("Error", "Admin");
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: TicketController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var ticket = ticketService.GetTicket(id);
+            var states = stateService.GetTicketStates();
+            ViewBag.States = states;
+            if (ticket == null)
+                return RedirectToAction("Error", "Admin");
+            return View(ticket);
         }
 
         // POST: TicketController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(TicketDto ticket)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = ticketService.UpdateTicket(ticket);
+            if (result == null)
+                return RedirectToAction("Error", "Admin");
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: TicketController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var ticket = ticketService.GetTicket(id);
+            if (ticket == null)
+                return RedirectToAction("Error", "Admin");
+            return View(ticket);
         }
 
         // POST: TicketController/Delete/5
@@ -85,14 +92,10 @@ namespace BioKudi.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = ticketService.DeleteTicket(id);
+            if (!result)
+                return RedirectToAction("Error", "Admin");
+            return RedirectToAction(nameof(Index));
         }
     }
 }

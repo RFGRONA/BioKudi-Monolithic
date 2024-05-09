@@ -80,7 +80,7 @@ namespace BioKudi.Repository
         {
             try
             {
-                var activityEntities = _context.Activities.Include(a => a.IdPlaces);
+                var activityEntities = _context.Activities.Include(a => a.IdPlaces).OrderBy(a => a.Type);
                 var activities = new List<ActivityDto>();
                 foreach (var activityEntity in activityEntities)
                 {

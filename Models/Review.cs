@@ -25,7 +25,9 @@ public partial class Review
     /// </summary>
     public int UserId { get; set; }
 
-    public virtual User User { get; set; } = null!;
+    public int? PlaceId { get; set; }
 
-    public virtual ICollection<Place> IdPlaces { get; set; } = new List<Place>();
+    public virtual Place? Place { get; set; }
+
+    public virtual User User { get; set; } = null!;
 }

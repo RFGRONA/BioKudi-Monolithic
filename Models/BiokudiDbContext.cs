@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using BioKudi.dto;
 
 namespace BioKudi.Models;
 
@@ -343,4 +344,6 @@ public partial class BiokudiDbContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+public DbSet<BioKudi.dto.TicketDto> TicketDto { get; set; } = default!;
 }

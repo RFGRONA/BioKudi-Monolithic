@@ -8,7 +8,7 @@ namespace BioKudi.dto
         public int IdPicture { get; set; }
         public string Name { get; set; } = null!;
         public string Link { get; set; } = null!;
-        public List<int> Places { get; set; } = new List<int>();
-        public List<PlaceDto> PlacesData { get; set; } = new List<PlaceDto>();
+        public int? PlaceId { get; set; }
+        public string PlaceName { get; set; } = null!;
     }
 }

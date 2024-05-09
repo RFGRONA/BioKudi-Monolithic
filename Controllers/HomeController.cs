@@ -19,12 +19,13 @@ namespace BioKudi.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly UserService userService;
         private readonly MapService mapService;
-
-        public HomeController(ILogger<HomeController> logger, UserService userService, MapService mapService)
+        private readonly PlacesService placeService;
+        public HomeController(ILogger<HomeController> logger, UserService userService, MapService mapService, PlacesService placesService)
         {
             _logger = logger;
             this.userService = userService;
             this.mapService = mapService;
+            this.placeService = placesService;
         }
 
         [ValidateLogin]
@@ -61,13 +62,21 @@ namespace BioKudi.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult PublicMap()
+        public IActionResult Map()
         {
             var markers = mapService.GetMarkers();
             if (markers == null)
                 return RedirectToAction("Error", "Home");
             return View(markers);
 		}
+
+        public IActionResult Activities()
+        {
+            var places = placeService.GetAllPlaces();
+            if (places == null)
+                return RedirectToAction("Error", "Home");
+            return View(places);
+        }
 
         public ContentResult InfoMap(int idPlace)
         {

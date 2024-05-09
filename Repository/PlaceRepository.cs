@@ -97,7 +97,7 @@ namespace BioKudi.Repository
 			try
             {
                 var states = _context.States.ToDictionary(s => s.IdState, s => s.NameState);
-                var placeEntities = _context.Places.OrderBy(p => p.NamePlace);
+                var placeEntities = _context.Places.Include(p => p.IdActivities).OrderBy(p => p.NamePlace);
                 var places = new List<PlaceDto>();
                 foreach (var place in placeEntities)
                 {
@@ -112,6 +112,14 @@ namespace BioKudi.Repository
                         Link = place.Link,
                         StateName = states.ContainsKey((int)place.StateId) ? states[(int)place.StateId] : null
                     };
+                    foreach (var activity in place.IdActivities)
+                    {
+                        placeDto.ActivityData.Add(new ActivityDto
+                        {
+                            IdActivity = activity.IdActivity,
+                            Type = activity.Type
+                        });
+                    }
                     places.Add(placeDto);
                 }
                 return places;

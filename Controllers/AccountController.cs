@@ -48,7 +48,7 @@ namespace BioKudi.Controllers
                 return RedirectToAction("Error", "Admin");
             var states = stateService.GetUserStates();
             var roles = roleService.GetRoles();
-            ViewBag.BagPlaces = states;
+            ViewBag.BagStates = states;
             ViewBag.BagRoles = roles;
             return View(user);
         }

@@ -42,7 +42,7 @@
                 <label asp-for="StateId" class="control-label"></label>
                 <select asp-for="StateId" class="form-control">
                     <option value="">-- Select State --</option>
-                    @foreach (var state in ViewBag.BagPlaces)
+                    @foreach (var state in ViewBag.BagStates)
                     {
                         <option value="@state.StateId">@state.NameState</option>
                     }

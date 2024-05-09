@@ -111,8 +111,8 @@ namespace BioKudi.Repository
                 if (activityEntity == null)
                     return null;
                 activityEntity.Type = activity.Type;
-                activityEntity.IdPlaces.Clear()
-            foreach (var placeId in activity.Places)
+                activityEntity.IdPlaces.Clear();
+                foreach (var placeId in activity.Places)
                 {
                     var placeEntity = _context.Places.Find(placeId);
                     if (placeEntity != null)

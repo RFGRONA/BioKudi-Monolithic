@@ -16,13 +16,11 @@ public class PlacesService
 		this.httpContextAccessor = httpContextAccessor;
 	}
 
-	public PlaceDto Create(PlaceDto places)
+	public PlaceDto CreatePlace(PlaceDto places)
 	{
 		var result = placesRepo.Create(places);
 		if (result == null)
-		{
 			return null;
-		}
 		return places;
 	}
 
@@ -41,4 +39,13 @@ public class PlacesService
         return placesRepo.GetNameId();
     }
 
+	public PlaceDto UpdatePlace(PlaceDto place)
+    {
+        return placesRepo.Update(place);
+    }
+
+    public bool DeletePlace(int placeId)
+    {
+        return placesRepo.Delete(placeId);
+    }
 }

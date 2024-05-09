@@ -1,6 +1,7 @@
 ﻿using BioKudi.dto;
 using BioKudi.Models;
 using Microsoft.EntityFrameworkCore;
+using Mono.TextTemplating;
 
 namespace BioKudi.Repository
 {
@@ -29,6 +30,16 @@ namespace BioKudi.Repository
                 _context.Places.Add(placeEntity);
                 _context.SaveChanges();
                 place.IdPlace = placeEntity.IdPlace;
+                foreach (var activityId in place.ActivityId)
+                {
+                    var activityEntity = _context.Activities.Find(activityId);
+                    if (activityEntity != null)
+                    {
+                        _context.Entry(placeEntity).Collection(p => p.IdActivities).Load();
+                        placeEntity.IdActivities.Add(activityEntity);
+                    }
+                }
+                _context.SaveChanges();
                 return place;
             }
             catch (Exception ex)
@@ -59,10 +70,12 @@ namespace BioKudi.Repository
                     Description = placeEntity.Description,
                     Link = placeEntity.Link,
                     StateId = placeEntity.StateId,
+                    StateName = _context.States.Find(placeEntity.StateId).NameState,
                     Pictures = placeEntity.Pictures.Count(),
                     Reviews = placeEntity.Reviews.Count()
                 };
-                foreach (var activity in place.ActivityData)
+                var activities = placeEntity.IdActivities;
+                foreach (var activity in activities)
                 {
                     place.ActivityData.Add(new ActivityDto
                     {
@@ -84,7 +97,7 @@ namespace BioKudi.Repository
 			try
             {
                 var states = _context.States.ToDictionary(s => s.IdState, s => s.NameState);
-                var placeEntities = _context.Places;
+                var placeEntities = _context.Places.Include(p => p.IdActivities).OrderBy(p => p.NamePlace);
                 var places = new List<PlaceDto>();
                 foreach (var place in placeEntities)
                 {
@@ -99,6 +112,14 @@ namespace BioKudi.Repository
                         Link = place.Link,
                         StateName = states.ContainsKey((int)place.StateId) ? states[(int)place.StateId] : null
                     };
+                    foreach (var activity in place.IdActivities)
+                    {
+                        placeDto.ActivityData.Add(new ActivityDto
+                        {
+                            IdActivity = activity.IdActivity,
+                            Type = activity.Type
+                        });
+                    }
                     places.Add(placeDto);
                 }
                 return places;
@@ -140,7 +161,7 @@ namespace BioKudi.Repository
         {
             try
             {
-                var placeEntities = _context.Places;
+                var placeEntities = _context.Places.OrderBy(p => p.NamePlace);
                 var places = new List<PlaceDto>();
                 foreach (var place in placeEntities)
                 {
@@ -164,7 +185,9 @@ namespace BioKudi.Repository
         {
             try
             {
-                var placeEntity = _context.Places.Find(place.IdPlace);
+                var placeEntity = _context.Places
+                    .Include(p => p.IdActivities)
+                    .SingleOrDefault(p => p.IdPlace == place.IdPlace);
                 if (placeEntity == null)
                     return null;
                 placeEntity.NamePlace = place.NamePlace;
@@ -174,6 +197,15 @@ namespace BioKudi.Repository
                 placeEntity.Description = place.Description;
                 placeEntity.Link = place.Link;
                 placeEntity.StateId = place.StateId;
+                placeEntity.IdActivities.Clear();
+                foreach (var activityId in place.ActivityId)
+                {
+                    var activityEntity = _context.Activities.Find(activityId);
+                    if (activityEntity != null)
+                    {
+                        placeEntity.IdActivities.Add(activityEntity);
+                    }
+                }
                 _context.SaveChanges();
                 return place;
             }
@@ -192,7 +224,6 @@ namespace BioKudi.Repository
                     .Include(p => p.IdActivities)
                     .Include(p => p.Reviews)
                     .SingleOrDefault(p => p.IdPlace == id);
-
                 if (placeEntity == null)
                     return false;
                 foreach (var activity in placeEntity.IdActivities)

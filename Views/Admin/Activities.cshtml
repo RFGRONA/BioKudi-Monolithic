@@ -1,0 +1,67 @@
+﻿@model IEnumerable<BioKudi.dto.PlaceDto>
+
+@{
+    ViewData["Title"] = "Actividades";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<head>
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<div class="body">
+
+
+    <h1>Actividades</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Nombre Lugar
+                </th>
+                <th>
+                    Dirección
+                </th>
+                <th>
+                    Descripción
+                </th>
+                <th>
+                    Actividades
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="6" class="Error">No hay datos para mostrar</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NamePlace)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @foreach (var activity in item.ActivityData)
+                            {
+                                <p>@activity.Type</p>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

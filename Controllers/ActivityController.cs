@@ -80,24 +80,15 @@ namespace BioKudi.Controllers
                 return RedirectToAction("Error", "Admin");
             return RedirectToAction(nameof(Index));
         }
-
-        // GET: ActivityController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            var activity = activityService.GetActivity(id);
-            if (activity == null)
-                return RedirectToAction("Error", "Admin");
-            return View(activity);
-        }
-
         // POST: ActivityController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
             var result = activityService.DeleteActivity(id);
             if (!result)
                 return RedirectToAction("Error", "Admin");
+
             return RedirectToAction(nameof(Index));
         }
     }

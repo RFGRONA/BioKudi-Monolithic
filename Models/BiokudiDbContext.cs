@@ -346,4 +346,6 @@ public partial class BiokudiDbContext : DbContext
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
 public DbSet<BioKudi.dto.TicketDto> TicketDto { get; set; } = default!;
+
+public DbSet<BioKudi.dto.PlaceDto> PlaceDto { get; set; } = default!;
 }

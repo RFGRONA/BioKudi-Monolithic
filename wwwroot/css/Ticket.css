@@ -66,3 +66,7 @@ p a {
         color: white;
         padding: 10px 12px;
     }
+.Error{
+    color: black;
+    font-weight: bold;
+}

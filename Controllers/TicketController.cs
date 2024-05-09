@@ -1,4 +1,5 @@
-﻿using BioKudi.Services;
+﻿using BioKudi.dto;
+using BioKudi.Services;
 using BioKudi.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,12 +19,8 @@ namespace BioKudi.Controllers
         }
         public ActionResult Index()
         {
-            var tickets = ticketService.GetAllTickets();
-            if (tickets == null)
-            {
-                return NotFound();
-            }
-            return View(tickets);
+			var tickets = ticketService.GetAllTickets() ?? new List<TicketDto>();
+			return View(tickets);
         }
 
         // GET: TicketController/Details/5

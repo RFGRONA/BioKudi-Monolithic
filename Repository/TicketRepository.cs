@@ -59,6 +59,10 @@ namespace BioKudi.Repository
                 };
                 tickets.Add(ticketDto);
             }
+            if(tickets.Count == 0)
+            {
+                return null;
+            }
             return tickets;
         }
 

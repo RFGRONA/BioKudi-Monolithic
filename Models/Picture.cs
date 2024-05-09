@@ -20,5 +20,7 @@ public partial class Picture
     /// </summary>
     public string Link { get; set; } = null!;
 
-    public virtual ICollection<Place> IdPlaces { get; set; } = new List<Place>();
+    public int? PlaceId { get; set; }
+
+    public virtual Place? Place { get; set; }
 }

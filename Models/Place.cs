@@ -45,11 +45,11 @@ public partial class Place
     /// </summary>
     public int? StateId { get; set; }
 
+    public virtual ICollection<Picture> Pictures { get; set; } = new List<Picture>();
+
+    public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+
     public virtual State? State { get; set; }
 
     public virtual ICollection<Activity> IdActivities { get; set; } = new List<Activity>();
-
-    public virtual ICollection<Picture> IdPictures { get; set; } = new List<Picture>();
-
-    public virtual ICollection<Review> IdReviews { get; set; } = new List<Review>();
 }

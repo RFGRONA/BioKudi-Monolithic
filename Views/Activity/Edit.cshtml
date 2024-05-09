@@ -1,4 +1,4 @@
-﻿@model BioKudi.dto.PictureDto
+﻿@model BioKudi.dto.ActivityDto
 
 @{
     ViewData["Title"] = "Edit";
@@ -7,30 +7,24 @@
 
 <h1>Edit</h1>
 
-<h4>PictureDto</h4>
+<h4>ActivityDto</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdPicture" />
+            <input type="hidden" asp-for="IdActivity" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Type" class="control-label"></label>
+                <input asp-for="Type" class="form-control" />
+                <span asp-validation-for="Type" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Link" class="control-label"></label>
-                <input asp-for="Link" class="form-control" />
-                <span asp-validation-for="Link" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PlaceId" class="control-label">Related Places:</label>
-                <select asp-for="PlaceId" class="form-control">
-                    <option value="">Seleccione un lugar</option>
+                <label asp-for="Places" class="control-label">Related Places:</label>
+                <select asp-for="Places" class="form-control" multiple>
                     @foreach (var place in ViewBag.BagPlaces)
                     {
-                        if (Model.PlaceId == place.IdPlace)
+                        if (Model.PlacesData.Any(p => p.IdPlace == place.IdPlace))
                         {
                             <option value="@place.IdPlace" selected>
                                 @($"{place.NamePlace} ({place.IdPlace})")
@@ -44,7 +38,7 @@
                         }
                     }
                 </select>
-                <span asp-validation-for="PlaceId" class="text-danger"></span>
+                <span asp-validation-for="Places" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

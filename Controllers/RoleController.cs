@@ -1,4 +1,6 @@
-﻿using BioKudi.Utilities;
+﻿using BioKudi.dto;
+using BioKudi.Services;
+using BioKudi.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,16 +11,29 @@ namespace BioKudi.Controllers
     [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
+        private readonly RoleService roleService;
+
+        public RoleController(RoleService roleService)
+        {
+            this.roleService = roleService;
+        }
+
         // GET: RoleController
         public ActionResult Index()
         {
-            return View();
+            var roles = roleService.GetRoles();
+            if (roles == null)
+                return RedirectToAction("Error", "Admin");
+            return View(roles);
         }
 
         // GET: RoleController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var role = roleService.GetRole(id);
+            if (role == null)
+                return RedirectToAction("Error", "Admin");
+            return View(role);
         }
 
         // GET: RoleController/Create
@@ -30,43 +45,41 @@ namespace BioKudi.Controllers
         // POST: RoleController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(RoleDto role)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = roleService.CreateRole(role);
+            if (result == null)
+                return RedirectToAction("Error", "Admin");
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: RoleController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var role = roleService.GetRole(id);
+            if (role == null)
+                return RedirectToAction("Error", "Admin");
+            return View(role);
         }
 
         // POST: RoleController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(RoleDto role)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = roleService.UpdateRole(role);
+            if (result == null)
+                return RedirectToAction("Error", "Admin");
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: RoleController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var role = roleService.GetRole(id);
+            if (role == null)
+                return RedirectToAction("Error", "Admin");
+            return View(role);
         }
 
         // POST: RoleController/Delete/5
@@ -74,14 +87,10 @@ namespace BioKudi.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = roleService.DeleteRole(id);
+            if (!result)
+                return RedirectToAction("Error", "Admin");
+            return RedirectToAction(nameof(Index));
         }
     }
 }

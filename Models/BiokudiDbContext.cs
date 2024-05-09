@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using BioKudi.dto;
-using BioKudi.dto.ViewModel;
 
 namespace BioKudi.Models;
 
@@ -105,6 +104,11 @@ public partial class BiokudiDbContext : DbContext
                 .IsUnicode(false)
                 .HasComment("Name of the picture (character string, maximum 128).")
                 .HasColumnName("name");
+            entity.Property(e => e.PlaceId).HasColumnName("place_id");
+
+            entity.HasOne(d => d.Place).WithMany(p => p.Pictures)
+                .HasForeignKey(d => d.PlaceId)
+                .HasConstraintName("FK_PICTURE_PLACE");
         });
 
         modelBuilder.Entity<Place>(entity =>
@@ -176,52 +180,6 @@ public partial class BiokudiDbContext : DbContext
                             .HasComment("ID of the activity associated with the place (integer).")
                             .HasColumnName("id_activity");
                     });
-
-            entity.HasMany(d => d.IdPictures).WithMany(p => p.IdPlaces)
-                .UsingEntity<Dictionary<string, object>>(
-                    "PicturePlace",
-                    r => r.HasOne<Picture>().WithMany()
-                        .HasForeignKey("IdPicture")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__PICTURE_P__id_pi__0C85DE4D"),
-                    l => l.HasOne<Place>().WithMany()
-                        .HasForeignKey("IdPlace")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__PICTURE_P__id_pl__0B91BA14"),
-                    j =>
-                    {
-                        j.HasKey("IdPlace", "IdPicture").HasName("PK_Picture_Place");
-                        j.ToTable("PICTURE_PLACE");
-                        j.IndexerProperty<int>("IdPlace")
-                            .HasComment("ID of the place associated with the picture (integer).")
-                            .HasColumnName("id_place");
-                        j.IndexerProperty<int>("IdPicture")
-                            .HasComment("ID of the picture associated with the place (integer).")
-                            .HasColumnName("id_picture");
-                    });
-
-            entity.HasMany(d => d.IdReviews).WithMany(p => p.IdPlaces)
-                .UsingEntity<Dictionary<string, object>>(
-                    "ReviewPlace",
-                    r => r.HasOne<Review>().WithMany()
-                        .HasForeignKey("IdReview")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__REVIEW_PL__id_re__151B244E"),
-                    l => l.HasOne<Place>().WithMany()
-                        .HasForeignKey("IdPlace")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__REVIEW_PL__id_pl__14270015"),
-                    j =>
-                    {
-                        j.HasKey("IdPlace", "IdReview").HasName("PK_Review_Place");
-                        j.ToTable("REVIEW_PLACE");
-                        j.IndexerProperty<int>("IdPlace")
-                            .HasComment("ID of the place associated with the review (integer).")
-                            .HasColumnName("id_place");
-                        j.IndexerProperty<int>("IdReview")
-                            .HasComment("ID of the review associated with the place (integer).")
-                            .HasColumnName("id_review");
-                    });
         });
 
         modelBuilder.Entity<Review>(entity =>
@@ -238,12 +196,17 @@ public partial class BiokudiDbContext : DbContext
                 .IsUnicode(false)
                 .HasComment("Comment of the review (character string, maximum 255).")
                 .HasColumnName("comment");
+            entity.Property(e => e.PlaceId).HasColumnName("place_id");
             entity.Property(e => e.Rate)
                 .HasComment("Rating of the review (float, precision of 2 digits).")
                 .HasColumnName("rate");
             entity.Property(e => e.UserId)
                 .HasComment("ID of the user who made the review (integer).")
                 .HasColumnName("user_id");
+
+            entity.HasOne(d => d.Place).WithMany(p => p.Reviews)
+                .HasForeignKey(d => d.PlaceId)
+                .HasConstraintName("FK_REVIEW_PLACE");
 
             entity.HasOne(d => d.User).WithMany(p => p.Reviews)
                 .HasForeignKey(d => d.UserId)
@@ -382,23 +345,7 @@ public partial class BiokudiDbContext : DbContext
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-public DbSet<BioKudi.dto.PictureDto> PictureDto { get; set; } = default!;
-
 public DbSet<BioKudi.dto.TicketDto> TicketDto { get; set; } = default!;
 
-public DbSet<BioKudi.dto.StateDto> StateDto { get; set; } = default!;
-
-public DbSet<BioKudi.dto.RoleDto> RoleDto { get; set; } = default!;
-
-public DbSet<BioKudi.dto.ActivityDto> ActivityDto { get; set; } = default!;
-
-public DbSet<BioKudi.dto.AuditDto> AuditDto { get; set; } = default!;
-
-public DbSet<BioKudi.dto.ReviewDto> ReviewDto { get; set; } = default!;
-
-public DbSet<BioKudi.dto.UserDto> UserDto { get; set; } = default!;
-
 public DbSet<BioKudi.dto.PlaceDto> PlaceDto { get; set; } = default!;
-
-public DbSet<BioKudi.dto.ViewModel.ReportAuditViewModel> ReportAuditViewModel { get; set; } = default!;
 }

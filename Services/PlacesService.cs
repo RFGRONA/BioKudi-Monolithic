@@ -16,15 +16,15 @@ public class PlacesService
 		this.httpContextAccessor = httpContextAccessor;
 	}
 
-	//public PlacesDto CreatePlaces(PlacesDto places)
-	//{
-	//	var result = placesRepo.Create(places);
-	//	if (result == null)
-	//	{
-	//		return null;
-	//	}
-	//	return places;
-	//}
+	public PlaceDto Create(PlaceDto places)
+	{
+		var result = placesRepo.Create(places);
+		if (result == null)
+		{
+			return null;
+		}
+		return places;
+	}
 
 	public IEnumerable<PlaceDto> GetAllPlaces()
 	{

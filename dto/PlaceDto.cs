@@ -15,8 +15,8 @@ namespace BioKudi.dto
         public int? StateId { get; set; }
 		public string? StateName { get; set; }
 		public List<int> ActivityId { get; set; } = new List<int>();
-        public List<int> PictureId { get; set; } = new List<int>();
-        public List<int> ReviewId { get; set; } = new List<int>();
-
+        public List<ActivityDto> ActivityData { get; set; } = new List<ActivityDto>();
+        public int Pictures { get; set; } 
+        public int Reviews { get; set; } 
     }
 }

@@ -26,6 +26,8 @@ namespace BioKudi.Controllers
         public ActionResult Report()
         {
             var report = auditService.GetAuditReport(HttpContext);
+            if (report == null)
+                return RedirectToAction("Error", "Admin");
             return View(report);
         }
 

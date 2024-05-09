@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using BioKudi.Utilities;
 using System.Security.Claims;
+using System.Composition;
+using BioKudi.Models;
 
 namespace BioKudi.Controllers
 {
@@ -39,6 +41,8 @@ namespace BioKudi.Controllers
         public IActionResult Login()
         {
             UserDto user = new UserDto();
+            if (user == null)
+                return RedirectToAction("Error", "Home");
             return View(user);
 
         }
@@ -46,6 +50,8 @@ namespace BioKudi.Controllers
         public IActionResult Register()
         {
             UserDto user = new UserDto();
+            if (user == null)
+                return RedirectToAction("Error", "Home");
             return View(user);
         }
 
@@ -58,7 +64,9 @@ namespace BioKudi.Controllers
         public IActionResult PublicMap()
         {
             var markers = mapService.GetMarkers();
-			return View(markers);
+            if (markers == null)
+                return RedirectToAction("Error", "Home");
+            return View(markers);
 		}
 
         public ContentResult InfoMap(int idPlace)

@@ -4,6 +4,7 @@ using BioKudi.Services;
 using BioKudi.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BioKudi.Controllers
@@ -24,13 +25,18 @@ namespace BioKudi.Controllers
         // GET: PictureController
         public ActionResult Index()
         {
-            return View(pictureService.GetAllPictures());
+            var pictures = pictureService.GetAllPictures();
+            if (pictures == null)
+                return RedirectToAction("Error", "Admin");
+            return View(pictures);
         }
 
         // GET: PictureController/Details/5
         public ActionResult Details(int id)
         {
-            PictureDto picture = pictureService.GetPicture(id);
+            var picture = pictureService.GetPicture(id);
+            if (picture == null)
+                return RedirectToAction("Error", "Admin");
             return View(picture);
         }
 
@@ -39,6 +45,8 @@ namespace BioKudi.Controllers
         {
             var places = placeService.GetNameId();
             ViewBag.BagPlaces = places;
+            if (places == null)
+                return RedirectToAction("Error", "Admin");
             return View();
         }
 
@@ -76,7 +84,9 @@ namespace BioKudi.Controllers
         // GET: PictureController/Delete/5
         public ActionResult Delete(int id)
         {
-            PictureDto picture = pictureService.GetPicture(id);
+            var picture = pictureService.GetPicture(id);
+            if (picture == null)
+                return RedirectToAction("Error", "Admin");
             return View(picture);
         }
 

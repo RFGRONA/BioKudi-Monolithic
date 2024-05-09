@@ -1,6 +1,7 @@
 ﻿using BioKudi.dto;
 using BioKudi.Models;
 using Microsoft.EntityFrameworkCore;
+using Mono.TextTemplating;
 
 namespace BioKudi.Repository
 {
@@ -59,10 +60,12 @@ namespace BioKudi.Repository
                     Description = placeEntity.Description,
                     Link = placeEntity.Link,
                     StateId = placeEntity.StateId,
+                    StateName = _context.States.Find(placeEntity.StateId).NameState,
                     Pictures = placeEntity.Pictures.Count(),
                     Reviews = placeEntity.Reviews.Count()
                 };
-                foreach (var activity in place.ActivityData)
+                var activities = placeEntity.IdActivities;
+                foreach (var activity in activities)
                 {
                     place.ActivityData.Add(new ActivityDto
                     {

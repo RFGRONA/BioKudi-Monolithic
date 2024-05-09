@@ -30,10 +30,20 @@
             <div class="form-group">
                 <label asp-for="RoleId" class="control-label"></label>
                 <select asp-for="RoleId" class="form-control">
-                    <option value="">-- Select Role --</option>
                     @foreach (var role in ViewBag.BagRoles)
                     {
                         <option value="@role.RoleId">@role.NameRole</option>
+                    }
+                    @foreach (var role in ViewBag.BagRoles)
+                    {
+                        @if (role.RoleId == Model.RoleId)
+                        {
+                            <option value="@role.RoleId" selected>@role.NameRole</option>
+                        }
+                        else
+                        {
+                            <option value="@role.RoleId">@role.NameRole</option>
+                        }
                     }
                 </select>
                 <span asp-validation-for="RoleId" class="text-danger"></span>
@@ -41,10 +51,16 @@
             <div class="form-group">
                 <label asp-for="StateId" class="control-label"></label>
                 <select asp-for="StateId" class="form-control">
-                    <option value="">-- Select State --</option>
                     @foreach (var state in ViewBag.BagStates)
                     {
-                        <option value="@state.StateId">@state.NameState</option>
+                        @if (state.StateId == Model.StateId)
+                        {
+                            <option value="@state.StateId" selected>@state.NameState</option>
+                        }
+                        else
+                        {
+                            <option value="@state.StateId">@state.NameState</option>
+                        }
                     }
                 </select>
                 <span asp-validation-for="StateId" class="text-danger"></span>

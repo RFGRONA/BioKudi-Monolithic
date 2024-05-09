@@ -161,7 +161,7 @@ namespace BioKudi.Repository
         {
             try
             {
-                var placeEntities = _context.Places;
+                var placeEntities = _context.Places.OrderBy(p => p.NamePlace);
                 var places = new List<PlaceDto>();
                 foreach (var place in placeEntities)
                 {

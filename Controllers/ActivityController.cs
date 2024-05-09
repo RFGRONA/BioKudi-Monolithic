@@ -25,9 +25,7 @@ namespace BioKudi.Controllers
         // GET: ActivityController
         public ActionResult Index()
         {
-            var activities = activityService.GetAllActivities();
-            if (activities == null)
-                return RedirectToAction("Error", "Admin");
+            var activities = activityService.GetAllActivities() ?? new List<ActivityDto>();
             return View(activities);
         }
 

@@ -27,9 +27,7 @@ namespace BioKudi.Controllers
         // GET: AccountController
         public ActionResult Index()
         {
-            var users = userService.GetAllUsers();
-            if (users == null)
-                return RedirectToAction("Error", "Admin");
+            var users = userService.GetAllUsers() ?? new List<UserDto>();
             return View(users);
         }
 

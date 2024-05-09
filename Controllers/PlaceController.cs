@@ -20,7 +20,7 @@ namespace BioKudi.Controllers
         // GET: PlaceController
         public ActionResult Index()
         {
-            var places = placeService.GetAllPlaces();
+            var places = placeService.GetAllPlaces() ?? new List<PlaceDto>();
             return View(places);
         }
 

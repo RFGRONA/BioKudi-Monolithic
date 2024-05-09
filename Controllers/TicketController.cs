@@ -24,9 +24,7 @@ namespace BioKudi.Controllers
         // GET: TicketController
         public ActionResult Index()
         {
-            var tickets = ticketService.GetAllTickets();
-            if (tickets == null)
-                return RedirectToAction("Error", "Admin");
+            var tickets = ticketService.GetAllTickets() ?? new List<TicketDto>();
             return View(tickets);
         }
 

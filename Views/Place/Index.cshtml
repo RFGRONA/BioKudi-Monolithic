@@ -43,31 +43,40 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @if (!Model.Any())
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NamePlace)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Latitude), 
-                        @Html.DisplayFor(modelItem => item.Longitude)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StateName)
-                    </td>
-                    <td class="acciones">
-                        <a asp-action="Edit" asp-route-id="@item.IdPlace"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a asp-action="Details" asp-route-id="@item.IdPlace"><i class="fa-regular fa-file-lines"></i></a>
-                        <a asp-action="Delete" asp-route-id="@item.IdPlace"><i class="fa-solid fa-trash"></i></a>
-                    </td>
+                    <td colspan="6" class="Error">No hay datos para mostrar</td>
                 </tr>
+            }
+            else
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NamePlace)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Latitude), 
+                            @Html.DisplayFor(modelItem => item.Longitude)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StateName)
+                        </td>
+                        <td class="acciones">
+                            <a asp-action="Edit" asp-route-id="@item.IdPlace"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a asp-action="Details" asp-route-id="@item.IdPlace"><i class="fa-regular fa-file-lines"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.IdPlace"><i class="fa-solid fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
             }
         </tbody>
     </table>

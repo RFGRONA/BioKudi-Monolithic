@@ -25,9 +25,7 @@ namespace BioKudi.Controllers
         // GET: PictureController
         public ActionResult Index()
         {
-            var pictures = pictureService.GetAllPictures();
-            if (pictures == null)
-                return RedirectToAction("Error", "Admin");
+            var pictures = pictureService.GetAllPictures() ?? new List<PictureDto>();
             return View(pictures);
         }
 

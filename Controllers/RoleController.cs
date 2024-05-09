@@ -21,9 +21,7 @@ namespace BioKudi.Controllers
         // GET: RoleController
         public ActionResult Index()
         {
-            var roles = roleService.GetRoles();
-            if (roles == null)
-                return RedirectToAction("Error", "Admin");
+            var roles = roleService.GetRoles() ?? new List<RoleDto>();
             return View(roles);
         }
 

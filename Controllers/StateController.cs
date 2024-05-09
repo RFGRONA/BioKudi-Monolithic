@@ -22,9 +22,7 @@ namespace BioKudi.Controllers
         // GET: StateController
         public ActionResult Index()
         {
-            var states = stateService.GetAllStates();
-            if (states == null)
-                return RedirectToAction("Error", "Admin");
+            var states = stateService.GetAllStates() ?? new List<StateDto>();
             return View(states);
         }
 

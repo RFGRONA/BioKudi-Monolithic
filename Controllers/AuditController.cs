@@ -19,8 +19,7 @@ namespace BioKudi.Controllers
         }
         public ActionResult Index()
         {
-            var audits = auditService.GetAllAudits();
-
+            var audits = auditService.GetAllAudits() ?? new List<AuditDto>();
             return View(audits);
         }
         public ActionResult Report()

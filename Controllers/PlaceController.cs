@@ -13,11 +13,13 @@ namespace BioKudi.Controllers
     {
         private readonly PlacesService placeService;
         private readonly StateService stateService;
+        private readonly ActivityService activityService;
 
-        public PlaceController(PlacesService placeService, StateService stateService)
+        public PlaceController(PlacesService placeService, StateService stateService, ActivityService activityService)
         {
             this.placeService = placeService;
             this.stateService = stateService;
+            this.activityService = activityService;
         }
 
         // GET: PlaceController
@@ -40,7 +42,9 @@ namespace BioKudi.Controllers
         public ActionResult Create()
         {
             var state = stateService.GetPlaceStates();
+            var activity = activityService.GetAllActivities();
             ViewBag.States = state;
+            ViewBag.Activities = activity;
             return View();
         }
 
@@ -58,28 +62,35 @@ namespace BioKudi.Controllers
         // GET: PlaceController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var state = stateService.GetPlaceStates();
+            var activity = activityService.GetAllActivities();
+            var place = placeService.GetPlace(id);
+            if (place == null)
+                return RedirectToAction("Error", "Admin");
+            ViewBag.States = state;
+            ViewBag.Activities = activity;
+            return View(place);
         }
 
         // POST: PlaceController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(PlaceDto place)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var result = placeService.UpdatePlace(place);
+            if (result == null)
+                return RedirectToAction("Error", "Admin");
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: PlaceController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var result = placeService.DeletePlace(id);
+            if (!result)
+                return RedirectToAction("Error", "Admin");
+            return RedirectToAction(nameof(Index));
+            //return View();
         }
 
         // POST: PlaceController/Delete/5

@@ -1,18 +1,19 @@
 ﻿@model BioKudi.dto.PlaceDto
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Create</h1>
+<h1>Edit</h1>
 
 <h4>PlaceDto</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdPlace" />
             <div class="form-group">
                 <label asp-for="NamePlace" class="control-label"></label>
                 <input asp-for="NamePlace" class="form-control" />
@@ -46,10 +47,16 @@
             <div class="form-group">
                 <label asp-for="StateId" class="control-label"></label>
                 <select asp-for="StateId" class="form-control">
-                    <option value="">-- Select State --</option>
                     @foreach (var state in ViewBag.States)
                     {
-                        <option value="@state.StateId">@state.NameState</option>
+                        @if (state.StateId == Model.StateId)
+                        {
+                            <option value="@state.StateId" selected>@state.NameState</option>
+                        }
+                        else
+                        {
+                            <option value="@state.StateId">@state.NameState</option>
+                        }
                     }
                 </select>
                 <span asp-validation-for="StateId" class="text-danger"></span>
@@ -59,13 +66,24 @@
                 <select asp-for="ActivityId" class="form-control" multiple>
                     @foreach (var activity in ViewBag.Activities)
                     {
-                        <option value="@activity.IdActivity">@activity.Type</option>
+                        if (Model.ActivityData.Any(a => a.IdActivity == activity.IdActivity))
+                        {
+                            <option value="@activity.IdActivity" selected>
+                                @activity.Type
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="@activity.IdActivity">
+                                @activity.Type
+                            </option>
+                        }
                     }
                 </select>
                 <span asp-validation-for="ActivityId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -74,3 +92,4 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+

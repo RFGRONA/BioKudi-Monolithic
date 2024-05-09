@@ -39,4 +39,13 @@ public class PlacesService
         return placesRepo.GetNameId();
     }
 
+	public PlaceDto UpdatePlace(PlaceDto place)
+    {
+        return placesRepo.Update(place);
+    }
+
+    public bool DeletePlace(int placeId)
+    {
+        return placesRepo.Delete(placeId);
+    }
 }

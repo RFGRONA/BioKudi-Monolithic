@@ -106,8 +106,8 @@ namespace BioKudi.Repository
             try
             {
                 var activityEntity = _context.Activities
-                .Include(a => a.IdPlaces)
-                .FirstOrDefault(a => a.IdActivity == activity.IdActivity);
+                    .Include(a => a.IdPlaces)
+                    .FirstOrDefault(a => a.IdActivity == activity.IdActivity);
                 if (activityEntity == null)
                     return null;
                 activityEntity.Type = activity.Type;

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BioKudi.Services;
 using Rotativa.AspNetCore;
+using BioKudi.dto;
 
 namespace BioKudi.Controllers
 {

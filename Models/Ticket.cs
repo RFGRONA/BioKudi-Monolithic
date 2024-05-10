@@ -30,6 +30,11 @@ public partial class Ticket
     /// </summary>
     public int State { get; set; }
 
+    /// <summary>
+    /// Answer provided for the ticket (character string, maximum 255).
+    /// </summary>
+    public string? Answer { get; set; }
+
     public virtual State StateNavigation { get; set; } = null!;
 
     public virtual User User { get; set; } = null!;

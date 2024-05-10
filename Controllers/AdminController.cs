@@ -13,19 +13,38 @@ namespace BioKudi.Controllers
     {
         private readonly ILogger<AdminController> _logger;
 		private readonly UserService userService;
+        private readonly MapService mapService;
+        private readonly PlacesService placeService;
+        public AdminController(ILogger<AdminController> logger, UserService userService, MapService mapService, PlacesService placeService)
+        {
+            _logger = logger;
+            this.userService = userService;
+            this.mapService = mapService;
+            this.placeService = placeService;
+        }
 
-		public AdminController(ILogger<AdminController> logger, UserService userService)
-		{
-			_logger = logger;
-			this.userService = userService;
-		}
-
-		public IActionResult IndexAdmin(UserDto user)
+        public IActionResult IndexAdmin(UserDto user)
         {
 			user = userService.GetUser(user.UserId);
             if (user == null)
                 return RedirectToAction("Error", "Admin");
             return View(user);
+        }
+
+        public IActionResult Map()
+        {
+            var markers = mapService.GetMarkers();
+            if (markers == null)
+                return RedirectToAction("Error", "Admin");
+            return View(markers);
+        }
+
+        public IActionResult Activities()
+        {
+            var places = placeService.GetAllPlaces();
+            if (places == null)
+                return RedirectToAction("Error", "Admin");
+            return View(places);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

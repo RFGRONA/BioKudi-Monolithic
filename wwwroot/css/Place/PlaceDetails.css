@@ -6,9 +6,9 @@
 }
 
 .body {
+    background: #FEECD6;
 }
 h1 {
-    margin-left: 25%;
     margin-top: 4%;
     color: #F67924;
     font-weight: bold;
@@ -18,7 +18,7 @@ p {
 }
 table {
     margin: 0 auto;
-    min-width: 50%;
+    min-width: 100%;
     background: #F5D4AC;
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);

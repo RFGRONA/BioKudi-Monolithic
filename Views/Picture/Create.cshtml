@@ -1,47 +1,86 @@
 ﻿@model BioKudi.dto.PictureDto
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Imagen";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Create</h1>
-
-<h4>PictureDto</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Link" class="control-label"></label>
-                <input asp-for="Link" class="form-control" />
-                <span asp-validation-for="Link" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PlaceId" class="control-label"></label>
-                <select asp-for="PlaceId" class="form-control">
-                    <option value="">Selecciona un lugar</option>
-                    @foreach (var place in ViewBag.BagPlaces)
-                    {
-                        <option value="@place.IdPlace">@($"{place.NamePlace} ({place.IdPlace})")</option>
-                    }
-                </select>
-                <span asp-validation-for="PlaceId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+<head>
+    <link href="/css/Picture/PictureCreate.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<div class="body">
+    <h1>Create</h1>
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group input-container">
+            <label class="control-label">Nombre</label>
+            <input asp-for="Name" required class="form-control" maxlength="128"/>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group input-container">
+            <label class="control-label">Link</label>
+            <input asp-for="Link" required class="form-control" maxlength="255" />
+            <span asp-validation-for="Link" class="text-danger"></span>
+        </div>
+        <div class="form-group input-container">
+            <label class="control-label">Id lugar:</label>
+            <select asp-for="PlaceId" required class="form-control lugares" size="10">
+                @foreach (var place in ViewBag.BagPlaces)
+                {
+                    <option value="@place.IdPlace">@($"{place.NamePlace} ({place.IdPlace})")</option>
+                }
+            </select>
+            <span asp-validation-for="PlaceId" class="text-danger"></span>
+        </div>
+        <div class="form-group submit">
+            <input type="submit" value="Subir" id="createButton" class="btn" />
+        </div>
+        <div class="backk">
+            <a asp-action="Index" class="back">Volver a lista</a>
+        </div>
+    </form>
 </div>
+<script>
+    $('#createButton').click(function (e) {
+        e.preventDefault();
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+        // Obtener los valores de los campos
+        var name = $('#Name').val();
+        var link = $('#Link').val();
+        var placeId = $('#PlaceId').val();
 
+        // Verificar si los campos requeridos están completados
+        if (name.trim() === '' || link.trim() === '' || placeId.trim() === '') {
+            // Mostrar un mensaje de error si algún campo requerido está vacío
+            Swal.fire({
+                title: 'Error',
+                text: 'Por favor, completa todos los campos.',
+                icon: 'error'
+            });
+        } else {
+            // Si todos los campos requeridos están completados, mostrar la confirmación
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: '¿Estás seguro de que deseas subir esta imagen?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, subir 0imagen',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Enviar el formulario si se confirma la acción
+                    $('form').submit();
+                }
+            });
+        }
+    });
+
+</script>

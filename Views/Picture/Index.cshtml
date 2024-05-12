@@ -82,7 +82,7 @@
             if (result.isConfirmed) {
                 // Realizar la solicitud de eliminación al controlador
                 $.ajax({
-                    url: '@Url.Action("Delete", "Activity")/' + id,
+                    url: '@Url.Action("Delete", "Picture")/' + id,
                     type: 'POST',
                     data: { '__RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
                     success: function (result) {

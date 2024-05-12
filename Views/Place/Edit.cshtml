@@ -1,95 +1,137 @@
 ﻿@model BioKudi.dto.PlaceDto
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Lugar";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<head>
+    <link href="/css/Place/PlaceEdit.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<h1>Editar Lugar</h1>
 
-<h1>Edit</h1>
-
-<h4>PlaceDto</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdPlace" />
-            <div class="form-group">
-                <label asp-for="NamePlace" class="control-label"></label>
-                <input asp-for="NamePlace" class="form-control" />
-                <span asp-validation-for="NamePlace" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Latitude" class="control-label"></label>
-                <input asp-for="Latitude" class="form-control" />
-                <span asp-validation-for="Latitude" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Longitude" class="control-label"></label>
-                <input asp-for="Longitude" class="form-control" />
-                <span asp-validation-for="Longitude" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Link" class="control-label"></label>
-                <input asp-for="Link" class="form-control" />
-                <span asp-validation-for="Link" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StateId" class="control-label"></label>
-                <select asp-for="StateId" class="form-control">
-                    @foreach (var state in ViewBag.States)
-                    {
-                        @if (state.StateId == Model.StateId)
-                        {
-                            <option value="@state.StateId" selected>@state.NameState</option>
-                        }
-                        else
-                        {
-                            <option value="@state.StateId">@state.NameState</option>
-                        }
-                    }
-                </select>
-                <span asp-validation-for="StateId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ActivityId" class="control-label"></label>
-                <select asp-for="ActivityId" class="form-control" multiple>
-                    @foreach (var activity in ViewBag.Activities)
-                    {
-                        if (Model.ActivityData.Any(a => a.IdActivity == activity.IdActivity))
-                        {
-                            <option value="@activity.IdActivity" selected>
-                                @activity.Type
-                            </option>
-                        }
-                        else
-                        {
-                            <option value="@activity.IdActivity">
-                                @activity.Type
-                            </option>
-                        }
-                    }
-                </select>
-                <span asp-validation-for="ActivityId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="IdPlace" />
+    <div class="form-group input-container">
+        <label class="control-label">Nombre</label>
+        <input asp-for="NamePlace" class="form-control" />
+        <span asp-validation-for="NamePlace" class="text-danger"></span>
+    </div>
+    <div class="form-group input-container">
+        <label class="control-label">Latitud</label>
+        <input asp-for="Latitude" class="form-control" />
+        <span asp-validation-for="Latitude" class="text-danger"></span>
+    </div>
+    <div class="form-group input-container">
+        <label class="control-label">Longitud</label>
+        <input asp-for="Longitude" class="form-control" />
+        <span asp-validation-for="Longitude" class="text-danger"></span>
+    </div>
+    <div class="form-group input-container">
+        <label class="control-label">Dirección</label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <div class="form-group input-container">
+        <label asp-for="Description" class="control-label">Descripción</label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group input-container">
+        <label class="control-label">Link</label>
+        <input asp-for="Link" class="form-control" />
+        <span asp-validation-for="Link" class="text-danger"></span>
+    </div>
+    <div class="form-group input-container">
+        <label class="control-label">Estado</label>
+        <select asp-for="StateId" class="form-control">
+            @foreach (var state in ViewBag.States)
+            {
+                @if (state.StateId == Model.StateId)
+                {
+                    <option value="@state.StateId" selected>@state.NameState</option>
+                }
+                else
+                {
+                    <option value="@state.StateId">@state.NameState</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="StateId" class="text-danger"></span>
+    </div>
+    <div class="form-group input-container">
+        <label class="control-label">Actividad</label>
+        <select asp-for="ActivityId" class="form-control" size="10">
+            @foreach (var activity in ViewBag.Activities)
+            {
+                if (Model.ActivityData.Any(a => a.IdActivity == activity.IdActivity))
+                {
+                    <option value="@activity.IdActivity" selected>
+                        @activity.Type
+                    </option>
+                }
+                else
+                {
+                    <option value="@activity.IdActivity">
+                        @activity.Type
+                    </option>
+                }
+            }
+        </select>
+        <span asp-validation-for="ActivityId" class="text-danger"></span>
+    </div>
+    <div class="form-group submit">
+        <button type="submit" class="btn" id="saveButton">Enviar</button>
+    </div>
+    <div class="backk">
+        <a asp-action="Index" class="back">Volver a lista</a>
+    </div>
+</form>
     </div>
 </div>
+<script>
+    $('#saveButton').click(function (e) {
+        e.preventDefault();
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+        // Verificar manualmente si los campos cumplen con los requisitos
+        var name = $('#NamePlace').val();
+        var latitude = $('#Latitude').val();
+        var longitude = $('#Longitude').val();
+        var address = $('#Address').val();
+        var description = $('#Description').val();
+        var link = $('#Link').val();
+        var stateId = $('#StateId').val();
+        var activityId = $('#ActivityId').val();
 
+        if (name.trim() === '' || latitude.trim() === '' || longitude.trim() === '' || address.trim() === '' || description.trim() === '' || link.trim() === '' || stateId == null || activityId == null || activityId.length === 0) {
+            // Mostrar un mensaje de error si algún campo está vacío
+            Swal.fire({
+                title: 'Error',
+                text: 'Por favor, completa todos los campos obligatorios.',
+                icon: 'error'
+            });
+        } else {
+            // Si todos los campos están completos, mostrar la confirmación
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: '¿Estás seguro de que deseas editar este lugar?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, editar lugar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('form').submit();
+                }
+            });
+        }
+    });
+</script>

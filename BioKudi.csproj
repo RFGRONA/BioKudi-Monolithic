@@ -28,4 +28,11 @@
     <None Include="wwwroot\Rotativa\wkhtmltopdf.exe" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\css\Home\User.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

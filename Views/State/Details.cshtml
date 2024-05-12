@@ -1,31 +1,56 @@
 ﻿@model BioKudi.dto.StateDto
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles Estado";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<head>
+    <link href="/css/State/StateDetails.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<div class="body">
+    <h1>Detalles de estado</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Estado
+                </th>
+                <th>
+                    Tabla
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <p>
+                        @Html.DisplayFor(model => model.NameState)
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        @Html.DisplayFor(model => model.Table)
+                    </p>
+                </td>
+            </tr>
+        </tbody>
 
-<h1>Details</h1>
+        @Html.DisplayNameFor(model => model.NameState)
 
-<div>
-    <h4>StateDto</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NameState)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NameState)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Table)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Table)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.StateId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+        @Html.DisplayFor(model => model.NameState)
+
+
+        @Html.DisplayNameFor(model => model.Table)
+
+
+        @Html.DisplayFor(model => model.Table)
+
+        <a asp-action="Edit" asp-route-id="@Model?.StateId">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+
 </div>

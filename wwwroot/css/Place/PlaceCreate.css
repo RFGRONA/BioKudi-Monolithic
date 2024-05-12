@@ -1,0 +1,101 @@
+﻿body {
+    font-family: "Bitter", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    background-color: #FEECD6;
+}
+
+.body {
+}
+
+h1 {
+    margin-left: 30%;
+    margin-top: 4%;
+    color: #F67924;
+    font-weight: bold;
+}
+
+h4 {
+    margin-left: 30%;
+    color: black;
+}
+
+form {
+    background: #F5D4AC;
+    margin: 0 auto;
+    margin-bottom: 15%;
+    max-width: 40%;
+    border-radius: 15px;
+    min-height: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+label {
+    margin-top: 10%;
+}
+
+.input-container {
+    max-width: 70%;
+    margin: 0 auto;
+}
+
+.submit {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.btn {
+    background-color: #F67924;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    border: none;
+}
+
+    .btn:focus {
+        outline: none;
+    }
+
+
+    .btn:hover {
+        background-color: #EC5F00;
+    }
+
+    .btn:active {
+        background-color: #F67924;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 20px;
+        text-decoration: none;
+        border: none;
+    }
+
+.back {
+    max-width: 20%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5%;
+    color: #F67924;
+    text-decoration: none;
+}
+
+.backk {
+    display: flex;
+    justify-content: center;
+}
+
+.back:hover {
+    color: #F67924;
+    text-decoration: underline;
+}
+
+p {
+    font-style: italic;
+    color: red;
+    margin-bottom: -1%;
+}
+
+

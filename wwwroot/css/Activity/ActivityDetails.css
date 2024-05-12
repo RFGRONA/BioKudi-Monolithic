@@ -16,11 +16,12 @@ h1 {
 p {
     color: black;
 }
-table{
+table {
     margin: 0 auto;
     min-width: 50%;
     background: #F5D4AC;
     border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 td, th{
     padding: 10px;

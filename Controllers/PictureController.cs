@@ -25,7 +25,9 @@ namespace BioKudi.Controllers
         // GET: PictureController
         public ActionResult Index()
         {
-            var pictures = pictureService.GetAllPictures() ?? new List<PictureDto>();
+            var pictures = pictureService.GetAllPictures();
+            if (pictures == null)
+                return RedirectToAction("Error", "Admin");
             return View(pictures);
         }
 
@@ -80,23 +82,14 @@ namespace BioKudi.Controllers
         }
 
         // GET: PictureController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            var picture = pictureService.GetPicture(id);
-            if (picture == null)
-                return RedirectToAction("Error", "Admin");
-            return View(picture);
-        }
-
-        // POST: PictureController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
-                var result = pictureService.DeletePicture(id);
-                if (!result)
-                    return RedirectToAction("Error", "Admin");
-                return RedirectToAction(nameof(Index));
+            var picture = pictureService.DeletePicture(id);
+            if (picture == null)
+                return RedirectToAction("Error", "Admin");
+            return RedirectToAction(nameof(Index));
         }
     }
 }

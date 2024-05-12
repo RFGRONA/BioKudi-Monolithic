@@ -4,90 +4,115 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<head>
+    <link href="/css/Place/PlaceDetails.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
 
-<h1>Details</h1>
+<div class="body">
 
-<div>
-    <h4>PlaceDto</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NamePlace)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NamePlace)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Latitude)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Latitude)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Longitude)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Longitude)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Link)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Link)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StateName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StateName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Pictures)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Pictures)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Reviews)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Reviews)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ActivityData)
-        </dt>
-        <td class="text">
-            @if (Model.ActivityData == null || Model.ActivityData.Count == 0)
-            {
-                <p>Sin actividades asociadas</p>
-            }
-            else
-            {
-                <ul>
-                    @foreach (var activity in Model.ActivityData)
+
+    <h1>Details</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Coordenadas
+                </th>
+                <th>
+                    Dirección
+                </th>
+                <th>
+                    Descripción
+                </th>
+                <th>
+                    Enlace
+                </th>
+                <th>
+                    Estado
+                </th>
+                <th>
+                    Imágenes
+                </th>
+                <th>
+                    Reseñas
+                </th>
+                <th>
+                    Actividades
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <p>
+                        @Html.DisplayFor(model => model.NamePlace)
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        @Html.DisplayFor(model => model.Latitude),
+                        @Html.DisplayFor(model => model.Longitude)
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        @Html.DisplayFor(model => model.Address)
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        @Html.DisplayFor(model => model.Description)
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        @Html.DisplayFor(model => model.Link)
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        @Html.DisplayFor(model => model.StateName)
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        @Html.DisplayFor(model => model.Pictures)
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        @Html.DisplayFor(model => model.Reviews)
+                    </p>
+                </td>
+                <td class="text">
+                    @if (Model.ActivityData == null || Model.ActivityData.Count == 0)
                     {
-                        <li>
-                            @activity.IdActivity - @activity.Type
-                        </li>
+                        <p>Sin actividades asociadas</p>
                     }
-                </ul>
-            }
-        </td>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdPlace">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+                    else
+                    {
+                        <ul>
+                            @foreach (var activity in Model.ActivityData)
+                            {
+                                <li>
+                                    @activity.IdActivity - @activity.Type
+                                </li>
+                            }
+                        </ul>
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="acciones">
+        <a asp-action="Edit" asp-route-id="@Model?.IdPlace" class="edit">Editar</a>
+        <a asp-action="Index" class="back">Volver a lista</a>
+    </div>
 </div>

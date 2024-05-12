@@ -72,22 +72,13 @@ namespace BioKudi.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: StateController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            var state = stateService.GetState(id);
-            if (state == null)
-                return RedirectToAction("Error", "Admin");
-            return View(state);
-        }
-
-        // POST: StateController/Delete/5
+        // POST: StateController/Delete/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
-            var result = stateService.Delete(id);
-            if (!result)
+            var state = stateService.Delete(id);
+            if (!state)
                 return RedirectToAction("Error", "Admin");
             return RedirectToAction(nameof(Index));
         }

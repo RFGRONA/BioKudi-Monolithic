@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using BioKudi.dto;
 
 namespace BioKudi.Models;
 
@@ -104,7 +103,9 @@ public partial class BiokudiDbContext : DbContext
                 .IsUnicode(false)
                 .HasComment("Name of the picture (character string, maximum 128).")
                 .HasColumnName("name");
-            entity.Property(e => e.PlaceId).HasColumnName("place_id");
+            entity.Property(e => e.PlaceId)
+                .HasComment("Identifier of the place to which the picture belongs (integer).")
+                .HasColumnName("place_id");
 
             entity.HasOne(d => d.Place).WithMany(p => p.Pictures)
                 .HasForeignKey(d => d.PlaceId)
@@ -196,7 +197,9 @@ public partial class BiokudiDbContext : DbContext
                 .IsUnicode(false)
                 .HasComment("Comment of the review (character string, maximum 255).")
                 .HasColumnName("comment");
-            entity.Property(e => e.PlaceId).HasColumnName("place_id");
+            entity.Property(e => e.PlaceId)
+                .HasComment("ID of the place being reviewed (integer).")
+                .HasColumnName("place_id");
             entity.Property(e => e.Rate)
                 .HasComment("Rating of the review (float, precision of 2 digits).")
                 .HasColumnName("rate");
@@ -265,6 +268,11 @@ public partial class BiokudiDbContext : DbContext
                 .IsUnicode(false)
                 .HasComment("Subject of the ticket (character string, maximum 1024).")
                 .HasColumnName("affair");
+            entity.Property(e => e.Answer)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasComment("Answer provided for the ticket (character string, maximum 255).")
+                .HasColumnName("answer");
             entity.Property(e => e.State)
                 .HasComment("ID of the state in which the ticket is located (integer).")
                 .HasColumnName("state");
@@ -344,8 +352,4 @@ public partial class BiokudiDbContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-public DbSet<BioKudi.dto.TicketDto> TicketDto { get; set; } = default!;
-
-public DbSet<BioKudi.dto.PlaceDto> PlaceDto { get; set; } = default!;
 }

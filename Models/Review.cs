@@ -25,6 +25,9 @@ public partial class Review
     /// </summary>
     public int UserId { get; set; }
 
+    /// <summary>
+    /// ID of the place being reviewed (integer).
+    /// </summary>
     public int? PlaceId { get; set; }
 
     public virtual Place? Place { get; set; }

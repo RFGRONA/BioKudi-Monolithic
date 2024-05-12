@@ -10,42 +10,49 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Report</title>
+    <link href="~/css/audit/report.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ViewAction)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Action)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ViewAction)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Action)
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <header>
+        <img src="~/img/favicon.png" alt="Logo BioKudi">
+        <h1>Reporte de auditoría</h1>
+    </header>
+    <p>
+        <a>Reporte generado por: @Model.FirstOrDefault()?.UserName</a>
+        <a>Fecha: @Model.FirstOrDefault()?.TimePrint</a>
+    </p>
+    <table class="table">
+            <tr>
+                <th>
+                    Fecha
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ViewAction)
+                </th>
+                <th>
+                    Acción
+                </th>
+            </tr>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ViewAction)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Action)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </body>
-<footer>
-    <a>Reporte generado por: @Model.FirstOrDefault()?.UserName</a>
-    <a>Fecha: @Model.FirstOrDefault()?.TimePrint</a>
-</footer>
 </html>

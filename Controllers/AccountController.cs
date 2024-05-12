@@ -66,21 +66,12 @@ namespace BioKudi.Controllers
         }
 
         // GET: AccountController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            var user = userService.GetUser(id);
-            if (user == null)
-                return RedirectToAction("Error", "Admin");
-            return View(user);
-        }
-
-        // POST: AccountController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
-            var result = userService.DeleteUser(id);
-            if (!result)
+            var user = userService.DeleteUser(id);
+            if (!user)
                 return RedirectToAction("Error", "Admin");
             return RedirectToAction(nameof(Index));
         }

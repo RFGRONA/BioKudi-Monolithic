@@ -1,37 +1,76 @@
 ﻿@model BioKudi.dto.StateDto
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Estado";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<head>
+    <link href="/css/State/StateEdit.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<div class="body">
 
-<h1>Edit</h1>
-
-<h4>StateDto</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="StateId" />
-            <div class="form-group">
-                <label asp-for="NameState" class="control-label"></label>
-                <input asp-for="NameState" class="form-control" />
-                <span asp-validation-for="NameState" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Table" class="control-label"></label>
-                <input asp-for="Table" class="form-control" />
-                <span asp-validation-for="Table" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+    <h1>Editar estado</h1>
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="StateId" />
+        <div class="form-group input-container">
+            <label class="control-label">Nombre</label>
+            <input asp-for="NameState" class="form-control" />
+            <span asp-validation-for="NameState" class="text-danger"></span>
+        </div>
+        <div class="form-group input-container">
+            <label class="control-label">Tabla</label>
+            <input asp-for="Table" class="form-control" />
+            <span asp-validation-for="Table" class="text-danger"></span>
+        </div>
+        <div class="form-group submit">
+            <input type="submit" value="Guardar" id="saveButton" class="btn" />
+        </div>
+        <div class="backk">
+            <a asp-action="Index" class="back">Volver a lista</a>
+        </div>
+    </form>
 </div>
+<script>
+    $('#saveButton').click(function (e) {
+        e.preventDefault();
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+        // Obtener los valores de los campos
+        var nameState = $('#NameState').val();
+        var table = $('#Table').val();
 
+        // Verificar si los campos requeridos están completados
+        if (nameState.trim() === '' || table.trim() === '') {
+            // Mostrar un mensaje de error si el campo de nombre está vacío
+            Swal.fire({
+                title: 'Error',
+                text: 'Por favor, completa todos los campos.',
+                icon: 'error'
+            });
+        } else {
+            // Si todos los campos requeridos están completados, mostrar la confirmación
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: '¿Estás seguro de que deseas editar este estado?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, editar estado',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Enviar el formulario si se confirma la acción
+                    $('form').submit();
+                }
+            });
+        }
+    });
+
+</script>

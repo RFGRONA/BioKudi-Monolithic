@@ -14,8 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <div class="body">
-
-    <h1>Editar</h1>
+    <h1>Editar actividad</h1>
     <form asp-action="Edit">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="IdActivity" />
@@ -47,29 +46,45 @@
             <span asp-validation-for="Places" class="text-danger"></span>
         </div>
         <div class="form-group submit">
-            <input type="submit" value="Guardar" asp-action="Edit" id="saveButton" class="btn btn-primary" />
+            <input type="submit" value="Guardar" asp-action="Edit" id="saveButton" class="btn" />
         </div>
         <div class="backk">
-            <a asp-action="Index" class="back">Back to List</a>
+            <a asp-action="Index" class="back">Volver a lista</a>
         </div>
     </form>
 </div>
 <script>
     $('#saveButton').click(function (e) {
         e.preventDefault();
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: '¿Estás seguro de que deseas editar esta actividad?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, editar actividad',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $('form').submit();
-            }
-        });
+
+        // Verificar manualmente si los campos cumplen con los requisitos
+        var type = $('#Type').val();
+        var places = $('#Places').val();
+
+        if (type.trim() === '' || places == null || places.length === 0) {
+            // Mostrar un mensaje de error si algún campo está vacío
+            Swal.fire({
+                title: 'Error',
+                text: 'Por favor, completa todos los campos obligatorios.',
+                icon: 'error'
+            });
+        } else {
+            // Si todos los campos están completos, mostrar la confirmación
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: '¿Estás seguro de que deseas editar esta actividad?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, editar actividad',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('form').submit();
+                }
+            });
+        }
     });
+
 </script>

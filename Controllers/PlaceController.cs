@@ -84,29 +84,15 @@ namespace BioKudi.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: PlaceController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
             var result = placeService.DeletePlace(id);
             if (!result)
                 return RedirectToAction("Error", "Admin");
             return RedirectToAction(nameof(Index));
-            //return View();
-        }
 
-        // POST: PlaceController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

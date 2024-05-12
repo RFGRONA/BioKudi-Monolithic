@@ -194,6 +194,7 @@ footer {
     opacity: 0;
     z-index: 1;
     transition: all 200ms ease;
+
 }
 
 .menu ul li:hover ul.perfil {

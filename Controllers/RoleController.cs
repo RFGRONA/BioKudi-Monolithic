@@ -71,22 +71,13 @@ namespace BioKudi.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: RoleController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            var role = roleService.GetRole(id);
-            if (role == null)
-                return RedirectToAction("Error", "Admin");
-            return View(role);
-        }
-
         // POST: RoleController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
-            var result = roleService.DeleteRole(id);
-            if (!result)
+            var role = roleService.DeleteRole(id);
+            if (!role)
                 return RedirectToAction("Error", "Admin");
             return RedirectToAction(nameof(Index));
         }

@@ -57,22 +57,21 @@
     $('#saveButton').click(function (e) {
         e.preventDefault();
 
-        // Verificar manualmente si los campos cumplen con los requisitos
+        // Manually check if fields meet requirements
         var type = $('#Type').val();
-        var places = $('#Places').val();
 
-        if (type.trim() === '' || places == null || places.length === 0) {
-            // Mostrar un mensaje de error si algún campo está vacío
+        if (type.trim() === '') {
+            // Show an error message if any field is empty
             Swal.fire({
                 title: 'Error',
                 text: 'Por favor, completa todos los campos obligatorios.',
                 icon: 'error'
             });
         } else {
-            // Si todos los campos están completos, mostrar la confirmación
+            // If all fields are complete, show confirmation
             Swal.fire({
                 title: '¿Estás seguro?',
-                text: '¿Estás seguro de que deseas editar esta actividad?',
+                text: '¿Deseas editar esta actividad?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

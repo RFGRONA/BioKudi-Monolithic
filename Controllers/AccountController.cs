@@ -71,7 +71,7 @@ namespace BioKudi.Controllers
         public ActionResult Delete(int id)
         {
             var user = userService.DeleteUser(id);
-            if (user == null)
+            if (!user)
                 return RedirectToAction("Error", "Admin");
             return RedirectToAction(nameof(Index));
         }

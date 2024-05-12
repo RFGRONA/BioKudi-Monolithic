@@ -20,6 +20,9 @@ public partial class Picture
     /// </summary>
     public string Link { get; set; } = null!;
 
+    /// <summary>
+    /// Identifier of the place to which the picture belongs (integer).
+    /// </summary>
     public int? PlaceId { get; set; }
 
     public virtual Place? Place { get; set; }

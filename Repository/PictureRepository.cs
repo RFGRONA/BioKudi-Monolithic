@@ -50,8 +50,11 @@ namespace BioKudi.Repository
                     Link = pictureEntity.Link,
                     PlaceId = pictureEntity.PlaceId
                 };
-                var place = _placeRepository.GetPlace((int)picture.PlaceId);
-                picture.PlaceName = place != null ? place.NamePlace : null;
+                if(picture.PlaceId != null)
+                {
+                    var place = _placeRepository.GetPlace((int)picture.PlaceId);
+                    picture.PlaceName = place != null ? place.NamePlace : null;
+                }
                 return picture;
             }
             catch (Exception ex)

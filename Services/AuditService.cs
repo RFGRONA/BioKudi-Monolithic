@@ -17,7 +17,7 @@ namespace BioKudi.Services
 
         public IEnumerable<AuditDto> GetAllAudits()
         {
-            return auditRepo.GetListAudit();
+            return auditRepo.GetListAudit() ?? new List<AuditDto>();
         }
 
         public IEnumerable<ReportAuditViewModel> GetAuditReport(HttpContext httpContext)

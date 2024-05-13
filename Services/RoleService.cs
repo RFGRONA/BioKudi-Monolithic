@@ -16,7 +16,7 @@ namespace BioKudi.Services
 
         public IEnumerable<RoleDto> GetRoles()
         {
-            return roleRepository.GetRoles();
+            return roleRepository.GetRoles() ?? new List<RoleDto>();
         }
 
         public RoleDto GetRole(int roleId)

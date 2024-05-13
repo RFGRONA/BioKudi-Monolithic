@@ -26,7 +26,7 @@ namespace BioKudi.Services
 
 		public IEnumerable<ActivityDto> GetAllActivities()
 		{
-			return activityRepo.GetListActivity();
+			return activityRepo.GetListActivity() ?? new List<ActivityDto>();
 		}
 
 		public ActivityDto GetActivity(int activityId)

@@ -25,7 +25,7 @@ namespace BioKudi.Controllers
         // GET: ActivityController
         public ActionResult Index()
         {
-            var activities = activityService.GetAllActivities() ?? new List<ActivityDto>();
+            var activities = activityService.GetAllActivities();
             return View(activities);
         }
 

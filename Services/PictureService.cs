@@ -21,7 +21,7 @@ namespace BioKudi.Services
 
         public IEnumerable<PictureDto> GetAllPictures()
         {
-            return picRepo.GetListPicture();
+            return picRepo.GetListPicture() ?? new List<PictureDto>();
         }
 
         public PictureDto CreatePicture(PictureDto picture)

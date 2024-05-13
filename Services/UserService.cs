@@ -66,7 +66,7 @@ namespace BioKudi.Services
         
         public IEnumerable<UserDto> GetAllUsers()
         {
-			return userRepo.GetListUser();
+			return userRepo.GetListUser() ?? new List<UserDto>();
 		}
 
         public UserDto GetUser(int userId)

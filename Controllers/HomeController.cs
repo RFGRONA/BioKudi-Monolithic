@@ -20,12 +20,14 @@ namespace BioKudi.Controllers
         private readonly UserService userService;
         private readonly MapService mapService;
         private readonly PlacesService placeService;
-        public HomeController(ILogger<HomeController> logger, UserService userService, MapService mapService, PlacesService placesService)
+        private readonly TicketService ticketService;
+        public HomeController(ILogger<HomeController> logger, UserService userService, MapService mapService, PlacesService placesService, TicketService ticketService)
         {
             _logger = logger;
             this.userService = userService;
             this.mapService = mapService;
             this.placeService = placesService;
+            this.ticketService = ticketService;
         }
 
         [ValidateLogin]
@@ -110,6 +112,23 @@ namespace BioKudi.Controllers
                     return RedirectToAction("Login", "Home");
             }
             return View(user);
+        }
+
+        [ValidateAuthentication]
+        public IActionResult Ticket()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateAuthentication]
+        public IActionResult Ticket(TicketDto ticket)
+        {
+            var result = ticketService.CreateTicket(ticket, HttpContext);
+            if (result == null)
+                return RedirectToAction("Error", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

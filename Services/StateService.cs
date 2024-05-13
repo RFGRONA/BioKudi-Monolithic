@@ -15,7 +15,7 @@ namespace BioKudi.Services
         }
         public IEnumerable<StateDto> GetAllStates()
         {
-            return stateRepo.GetAllStates();
+            return stateRepo.GetAllStates() ?? new List<StateDto>();
         }
 
         public StateDto GetState(int stateId)

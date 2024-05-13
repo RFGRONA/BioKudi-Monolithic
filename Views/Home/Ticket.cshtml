@@ -1,0 +1,29 @@
+﻿@model BioKudi.dto.TicketDto
+
+@{
+    ViewData["Title"] = "Ticket";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h1>Contactanos</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Ticket">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Titulo</label>
+                <input asp-for="Type" class="form-control" />
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Asunto</label>
+                <input asp-for="Affair" class="form-control" />
+                <span asp-validation-for="Affair" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

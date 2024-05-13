@@ -67,7 +67,7 @@ namespace BioKudi.Repository
                 var states = _context.States.ToDictionary(s => s.IdState, s => s.NameState);
                 var ticketEntities = _context.Tickets;
                 var tickets = new List<TicketDto>();
-                if(tickets.Count == 0)
+                if(ticketEntities == null)
                     return null;
                 foreach (var ticket in ticketEntities)
                 {

@@ -26,7 +26,7 @@ public class PlacesService
 
 	public IEnumerable<PlaceDto> GetAllPlaces()
 	{
-		return placesRepo.GetListPlace();
+		return placesRepo.GetListPlace() ?? new List<PlaceDto>();
 	}
 
 	public PlaceDto GetPlace(int placeId)

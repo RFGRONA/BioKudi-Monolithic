@@ -22,7 +22,7 @@ namespace BioKudi.Controllers
         // GET: StateController
         public ActionResult Index()
         {
-            var states = stateService.GetAllStates() ?? new List<StateDto>();
+            var states = stateService.GetAllStates();
             return View(states);
         }
 

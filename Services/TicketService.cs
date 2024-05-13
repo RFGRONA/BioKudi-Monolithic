@@ -1,5 +1,6 @@
 ﻿using BioKudi.dto;
 using BioKudi.Repository;
+using System.Security.Claims;
 
 namespace BioKudi.Services
 {
@@ -14,8 +15,13 @@ namespace BioKudi.Services
             this.httpContextAccessor = httpContextAccessor;
         }
 
-        public TicketDto CreateTicket(TicketDto ticket)
+        public TicketDto CreateTicket(TicketDto ticket, HttpContext httpContext)
         {
+            var userIdClaim = httpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim != null)
+                if (int.TryParse(userIdClaim.Value, out int userId))
+                    ticket.UserId = userId;
+            ticket.State = 6;
             var result = ticketRepo.Create(ticket);
             if (result == null)
             {
@@ -26,7 +32,7 @@ namespace BioKudi.Services
 
         public IEnumerable<TicketDto> GetAllTickets()
         {
-            return ticketRepo.GetListTicket();
+            return ticketRepo.GetListTicket() ?? new List<TicketDto>();
         }
 
         public TicketDto GetTicket(int id)

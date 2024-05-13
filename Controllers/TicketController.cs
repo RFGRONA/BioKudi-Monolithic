@@ -24,7 +24,7 @@ namespace BioKudi.Controllers
         // GET: TicketController
         public ActionResult Index()
         {
-            var tickets = ticketService.GetAllTickets() ?? new List<TicketDto>();
+            var tickets = ticketService.GetAllTickets();
             return View(tickets);
         }
 
@@ -35,23 +35,6 @@ namespace BioKudi.Controllers
             if (ticket == null)
                 return RedirectToAction("Error", "Admin");
             return View();
-        }
-
-        // GET: TicketController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: TicketController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(TicketDto ticket)
-        {
-            var result = ticketService.CreateTicket(ticket);
-            if (result == null)
-                return RedirectToAction("Error", "Admin");
-            return RedirectToAction(nameof(Index));
         }
 
         // GET: TicketController/Edit/5

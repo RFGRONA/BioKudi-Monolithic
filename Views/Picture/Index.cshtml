@@ -67,11 +67,11 @@
 </div>
 @Html.AntiForgeryToken()
 <script>
-    //Funcion ventana emergente
+    // Popup window function
     function showConfirmationDialog(id) {
         Swal.fire({
             title: '¿Estás seguro?',
-            text: '¿Estás seguro de que deseas eliminar esta imagen?',
+            text: '¿Deseas eliminar esta imagen?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -80,13 +80,13 @@
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Realizar la solicitud de eliminación al controlador
+                // Make the delete request to the controller
                 $.ajax({
                     url: '@Url.Action("Delete", "Picture")/' + id,
                     type: 'POST',
                     data: { '__RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
                     success: function (result) {
-                        // Actualizar la vista después de la eliminación exitosa
+                        // Refresh view after successful deletion
                         window.location.reload();
                     },
                     error: function (xhr, status, error) {

@@ -102,7 +102,7 @@ namespace BioKudi.Repository
                 ticketEntity.Type = ticket.Type;
                 ticketEntity.Affair = ticket.Affair;
                 ticketEntity.UserId = ticket.UserId;
-                ticketEntity.State = 7;
+                ticketEntity.State = ticket.State;
                 ticketEntity.Answer = ticket.Answer;
                 _context.SaveChanges();
                 return ticket;

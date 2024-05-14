@@ -42,6 +42,7 @@ namespace BioKudi.Services
 
         public TicketDto UpdateTicket(TicketDto ticket)
         {
+            ticket.State = 7;
             var result = ticketRepo.Update(ticket);
             if (result == null)
             {

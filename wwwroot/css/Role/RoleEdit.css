@@ -31,6 +31,8 @@ form {
 
 label {
     margin-top: 10%;
+    color: black;
+    font-weight: bold;
 }
 
 .input-container {

@@ -11,5 +11,6 @@ namespace BioKudi.dto
         public int UserId { get; set; }
         public int State { get; set; }
 		public string StateName { get; set; } = null!;
+        public string Answer { get; set; } = null!;
 	}
 }

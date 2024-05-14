@@ -1,43 +1,67 @@
 ﻿@model BioKudi.dto.TicketDto
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detlles Ticket";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<head>
+    <link href="/css/Ticket/TicketDetails.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<div class="body">
 
-<h1>Details</h1>
 
-<div>
-    <h4>TicketDto</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Affair)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Affair)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StateName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StateName)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdTicket">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <h1>Detalles Ticket</h1>
+    <h2>@Html.DisplayFor(model => model.Type)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Asunto
+                </th>
+                <th>
+                    ID Usuario
+                </th>
+                <th>
+                    Estado
+                </th>
+                <th>
+                    Respuesta
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Affair)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.StateName)
+                </td>
+                <td>
+                    @if(!string.IsNullOrEmpty(Model.Answer)){
+                    @Html.DisplayFor(model => model.Answer)
+                    }else{
+                        <p>Sin respuesta</p>
+                    }
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+    <div class="acciones">
+        @if (string.IsNullOrEmpty(Model.Answer))
+        {
+            <a asp-action="Edit" asp-route-id="@Model?.IdTicket" class="edit">Editar</a>
+        }
+        
+        <a asp-action="Index" class="back">Volver a lista</a>
+    </div>
+
 </div>

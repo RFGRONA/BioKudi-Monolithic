@@ -49,7 +49,8 @@ namespace BioKudi.Repository
                     Affair = ticketEntity.Affair,
                     UserId = ticketEntity.UserId,
                     State = ticketEntity.State,
-                    StateName = _context.States.Find(ticketEntity.State).NameState
+                    StateName = _context.States.Find(ticketEntity.State).NameState,
+                    Answer = ticketEntity.Answer
                 };
                 return ticket;
             }
@@ -77,7 +78,8 @@ namespace BioKudi.Repository
                         Type = ticket.Type,
                         Affair = ticket.Affair,
                         UserId = ticket.UserId,
-                        StateName = states.ContainsKey((int)ticket.State) ? states[(int)ticket.State] : null
+                        StateName = states.ContainsKey((int)ticket.State) ? states[(int)ticket.State] : null,
+                        Answer = ticket.Answer
                     };
                     tickets.Add(ticketDto);
                 }
@@ -100,7 +102,8 @@ namespace BioKudi.Repository
                 ticketEntity.Type = ticket.Type;
                 ticketEntity.Affair = ticket.Affair;
                 ticketEntity.UserId = ticket.UserId;
-                ticketEntity.State = ticket.State;
+                ticketEntity.State = 7;
+                ticketEntity.Answer = ticket.Answer;
                 _context.SaveChanges();
                 return ticket;
             }

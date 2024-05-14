@@ -34,7 +34,7 @@ namespace BioKudi.Controllers
             var ticket = ticketService.GetTicket(id);
             if (ticket == null)
                 return RedirectToAction("Error", "Admin");
-            return View();
+            return View(ticket);
         }
 
         // GET: TicketController/Edit/5

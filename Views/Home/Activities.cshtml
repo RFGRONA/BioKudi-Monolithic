@@ -1,8 +1,23 @@
 ﻿@model IEnumerable<BioKudi.dto.PlaceDto>
 
 @{
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else if (User.IsInRole("User"))
+    {
+        Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    }
+    else if (User.IsInRole("Editor"))
+    {
+        Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
     ViewData["Title"] = "Actividades";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <head>
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />

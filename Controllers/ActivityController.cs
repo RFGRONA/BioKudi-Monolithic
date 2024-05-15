@@ -10,7 +10,7 @@ using System.Diagnostics;
 namespace BioKudi.Controllers
 {
     [ValidateAuthentication]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Editor")]
     public class ActivityController : Controller
     {
         private readonly ActivityService activityService;
@@ -26,8 +26,6 @@ namespace BioKudi.Controllers
         public ActionResult Index()
         {
             var activities = activityService.GetAllActivities();
-            if (activities == null)
-                return RedirectToAction("Error", "Admin");
             return View(activities);
         }
 
@@ -82,24 +80,15 @@ namespace BioKudi.Controllers
                 return RedirectToAction("Error", "Admin");
             return RedirectToAction(nameof(Index));
         }
-
-        // GET: ActivityController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            var activity = activityService.GetActivity(id);
-            if (activity == null)
-                return RedirectToAction("Error", "Admin");
-            return View(activity);
-        }
-
         // POST: ActivityController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
             var result = activityService.DeleteActivity(id);
             if (!result)
                 return RedirectToAction("Error", "Admin");
+
             return RedirectToAction(nameof(Index));
         }
     }

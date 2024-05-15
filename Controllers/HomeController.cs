@@ -19,12 +19,15 @@ namespace BioKudi.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly UserService userService;
         private readonly MapService mapService;
-
-        public HomeController(ILogger<HomeController> logger, UserService userService, MapService mapService)
+        private readonly PlacesService placeService;
+        private readonly TicketService ticketService;
+        public HomeController(ILogger<HomeController> logger, UserService userService, MapService mapService, PlacesService placesService, TicketService ticketService)
         {
             _logger = logger;
             this.userService = userService;
             this.mapService = mapService;
+            this.placeService = placesService;
+            this.ticketService = ticketService;
         }
 
         [ValidateLogin]
@@ -61,13 +64,21 @@ namespace BioKudi.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult PublicMap()
+        public IActionResult Map()
         {
             var markers = mapService.GetMarkers();
             if (markers == null)
                 return RedirectToAction("Error", "Home");
             return View(markers);
 		}
+
+        public IActionResult Activities()
+        {
+            var places = placeService.GetAllPlaces();
+            if (places == null)
+                return RedirectToAction("Error", "Home");
+            return View(places);
+        }
 
         public ContentResult InfoMap(int idPlace)
         {
@@ -87,6 +98,8 @@ namespace BioKudi.Controllers
                     return RedirectToAction("IndexUser", "User", new { userId = user.UserId });
                 if (result.RoleName == "Admin") // Admin
                     return RedirectToAction("IndexAdmin", "Admin", new { userId = user.UserId });
+                if (result.RoleName == "Editor") // Admin
+                    return RedirectToAction("IndexEditor", "Editor", new { userId = user.UserId });
             }
             return View(user);
         }
@@ -101,6 +114,23 @@ namespace BioKudi.Controllers
                     return RedirectToAction("Login", "Home");
             }
             return View(user);
+        }
+
+        [ValidateAuthentication]
+        public IActionResult Ticket()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateAuthentication]
+        public IActionResult Ticket(TicketDto ticket)
+        {
+            var result = ticketService.CreateTicket(ticket, HttpContext);
+            if (result == null)
+                return RedirectToAction("Error", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

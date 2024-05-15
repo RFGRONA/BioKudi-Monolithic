@@ -24,23 +24,24 @@ builder.Services.AddAuthorization();
 builder.Services.AddLogging();
 builder.Services.AddRazorPages();
 
-builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<PasswordUtility>();
-builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<EmailUtility>();
+builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<ActivityRepository>();
-builder.Services.AddScoped<ActivityService>();
 builder.Services.AddScoped<RoleRepository>();
 builder.Services.AddScoped<StateRepository>();
 builder.Services.AddScoped<PlaceRepository>();
-builder.Services.AddScoped<PlacesService>();
 builder.Services.AddScoped<PictureRepository>();
+builder.Services.AddScoped<AuditRepository>();
+builder.Services.AddScoped<TicketRepository>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<ActivityService>();
+builder.Services.AddScoped<PlacesService>();
 builder.Services.AddScoped<PictureService>();
 builder.Services.AddScoped<MapService>();
-builder.Services.AddScoped<AuditRepository>();
 builder.Services.AddScoped<AuditService>();
 builder.Services.AddScoped<StateService>();
 builder.Services.AddScoped<RoleService>();
-builder.Services.AddScoped<TicketRepository>();
 builder.Services.AddScoped<TicketService>();
 
 builder.Services.AddHsts(options =>

@@ -15,14 +15,15 @@ namespace BioKudi.Services
     {
         private readonly UserRepository userRepo;
         private readonly PasswordUtility passwordUtility;
+        private readonly EmailUtility emailUtility;
         private readonly IHttpContextAccessor httpContextAccessor;
         private static readonly RoleRepository roleRepository = new RoleRepository(new BiokudiDbContext());
 
-        public UserService(UserRepository userRepo, PasswordUtility passwordUtility, IHttpContextAccessor httpContextAccessor)
+        public UserService(UserRepository userRepo, PasswordUtility passwordUtility, IHttpContextAccessor httpContextAccessor, EmailUtility emailUtility)
         {
             this.userRepo = userRepo;
             this.passwordUtility = passwordUtility;
-
+            this.emailUtility = emailUtility;
             this.httpContextAccessor = httpContextAccessor;
         }
 
@@ -40,6 +41,7 @@ namespace BioKudi.Services
                 model.AddModelError("Email", "Este correo ya esta registrado");
                 return null;
             }
+            emailUtility.SendEmail(user.Email, "Registro exitoso", emailUtility.loginEmail(user.NameUser));
             return user;
         }
 
@@ -66,7 +68,7 @@ namespace BioKudi.Services
         
         public IEnumerable<UserDto> GetAllUsers()
         {
-			return userRepo.GetListUser();
+			return userRepo.GetListUser() ?? new List<UserDto>();
 		}
 
         public UserDto GetUser(int userId)
@@ -91,6 +93,7 @@ namespace BioKudi.Services
             {
                 new Claim(ClaimTypes.Name, user.NameUser),
                 new Claim(ClaimTypes.Role, user.RoleName),
+                new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
             };
 

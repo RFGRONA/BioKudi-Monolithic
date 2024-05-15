@@ -6,47 +6,54 @@
 }
 
 .body {
+    max-width: 80%;
+    min-width: 80%;
+    margin: 0 auto;
+    margin-top: 5%;
+    padding: 20px;
+    border-radius: 5px;
 }
 
 h1 {
-    margin-left: 30%;
-    margin-top: 4%;
+    text-align: center;
     color: #F67924;
     font-weight: bold;
+    margin-bottom: 5%;
 }
 
-h4 {
-    margin-left: 30%;
+p {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
     color: black;
+    line-height: 1.5;
+    font-size: 32px;
+    font-family: "Inter";
+    text-align: center;
+    margin-bottom: 6%;
+}
+select option[value="pqrs"] {
+    color: red;
+}
+
+hr {
+    color: #F67924;
 }
 
 form {
-    background: #F5D4AC;
-    margin: 0 auto;
-    margin-bottom: 15%;
-    max-width: 40%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    background-color: #F5D4AC;
     border-radius: 15px;
-    min-height: 400px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    margin-bottom: 15%;
 }
 
-label {
-    margin-top: 10%;
-    color: black;
-    font-weight: bold;
-  
+.form-group {
+    margin-bottom: 20px;
+    padding: 3%;
 }
 
-.input-container {
-    max-width: 70%;
-    margin: 0 auto;
-}
-
-.submit {
-    margin-top: 5%;
-    margin-bottom: 5%;
-    display: flex;
-    justify-content: center;
+.Affair {
+    margin-top: -4%;
 }
 
 .btn {
@@ -75,38 +82,32 @@ label {
         text-decoration: none;
         border: none;
     }
-
-.back {
-    max-width: 20%;
-    display: flex;
-    justify-content: center;
+.submit {
+    
     margin-bottom: 5%;
-    color: #F67924;
-    text-decoration: none;
-}
-
-.backk {
     display: flex;
     justify-content: center;
 }
-
-.back:hover {
-    color: #F67924;
-    text-decoration: underline;
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 24px;
+}
+.input{
+    border-radius: 30px;
+}
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
-p {
-    font-style: italic;
-    color: red;
-    margin-bottom: -1%;
-}
-
-.affair{
-   /* color: #F67924;
-    font-weight: bold;*/
-   min-height: 200px;
-   vertical-align: top;
-}
-input.form-control.affair{
-    vertical-align: top;
+.seleccion{
+    border-radius: 30px;
+    max-width: 20%;
 }

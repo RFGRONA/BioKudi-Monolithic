@@ -23,67 +23,79 @@
     <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 </head>
-<h1>Contactanos</h1>
-<form asp-action="Ticket">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="form-group input-container">
-        <label class="control-label">Tipo</label>
-        <input asp-for="Type" maxlength="50" class="form-control" />
-        <span asp-validation-for="Type" class="text-danger"></span>
-    </div>
-    <div class="form-group input-container">
-        <label class="control-label">Asunto</label>
-        <textarea asp-for="Affair" maxlength="1024" class="form-control affair" rows="4"></textarea>
-        <span asp-validation-for="Affair" class="text-danger"></span>
-    </div>
-    <div class="form-group submit">
-        <input type="submit" value="Enviar" class="btn" />
-    </div>
-    <div class="backk">
-        <a asp-action="Index" class="back">Volver</a>
-    </div>
-</form>
+<div class="body">
+    <h1>Contactanos</h1>
+    <hr>
+    <p>
+        En caso de presentar algún problema, sugerencia o reclamo, puedes contactarte con
+        nosotros llenando el siguiente formulario o enviando un correo electrónico al correo:
+        <b>
+            biokudipqrs@gmail.com
+        </b>
+    </p>
+    <form asp-action="Ticket">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label for="Type">Tipo</label>
+            <select id="Type" value="PQRS" class="seleccion" asp-for="Type">
+                <option value="" disabled selected>PQRS</option>
+                <option value="sugerencia">Sugerencia</option>
+                <option value="reclamo">Reclamo</option>
+                <option value="pregunta">Pregunta</option>
+                <option value="queja">Queja</option>
+            </select>
+        </div>
+        <div class="form-group Affair">
+            <label for="Affair">Mensaje</label>
+            <textarea id="Affair" asp-for="Affair" rows="5" class="input" placeholder="Ingresa tu mensaje"></textarea>
+        </div>
+        <div class="submit">
+            <button type="submit" class="btn submit">Enviar</button>
+        </div>
+    </form>
+</div>
 <script>
-    $('form').submit(function (e) {
-        e.preventDefault();
-        var title = $('#Type').val();
-        var subject = $('#Affair').val();
+    $(document).ready(function () {
+        $('form').submit(function (e) {
+            e.preventDefault();
+            var tipo = $('#Type').val();
+            var mensaje = $('#Affair').val();
 
-        //  Manually check if fields meet requirements
-        if (title.trim() === '' || subject.trim() === '') {
-
-            Swal.fire({
-                title: 'Error',
-                text: 'Por favor, completa todos los campos.',
-                icon: 'error'
-            });
-        } else {
-            //Show an error message if any field is empty
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: '¿Estás seguro de que deseas enviar este ticket?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, enviar ticket',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    //If all fields are complete, show confirmation
-                    Swal.fire({
-                        title: '¡Bienvenido!',
-                        text: 'Ticket Creado Correctamente',
-                        icon: 'success',
-                        showConfirmButton: false
-                    });
-                    setTimeout(() => {
-                        $(this).unbind('submit').submit();
-                    }, 1500);
-
-                }
-            });
-        }
+            // Manually check if fields meet requirements
+            if (tipo === null || mensaje.trim() === '') {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Por favor, completa todos los campos.',
+                    icon: 'error'
+                });
+            } else {
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: '¿Estás seguro de que deseas enviar este ticket?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, enviar ticket',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: '¡Hecho!',
+                            text: 'Ticket Creado Correctamente',
+                            icon: 'success',
+                            showConfirmButton: false
+                        });
+                        setTimeout(() => {
+                            $('form').off('submit').submit();
+                        }, 1500);
+                    }
+                });
+            }
+        });
     });
 </script>

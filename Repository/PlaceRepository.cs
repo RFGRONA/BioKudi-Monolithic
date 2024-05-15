@@ -93,6 +93,20 @@ namespace BioKudi.Repository
                         Link = picture.Link
                     });
                 }
+                var reviews = placeEntity.Reviews;
+                double totalRate = 0;
+                foreach (var review in reviews)
+                {
+                    place.ReviewData.Add(new ReviewDto
+                    {
+                        IdReview = review.IdReview,
+                        Comment = review.Comment,
+                        Rate = review.Rate,
+                        UserName = _context.Users.Find(review.UserId).NameUser
+                    });
+                    totalRate += review.Rate;
+                }
+                place.Rating = reviews.Count() > 0 ? totalRate / reviews.Count() : 0;
                 return place;
             }
             catch (Exception ex)
@@ -107,6 +121,7 @@ namespace BioKudi.Repository
 			try
             {
                 var states = _context.States.ToDictionary(s => s.IdState, s => s.NameState);
+                var users = _context.Users.ToDictionary(u => u.IdUser, u => u.NameUser);
                 var placeEntities = _context.Places.Include(p => p.IdActivities).Include(p => p.Pictures).OrderBy(p => p.NamePlace);
                 var places = new List<PlaceDto>();
                 foreach (var place in placeEntities)
@@ -139,6 +154,19 @@ namespace BioKudi.Repository
                             Link = picture.Link
                         });
                     }
+                    double totalRate = 0;
+                    foreach (var review in place.Reviews)
+                    {
+                        placeDto.ReviewData.Add(new ReviewDto
+                        {
+                            IdReview = review.IdReview,
+                            Comment = review.Comment,
+                            Rate = review.Rate,
+                            UserName = users.ContainsKey(review.UserId) ? users[review.UserId] : null
+                        });
+                        totalRate += review.Rate;
+                    }
+                    placeDto.Rating = place.Reviews.Count() > 0 ? totalRate / place.Reviews.Count() : 0;
                     places.Add(placeDto);
                 }
                 return places;

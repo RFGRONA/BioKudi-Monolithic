@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using BioKudi.Models;
 
 namespace BioKudi.Utilities
 {
@@ -10,22 +11,27 @@ namespace BioKudi.Utilities
 		public override void OnActionExecuting(ActionExecutingContext context)
 		{
 			var role = context.HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
+			var userId = context.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
 			if (role == "User")
 			{
-				context.Result = new RedirectToActionResult("IndexUser", "User",
-					new { userId = context.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value });
+				context.Result = new RedirectToActionResult("IndexUser", "User", new { userId });
 				return;
 			}
 
 			if (role == "Admin")
 			{
-				context.Result = new RedirectToActionResult("IndexAdmin", "Admin",
-					new { userId = context.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value });
+				context.Result = new RedirectToActionResult("IndexAdmin", "Admin", new { userId });
 				return;
 			}
 
-			base.OnActionExecuting(context);
+            if (role == "Editor")
+            {
+                context.Result = new RedirectToActionResult("IndexEditor", "Editor",new { userId });
+                return;
+            }
+
+            base.OnActionExecuting(context);
 		}
 	}
 }

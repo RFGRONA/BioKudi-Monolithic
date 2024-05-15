@@ -9,6 +9,8 @@ namespace BioKudi.dto
         public float Rate { get; set; }
         public string? Comment { get; set; }
         public int UserId { get; set; }
+        public string? UserName { get; set; }
         public int? PlaceId { get; set; }
+        public string? PlaceName { get; set; }
     }
 }

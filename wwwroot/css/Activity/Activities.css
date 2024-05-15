@@ -1,0 +1,60 @@
+﻿body {
+    font-family: "Bitter", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    background-color: #D8EECE;
+}
+
+td {
+    border: 1px solid black;
+}
+
+.table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+table {
+    padding: 10px;
+    border-collapse: collapse;
+    width: 80%;
+    margin-bottom: 2%;
+}
+
+h1 {
+    font-size: 48px;
+    font-weight: bold;
+    color: #476930;
+    text-align: center;
+    padding: 10px;
+    margin-top: 2%;
+}
+
+.image {
+}
+
+img {
+    width: 342px;
+    height: 358px;
+}
+
+.title {
+    color: #476930;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.name {
+    text-align: left;
+}
+
+.arrow {
+    text-align: right;
+}
+
+.title-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}

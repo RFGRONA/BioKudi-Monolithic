@@ -20,63 +20,54 @@
     ViewData["Title"] = "Actividades";
 }
 <head>
+    <link href="/css/Activity/Activities.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <div class="body">
-
-
-    <h1>Actividades</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>
-                    Nombre Lugar
-                </th>
-                <th>
-                    Dirección
-                </th>
-                <th>
-                    Descripción
-                </th>
-                <th>
-                    Actividades
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (!Model.Any())
+    <h1>Lista de lugares</h1>
+    @if (!Model.Any())
+    {
+        <tr>
+            <td colspan="6" class="Error">No hay datos para mostrar</td>
+        </tr>
+    }
+    else
+    {
+        <div class="table-container">
+            @foreach (var item in Model)
             {
-                <tr>
-                    <td colspan="6" class="Error">No hay datos para mostrar</td>
-                </tr>
-            }
-            else
-            {
-                @foreach (var item in Model)
-                {
+                <table border="1">
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NamePlace)
+                        <td rowspan="3" class="image">
+                            @Html.DisplayFor(modelItem => item.Pictures)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Address)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @foreach (var activity in item.ActivityData)
-                            {
-                                <p>@activity.Type</p>
-                            }
+                        <td colspan="2" class="title">
+                            <div class="title-container">
+                                <div class="name">@Html.DisplayFor(modelItem => item.NamePlace) </div>
+                                <div class="arrow">Flechita</div>
+                            </div>
                         </td>
                     </tr>
-                }
+                    <tr>
+                        <td rowspan="2">
+                            Textitoo
+                        </td>
+                        <td>
+                            Direccion
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Actividades
+                        </td>
+                    </tr>
+                </table>
             }
-        </tbody>
-    </table>
+        </div>
+    }
 </div>

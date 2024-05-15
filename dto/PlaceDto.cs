@@ -18,6 +18,6 @@ namespace BioKudi.dto
         public List<ActivityDto> ActivityData { get; set; } = new List<ActivityDto>();
         public int Pictures { get; set; }
         public List<PictureDto> PictureData { get; set; } = new List<PictureDto>();
-        public int Reviews { get; set; } 
+        public int Reviews { get; set; }
     }
 }

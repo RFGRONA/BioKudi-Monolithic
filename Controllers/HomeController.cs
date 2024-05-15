@@ -98,6 +98,8 @@ namespace BioKudi.Controllers
                     return RedirectToAction("IndexUser", "User", new { userId = user.UserId });
                 if (result.RoleName == "Admin") // Admin
                     return RedirectToAction("IndexAdmin", "Admin", new { userId = user.UserId });
+                if (result.RoleName == "Editor") // Admin
+                    return RedirectToAction("IndexEditor", "Editor", new { userId = user.UserId });
             }
             return View(user);
         }

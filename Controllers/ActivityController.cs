@@ -10,7 +10,7 @@ using System.Diagnostics;
 namespace BioKudi.Controllers
 {
     [ValidateAuthentication]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Editor")]
     public class ActivityController : Controller
     {
         private readonly ActivityService activityService;

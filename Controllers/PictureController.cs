@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BioKudi.Controllers
 {
     [ValidateAuthentication]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Editor")]
     public class PictureController : Controller
     {
         private readonly PictureService pictureService;

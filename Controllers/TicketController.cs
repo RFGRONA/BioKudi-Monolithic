@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BioKudi.Controllers
 {
     [ValidateAuthentication]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Editor,Editor")]
     public class TicketController : Controller
     {
         private readonly TicketService ticketService;
@@ -53,7 +53,7 @@ namespace BioKudi.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(TicketDto ticket)
         {
-            var result = ticketService.UpdateTicket(ticket);
+            var result = ticketService.UpdateTicket(ticket, HttpContext);
             if (result == null)
                 return RedirectToAction("Error", "Admin");
             return RedirectToAction(nameof(Index));

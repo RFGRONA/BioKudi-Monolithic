@@ -1,0 +1,103 @@
+﻿@model IEnumerable<BioKudi.dto.PlaceDto>
+
+@{
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else if (User.IsInRole("User"))
+    {
+        Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    }
+    else if (User.IsInRole("Editor"))
+    {
+        Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    ViewData["Title"] = "Actividades";
+}
+
+<head>
+    <link href="/css/Activity/Activities.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Asul:wght@400;700&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+</head>
+<div class="body">
+    <h1>Lista de lugares</h1>
+    @if (!Model.Any())
+    {
+        <tr>
+            <td colspan="6" class="Error">No hay datos para mostrar</td>
+        </tr>
+    }
+    else
+    {
+        <div class="table-container">
+            @foreach (var item in Model)
+            {
+                <table>
+                    <tr>
+                        <td rowspan="3" class="image">
+                            @if (item.PictureData.Any())
+                            {
+                                <img src="@item.PictureData.FirstOrDefault().Link" alt="@item.PictureData.FirstOrDefault().Name" />
+                            }
+                            else
+                            {
+
+                                <p>Sin imagen</p>
+
+                            }
+                        </td>
+                        <td colspan="2" class="title">
+                            <div class="title-container">
+                                <div class="name">@Html.DisplayFor(modelItem => item.NamePlace) </div>
+                                <div class="arrow"><i class="fa-solid fa-caret-down"></i></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2" class="description">
+                            <div class="descriptionn">@Html.DisplayFor(modelItem => item.Description)</div>
+                        </td>
+                        <td class="address">
+                            <i class="fa-solid fa-location-dot"></i> <div class="address">@Html.DisplayFor(modelItem => item.Address)</div>
+                            <a href="https://www.google.com/maps/@@@item.Latitude,@item.Longitude,20z" target="_blank"  class="link">Ver en Maps</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="activity">
+                            @if (item.ActivityData.Any())
+                            {
+
+                                <div class="act">
+                                    <ul>
+                                        @foreach (var act in item.ActivityData)
+                                        {
+                                            <li>@act.Type</li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                            else
+                            {
+
+                            }
+                        </td>
+                    </tr>
+                </table>
+            }
+        </div>
+    }
+</div>

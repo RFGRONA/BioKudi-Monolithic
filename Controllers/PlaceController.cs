@@ -9,7 +9,7 @@ using BioKudi.dto;
 namespace BioKudi.Controllers
 {
     [ValidateAuthentication]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Editor")]
     public class PlaceController : Controller
     {
         private readonly PlacesService placeService;

@@ -83,6 +83,16 @@ namespace BioKudi.Repository
                         Type = activity.Type
                     });
                 }
+                var pictures = placeEntity.Pictures;
+                foreach (var picture in pictures)
+                {
+                    place.PictureData.Add(new PictureDto
+                    {
+                        IdPicture = picture.IdPicture,
+                        Name = picture.Name,
+                        Link = picture.Link
+                    });
+                }
                 return place;
             }
             catch (Exception ex)

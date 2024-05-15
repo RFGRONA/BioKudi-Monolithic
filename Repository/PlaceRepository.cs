@@ -107,7 +107,7 @@ namespace BioKudi.Repository
 			try
             {
                 var states = _context.States.ToDictionary(s => s.IdState, s => s.NameState);
-                var placeEntities = _context.Places.Include(p => p.IdActivities).OrderBy(p => p.NamePlace);
+                var placeEntities = _context.Places.Include(p => p.IdActivities).Include(p => p.Pictures).OrderBy(p => p.NamePlace);
                 var places = new List<PlaceDto>();
                 foreach (var place in placeEntities)
                 {
@@ -128,6 +128,15 @@ namespace BioKudi.Repository
                         {
                             IdActivity = activity.IdActivity,
                             Type = activity.Type
+                        });
+                    }
+                    foreach (var picture in place.Pictures)
+                    {
+                        placeDto.PictureData.Add(new PictureDto
+                        {
+                            IdPicture = picture.IdPicture,
+                            Name = picture.Name,
+                            Link = picture.Link
                         });
                     }
                     places.Add(placeDto);

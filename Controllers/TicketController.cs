@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BioKudi.Controllers
 {
     [ValidateAuthentication]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Editor,Editor")]
     public class TicketController : Controller
     {
         private readonly TicketService ticketService;
@@ -25,8 +25,6 @@ namespace BioKudi.Controllers
         public ActionResult Index()
         {
             var tickets = ticketService.GetAllTickets();
-            if (tickets == null)
-                return RedirectToAction("Error", "Admin");
             return View(tickets);
         }
 
@@ -36,24 +34,7 @@ namespace BioKudi.Controllers
             var ticket = ticketService.GetTicket(id);
             if (ticket == null)
                 return RedirectToAction("Error", "Admin");
-            return View();
-        }
-
-        // GET: TicketController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: TicketController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(TicketDto ticket)
-        {
-            var result = ticketService.CreateTicket(ticket);
-            if (result == null)
-                return RedirectToAction("Error", "Admin");
-            return RedirectToAction(nameof(Index));
+            return View(ticket);
         }
 
         // GET: TicketController/Edit/5
@@ -72,7 +53,7 @@ namespace BioKudi.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(TicketDto ticket)
         {
-            var result = ticketService.UpdateTicket(ticket);
+            var result = ticketService.UpdateTicket(ticket, HttpContext);
             if (result == null)
                 return RedirectToAction("Error", "Admin");
             return RedirectToAction(nameof(Index));

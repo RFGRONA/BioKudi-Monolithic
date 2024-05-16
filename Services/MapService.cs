@@ -488,161 +488,197 @@ namespace BioKudi.Services
 			};
 		}
 
-		// Bring all reviews for non-logged users. 
-		public ContentResult GetReviews(int idPlace)
-		{
-			var reviews = reviewRepo.GetReviewPlace(idPlace);
-			var head = @"
-                        <link rel=""stylesheet"" href=""https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"">
-                        <link rel=""preconnect"" href=""https://fonts.googleapis.com"">
-                        <link rel=""preconnect"" href=""https://fonts.gstatic.com"" crossorigin>
-                        <link href=""https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap"" rel=""stylesheet"">
-                        <script src=""https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js""></script>
-                        <script src=""https://cdn.jsdelivr.net/npm/sweetalert2@10""></script>
-                        <link rel=""preconnect"" href=""https://fonts.googleapis.com"">
-                        <link rel=""preconnect"" href=""https://fonts.gstatic.com"" crossorigin>
-                        <link href=""https://fonts.googleapis.com/css2?family=Asul:wght@400;700&family=Inter:wght@100..900&display=swap"" rel=""stylesheet"">
-                        <link rel=""stylesheet"" href=""~/lib/font-awesome/css/all.min.css"" />";
-			var css = @"table {
-                    margin: 1%;
-                    min-width: 95%;
-                    table-layout: fixed;
-                    word-wrap: break-word;
-                    word-break: break-all;
-                    margin-bottom: 2%;
-                    }
-                    colgroup col:first-child {
-                        width: 20%;
-                    }
-                    colgroup col:not(:first-child) {
-                        width: 80%;
-                    }
-                    h1 {
-                        text-align: center;
-                        color: #476930;
-                        font-family: 'Bitter', serif;
-                        font-optical-sizing: auto;
-                        font-weight: bold;
-                    }
-                    p {
-                        text-align: center;
-                    }
-                    body {
-                        background-color: #FEECD6;
-                    }
-                    td, th {
-                        padding: 3px;
-                        vertical-align: top;    
-                    }
-                    .rate {
-                        text-align: center;
-                        font-weight: bold;
-                        font-size: 28px;
-                        color: #F67924;
-                        font-family: 'Bitter', serif;
-                        font-optical-sizing: auto;
-                    }
-                    .end {
-                        font-weight: bold;
-                        color: #F67924;
-                        font-family: 'Bitter', serif;
-                        font-optical-sizing: auto;
-                        display: flex;
-                        justify-content: space-between;
-                        margin: 5%;
-                        padding: 0 10%;
-                    }
-                    .backk {
-                        text-align: left;
-                        color: #476930;
-                        text-decoration: none;
-                    }
-                    .index {
-                        text-align: right;
-                        color: #476930;
-                        text-decoration: none;  
-                    }
-                    .user {
-                    text-align: left;
-                    font-weight: bold;
+        // Bring all reviews for non-logged users. 
+        public ContentResult GetReviews(int idPlace)
+        {
+            var reviews = reviewRepo.GetReviewPlace(idPlace);
+            var head = @"
+                <link rel=""stylesheet"" href=""https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"">
+                <link rel=""preconnect"" href=""https://fonts.googleapis.com"">
+                <link rel=""preconnect"" href=""https://fonts.gstatic.com"" crossorigin>
+                <link href=""https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap"" rel=""stylesheet"">
+                <script src=""https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js""></script>
+                <script src=""https://cdn.jsdelivr.net/npm/sweetalert2@10""></script>
+                <link rel=""preconnect"" href=""https://fonts.googleapis.com"">
+                <link rel=""preconnect"" href=""https://fonts.gstatic.com"" crossorigin>
+                <link href=""https://fonts.googleapis.com/css2?family=Asul:wght@400;700&family=Inter:wght@100..900&display=swap"" rel=""stylesheet"">
+                <link rel=""stylesheet"" href=""~/lib/font-awesome/css/all.min.css"" />";
+            var css = @"
+            body {
+                background-color: #FEECD6;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+
+            html, body {
+                height: 100%;
+                width: 100%;
+            }
+
+            .info-container {
+                height: 100%;
+                width: 100%;
+                overflow-y: auto;
+            }
+
+            table {
+                margin: 1%;
+                min-width: 95%;
+                table-layout: fixed;
+                word-wrap: break-word;
+                word-break: break-all;
+                margin-bottom: 2%;
+            }
+
+            colgroup col:first-child {
+                width: 20%;
+            }
+
+            colgroup col:not(:first-child) {
+                width: 80%;
+            }
+
+            h1 {
+                text-align: center;
+                color: #476930;
+                font-family: 'Bitter', serif;
+                font-optical-sizing: auto;
+                font-weight: bold;
+            }
+
+            p {
+                text-align: center;
+            }
+
+            td, th {
+                padding: 3px;
+                vertical-align: top;    
+            }
+
+            .rate {
+                text-align: center;
+                font-weight: bold;
+                font-size: 28px;
+                color: #F67924;
+                font-family: 'Bitter', serif;
+                font-optical-sizing: auto;
+            }
+
+            .end {
+                font-weight: bold;
+                color: #F67924;
+                font-family: 'Bitter', serif;
+                font-optical-sizing: auto;
+                display: flex;
+                justify-content: space-between;
+                margin: 5%;
+                padding: 0 10%;
+            }
+
+            .backk {
+                text-align: left;
+                color: #476930;
+                text-decoration: none;
+            }
+
+            .index {
+                text-align: right;
+                color: #476930;
+                text-decoration: none;  
+            }
+
+            .user {
+                text-align: left;
+                font-weight: bold;
+                font-size: 18px;
+                font-family: 'Inter', sans-serif;
+            }
+
+            .comment {
+                text-align: left;
+                font-size: 17px;
+                font-family: 'Inter', sans-serif;
+            }
+
+            @media (max-width: 1200px) {
+                .rate {
+                    font-size: 24px;
+                }
+
+                .user, .end {
                     font-size: 18px;
-                    font-family: 'Inter', sans-serif;
-                    }
-                    .comment {
-                        text-align: left;
-                        font-size: 17px;
-                        font-family: 'Inter', sans-serif;
-                    }
-                    @media (max-width: 1200px) {
-                        .rate {
-                            font-size: 24px;
-                        }
-                        .user, .end {
-                            font-size: 18px;
-                        }
-                    }
-                    @media (max-width: 992px) {
-                        .rate {
-                            font-size: 20px;
-                        }
-                        .user, .end {
-                            font-size: 16px;
-                        }
-                    }
-                    @media (max-width: 768px) {
-                        .rate {
-                            font-size: 18px;
-                        }
-                        .user, .end {
-                            font-size: 14px;
-                        }
-                    }
-                    @media (max-width: 576px) {
-                        .rate {
-                            font-size: 16px;
-                        }
-                        .user, .end {
-                            font-size: 12px;
-                        }
-                    }";
-			var html = new StringBuilder();
-			html.Append($"<head>{head}</head>");
-			html.Append($"<style>{css}</style>");
-			html.Append("<h1>Reseñas</h1>");
+                }
+            }
 
-			if (reviews.Any())
-			{
-				html.Append("<table><colgroup><col style='width: 20%'><col style='width: 80%'></colgroup>");
-				foreach (var review in reviews)
-				{
-					html.Append($"<tr><td rowspan='2'><div class='rate'>&#9733; {WebUtility.HtmlEncode(review.Rate.ToString())} / 5</div></td>");
-					html.Append($"<td class='user'>{WebUtility.HtmlEncode(review.UserName)}</td></tr>");
-					if (!string.IsNullOrWhiteSpace(review.Comment))
-					{
-						html.Append($"<tr><td class='comment'>{WebUtility.HtmlEncode(review.Comment)}</td></tr>");
-					}
-					html.Append("<tr><td></td></tr>");
-				}
-				html.Append("</table>");
-			}
-			else
-			{
-				html.Append("<p>No hay reseñas todavía.<br>Si desea dejar una reseña, por favor inicie sesión.</p>");
-			}
+            @media (max-width: 992px) {
+                .rate {
+                    font-size: 20px;
+                }
 
-			html.Append($"<div class='end'><a href='#' onclick='showPlaceInfo({idPlace})' class='backk'>Volver al lugar</a>");
-			html.Append("<a href='/Home/Index' class='index'>Volver al inicio</a></div>");
+                .user, .end {
+                    font-size: 16px;
+                }
+            }
 
-			return new ContentResult
-			{
-				Content = html.ToString(),
-				ContentType = "text/html"
-			};
-		}
+            @media (max-width: 768px) {
+                .rate {
+                    font-size: 18px;
+                }
 
+                .user, .end {
+                    font-size: 14px;
+                }
+            }
 
-		// Bring all the reviews, the first being those of the logged in user
-		public ContentResult GetReviews(int idPlace, int idUser)
+            @media (max-width: 576px) {
+                .rate {
+                    font-size: 16px;
+                }
+
+                .user, .end {
+                    font-size: 12px;
+                }
+            }";
+            var html = new StringBuilder();
+            html.Append($"<head>{head}</head>");
+            html.Append($"<style>{css}</style>");
+            html.Append("<div class='info-container'>");
+            html.Append("<h1>Reseñas</h1>");
+
+            if (reviews.Any())
+            {
+                html.Append("<table><colgroup><col style='width: 20%'><col style='width: 80%'></colgroup>");
+                foreach (var review in reviews)
+                {
+                    html.Append($"<tr><td rowspan='2'><div class='rate'>&#9733; {WebUtility.HtmlEncode(review.Rate.ToString())} / 5</div></td>");
+                    html.Append($"<td class='user'>{WebUtility.HtmlEncode(review.UserName)}</td></tr>");
+                    if (!string.IsNullOrWhiteSpace(review.Comment))
+                    {
+                        html.Append($"<tr><td class='comment'>{WebUtility.HtmlEncode(review.Comment)}</td></tr>");
+                    }
+                    html.Append("<tr><td></td></tr>");
+                }
+                html.Append("</table>");
+            }
+            else
+            {
+                html.Append("<p>No hay reseñas todavía.<br>Si desea dejar una reseña, por favor inicie sesión.</p>");
+            }
+
+            html.Append($"<div class='end'><a href='#' onclick='showPlaceInfo({idPlace})' class='backk'>Volver al lugar</a>");
+            html.Append("<a href='/Home/Index' class='index'>Volver al inicio</a></div>");
+            html.Append("</div>"); // Cierre del contenedor info-container
+
+            return new ContentResult
+            {
+                Content = html.ToString(),
+                ContentType = "text/html"
+            };
+        }
+
+        // Bring all the reviews, the first being those of the logged in user
+        public ContentResult GetReviews(int idPlace, int idUser)
 		{
 			var reviews = reviewRepo.GetReviewUser(idPlace, idUser);
 			var head = @"
@@ -779,12 +815,18 @@ namespace BioKudi.Services
                 }
                 .user-actions .update-icon {
                     margin-right: 10px;
+                }
+                .info-container {
+                    height: 100%;
+                    width: 100%;
+                    overflow-y: auto;
                 }";
 
 			var html = new StringBuilder();
 			html.Append($"<head>{head}</head>");
 			html.Append($"<style>{css}</style>");
-			html.Append("<h1>Reseñas</h1>");
+            html.Append("<div class='info-container'>");
+            html.Append("<h1>Reseñas</h1>");
 			html.Append($"<div class='create-review'><a href='#' onclick='CreateReview({idPlace})' class='create'>Crear reseña</a></div>");
 
 			if (reviews.Any())
@@ -818,8 +860,9 @@ namespace BioKudi.Services
 
 			html.Append($"<div class='end'><a href='#' onclick='showPlaceInfo({idPlace})' class='backk'>Volver al lugar</a>");
 			html.Append("<a href='/Home/Index' class='index'>Volver al inicio</a></div>");
+            html.Append("</div>");
 
-			return new ContentResult
+            return new ContentResult
 			{
 				Content = html.ToString(),
 				ContentType = "text/html"

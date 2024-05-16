@@ -17,17 +17,16 @@ h1 {
 }
 
 p {
-    
+    margin-left: 15%;
 }
 
 table {
-    overflow: hidden;
+    width: 100%; 
     border-radius: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    min-width: 100%;
-    max-width: 100%;
+    min-width: 70%;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    table-layout: fixed;
+    overflow: hidden;
 }
 
     table thead tr {
@@ -43,19 +42,23 @@ table {
         padding: 10px;
         text-align: center;
         border: none;
-        max-width: 500px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
     }
 
+.comment {
+    overflow: hidden;
+    word-wrap: break-word;
+    white-space: normal;
+    max-width: 400px;
+}
 .acciones {
+    font-size: 20px;
 }
 
     .acciones i {
         color: #476930;
         margin: 0 5%;
     }
+
 p a {
     color: white;
     background-color: #F67924;
@@ -65,12 +68,13 @@ p a {
     font-weight: bold;
     transition: 0.2s;
 }
+
     p a:hover {
         background-color: #476930;
         color: white;
         padding: 10px 12px;
     }
-.Error{
-    color: black;
-    font-weight: bold;
+
+.place {
+    margin: 0 5%;
 }

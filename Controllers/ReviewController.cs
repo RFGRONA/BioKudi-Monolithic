@@ -1,4 +1,5 @@
-﻿using BioKudi.Utilities;
+﻿using BioKudi.Services;
+using BioKudi.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -6,13 +7,25 @@ using Microsoft.AspNetCore.Mvc;
 namespace BioKudi.Controllers
 {
     [ValidateAuthentication]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Editor")]
     public class ReviewController : Controller
     {
+        private readonly ReviewService reviewService;
+        private readonly PlacesService placeService;
+
+        public ReviewController(PlacesService placeService, ReviewService reviewService)
+        {
+            this.placeService = placeService;
+            this.reviewService = reviewService;
+        }
+
         // GET: ReviewController
         public ActionResult Index()
         {
-            return View();
+            var reviews = reviewService.GetAllReviews();
+            if (reviews == null)
+                return RedirectToAction("Error", "Admin");
+            return View(reviews);
         }
 
         // GET: ReviewController/Details/5

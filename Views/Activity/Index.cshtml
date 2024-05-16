@@ -1,8 +1,15 @@
 ﻿@model IEnumerable<BioKudi.dto.ActivityDto>
 
 @{
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutEditor.cshtml";
+    }
     ViewData["Title"] = "Actividades";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <head>
     <link href="/css/Activity/Activity.css" rel="stylesheet" />

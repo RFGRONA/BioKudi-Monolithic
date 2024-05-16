@@ -1,8 +1,15 @@
 ﻿@model IEnumerable<BioKudi.dto.PictureDto>
 
 @{
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutEditor.cshtml";
+    }
     ViewData["Title"] = "Imagenes";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <head>
     <link href="/css/Picture/Picture.css" rel="stylesheet" />

@@ -1,8 +1,15 @@
 ﻿@model IEnumerable<BioKudi.dto.ReviewDto>
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutEditor.cshtml";
+    }
+    ViewData["Title"] = "Reseñas";
 }
 
 <h1>Index</h1>

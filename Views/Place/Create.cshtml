@@ -1,8 +1,15 @@
 ﻿@model BioKudi.dto.PlaceDto
 
 @{
-    ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutEditor.cshtml";
+    }
+    ViewData["Title"] = "Crear lugar";
 }
 <head>
     <link href="/css/Place/PlaceCreate.css" rel="stylesheet" />

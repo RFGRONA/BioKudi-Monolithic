@@ -1,8 +1,15 @@
 ﻿@model BioKudi.dto.TicketDto
 
 @{
-    ViewData["Title"] = "Responder Ticket";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutEditor.cshtml";
+    }
+    ViewData["Title"] = "Actualizar Ticket";
 }
 <head>
     <link href="/css/Ticket/TicketEdit.css" rel="stylesheet" />

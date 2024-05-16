@@ -34,6 +34,7 @@ builder.Services.AddScoped<PlaceRepository>();
 builder.Services.AddScoped<PictureRepository>();
 builder.Services.AddScoped<AuditRepository>();
 builder.Services.AddScoped<TicketRepository>();
+builder.Services.AddScoped<ReviewRepository>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<ActivityService>();
 builder.Services.AddScoped<PlacesService>();
@@ -43,6 +44,7 @@ builder.Services.AddScoped<AuditService>();
 builder.Services.AddScoped<StateService>();
 builder.Services.AddScoped<RoleService>();
 builder.Services.AddScoped<TicketService>();
+builder.Services.AddScoped<ReviewService>();
 
 builder.Services.AddHsts(options =>
 {

@@ -1,8 +1,15 @@
 ﻿@model IEnumerable<BioKudi.dto.PlaceDto>
 
 @{
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutEditor.cshtml";
+    }
     ViewData["Title"] = "Lugares";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <head>
     <link href="/css/Place/Place.css" rel="stylesheet" />

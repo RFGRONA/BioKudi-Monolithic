@@ -1,8 +1,15 @@
 ﻿@model BioKudi.dto.ActivityDto
 
 @{
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutEditor.cshtml";
+    }
     ViewData["Title"] = "Editar Actividad";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <head>
     <link href="/css/Activity/ActivityEdit.css" rel="stylesheet" />

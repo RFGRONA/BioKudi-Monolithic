@@ -1,15 +1,19 @@
 ﻿@model IEnumerable<BioKudi.dto.ReviewDto>
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutEditor.cshtml";
+    }
+    ViewData["Title"] = "Reseñas";
 }
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -29,26 +33,33 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PlaceId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdReview">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdReview">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdReview">Delete</a>
-            </td>
-        </tr>
-}
+        @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="4" class="Error">No hay datos para mostrar</td>
+                </tr>
+            }
+        else
+            {
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comment)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserId)
+                    </td>
+                    <td>
+                        <p>@item.PlaceId - @item.PlaceName</p>
+                    </td>
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@item.IdReview">Delete</a>
+                    </td>
+                </tr>
+                }
+            }
     </tbody>
 </table>

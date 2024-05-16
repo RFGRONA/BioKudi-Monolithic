@@ -64,27 +64,6 @@ namespace BioKudi.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult Map()
-        {
-            var markers = mapService.GetMarkers();
-            if (markers == null)
-                return RedirectToAction("Error", "Home");
-            return View(markers);
-		}
-
-        public IActionResult Activities()
-        {
-            var places = placeService.GetAllPlaces();
-            if (places == null)
-                return RedirectToAction("Error", "Home");
-            return View(places);
-        }
-
-        public ContentResult InfoMap(int idPlace)
-        {
-            return mapService.GetInfoPlace(idPlace); 
-        }
-
         [HttpPost]
         public IActionResult Login(UserDto user)
         {

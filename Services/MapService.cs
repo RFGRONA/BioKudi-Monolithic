@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Net.Sockets;
 using System.Security.Claims;
-using System.Text;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BioKudi.Services
@@ -34,6 +33,7 @@ namespace BioKudi.Services
             var place = placesRepo.GetPlace(placeId);
             var head = @"
                         <link rel=""stylesheet"" href=""https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"">
+                        <link rel=""stylesheet"" href=""~/lib/font-awesome/css/all.min.css"" />
                         <link rel=""preconnect"" href=""https://fonts.googleapis.com"">
                         <link rel=""preconnect"" href=""https://fonts.gstatic.com"" crossorigin>
                         <link href=""https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap"" rel=""stylesheet"">
@@ -44,220 +44,175 @@ namespace BioKudi.Services
                         <link href=""https://fonts.googleapis.com/css2?family=Asul:wght@400;700&family=Inter:wght@100..900&display=swap"" rel=""stylesheet"">
                         <link rel=""stylesheet"" href=""~/lib/font-awesome/css/all.min.css"" />";
             var css = @"
-                        body {
-                            background-color: #FEECD6;
-                            margin: 0;
-                            padding: 0;
-                            overflow: hidden;
-                        }
+        body {
+            background-color: #FEECD6;
+        }
+        img {
+            min-width: 50%;
+            max-width: 100%;
+            height: auto;
+        }
+        table{
+            margin-left: 1%;
+        }
+        td {
+            padding: 5px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+        }
+        .titulo {
+            margin-bottom: 1%;
+        }
+        .icon {
+            min-width: 10px;
+            vertical-align: middle;
+            color: #476930;
+            font-size: 30px;
+            vertical-align: top;
+        }
+        .iconn {
+            text-align: left;
+            vertical-align: top;
+            font-size: 24px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+        }
+        .activity {
+            text-align: left;
+            vertical-align: top;
+            font-size: 24px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+        }
+        .description {
+            text-align: left;
+            vertical-align: top;
+            font-size: 24px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+        }
+        .rating {
+            display: flex;
+            text-align: left;
+            font-weight: bold;
+            vertical-align: top;
+            font-size: 28px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+            justify-content: space-between;
+        }
+        .review {
+            text-align: right;
+        }
+        .iconWeb {
+            color: #F67924;
+        }
+        .end {
+            display: flex;
+            text-align: left;
+            font-weight: bold;
+            vertical-align: top;
+            font-size: 28px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+            justify-content: space-between;
+        }
+        .pagina {
+            color: #F67924;
+        }
+        .volver {
+            color: #F67924;
+        }
+        .linkre {
+            color: #F67924;
+        }
+    ";
+
+            var html = "<head>"+head+ "</head><style>" + css + "</style>" +
+                       "<table>" +
+                       "<tr>" +
+                       "<td class=\"image\" colspan=\"2\">";
+
+            if (place.PictureData.Any())
+            {
+                html += "<img src=\"" + place.PictureData.FirstOrDefault().Link + "\" " +
+                        "alt=\"" + place.PictureData.FirstOrDefault().Name + "\" />";
+            }
+            else
+            {
+                html += "<img src=\"https://cloudfront-us-east-1.images.arcpublishing.com/semana/UNB4UJO4OZEQZGEYGL6YQE74NM.jpg\" alt=\"No image\" />";
+            }
+
+            html += "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"title\" colspan=\"2\">" +
+                    "<div class=\"titulo\">" + place.NamePlace + "</div>" +
+                    "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"icon\"><i class=\"fa-solid fa-location-dot\"></i></td>" +
+                    "<td class=\"iconn\">" + place.Address + "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"icon\"><i class=\"fa-solid fa-person-hiking\"></i></td>" +
+                    "<td class=\"activity\">";
+
+            foreach (var item in place.ActivityData)
+            {
+                html += "<p>" + item.Type + "</p>";
+            }
+
+            html += "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"icon\"><i class=\"fa-solid fa-file-lines\"></i></td>" +
+                    "<td class=\"description\">" + place.Description + "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"icon\"><i class=\"fa-solid fa-star-half-stroke\"></i></td>" +
+                    "<td class=\"rating\"><div class=\"ratingdiv\">" + place.Rating + " / 5.0</div></td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"iconWeb\"><i class=\"fa-solid fa-arrow-up-right-from-square\"></i></td>" +
+                    "<td class=\"end\">" +
+                    "<a href=\"" + place.Link + "\" class=\"pagina\">Pagina Web</a>" +
+                    "<div class=\"review\"><a href='#' onclick='showReviews(" + place.IdPlace + ")' class=\"linkre\">Ver reseñas</a></div>" +
+                    "<a href=\"/Home/Index\" class=\"volver\">Volver al inicio</a>" +
+                    "</td>" +
+                    "</tr>" +
+                    "</table>";
 
                         html, body {
                             height: 100%;
                             width: 100%;
                         }
 
-                        table {
-                            margin: 1%;
-                            width: 98%;
-                        }
 
-                        td {
-                            padding: 5px;
-                            word-wrap: break-word; 
-                        }
-
-                        .img-container {
-                            width: 100%;
-                            text-align: center;
-                        }
-
-                        img {
-                            min-width: 50%;
-                            max-width: 100%;
-                            height: auto;
-                        }
-
-                        .title {
-                            font-size: 36px;
-                            font-weight: bold;
-                            text-align: left;
-                            color: #476930;
-                            margin-bottom: 2%;
-                            font-family: 'Bitter', serif;
-                            font-optical-sizing: auto;
-                        }
-
-                        .titulo {
-                            margin-bottom: 1%;
-                        }
-
-                        .icon {
-                            color: #476930;
-                            font-size: 30px;
-                            vertical-align: top;
-                        }
-
-                        .iconn, .activity, .description {
-                            text-align: left;
-                            vertical-align: top;
-                            font-size: 24px;
-                            color: #476930;
-                            margin-bottom: 2%;
-                            font-family: 'Bitter', serif;
-                            font-optical-sizing: auto;
-                        }
-
-                        .rating, .end {
-                            display: flex;
-                            text-align: left;
-                            font-weight: bold;
-                            vertical-align: top;
-                            font-size: 28px;
-                            color: #476930;
-                            margin-bottom: 2%;
-                            font-family: 'Bitter', serif;
-                            font-optical-sizing: auto;
-                            justify-content: space-between;
-                        }
-
-                        .review {
-                            text-align: right;
-                        }
-
-                        .iconWeb {
-                            color: #F67924;
-                            font-size: 28px;
-                            align-content: center;
-                            text-align: center;
-                        }
-
-                        .info-container {
-                            height: 100%;
-                            width: 100%;
-                            overflow-y: auto;
-                        }
-
-                        .pagina, .volver, .linkre {
-                            color: #F67924;
-                            text-decoration: none;
-                            margin: 0 10px;
-                            text-align: center;      
-                        }
-
-                        .button-container {
-                            display: flex;
-                            justify-content: center; 
-                            gap: 20px; 
-                            margin-top: 20px; 
-                        }
-
-                        .button-container .pagina, 
-                        .button-container .volver, 
-                        .button-container .linkre {
-                            font-size: 24px; /* Tamaño de fuente base para los botones */
-                        }
-
-                        @media (max-width: 1200px) {
-                            .button-container .pagina, 
-                            .button-container .volver, 
-                            .button-container .linkre {
-                                font-size: 18px;
-                            }
-                        }
-
-                        @media (max-width: 992px) {
-                            .button-container .pagina, 
-                            .button-container .volver, 
-                            .button-container .linkre {
-                                font-size: 16px;
-                            }
-                        }
-
-                        @media (max-width: 768px) {
-                            .button-container .pagina, 
-                            .button-container .volver, 
-                            .button-container .linkre {
-                                font-size: 14px;
-                            }
-                        }
-
-                        @media (max-width: 576px) {
-                            .button-container .pagina, 
-                            .button-container .volver, 
-                            .button-container .linkre {
-                                font-size: 12px;
-                            }
-                        }
-                        ";
-
-			var html = new StringBuilder();
-
-			html.Append("<head>").Append(head).Append("</head><style>").Append(css).Append("</style>")
-				.Append("<table>")
-				.Append("<tr>")
-				.Append("<td class=\"image\" colspan=\"2\">");
-
-			if (place.PictureData.Any())
-			{
-				var firstPicture = place.PictureData.FirstOrDefault();
-				html.Append("<img src=\"").Append(WebUtility.HtmlEncode(firstPicture.Link)).Append("\" ")
-					.Append("alt=\"").Append(WebUtility.HtmlEncode(firstPicture.Name)).Append("\" />");
-			}
-			else
-			{
-				html.Append("<img src=\"https://cloudfront-us-east-1.images.arcpublishing.com/semana/UNB4UJO4OZEQZGEYGL6YQE74NM.jpg\" alt=\"No image\" />");
-			}
-
-			html.Append("</td>")
-				.Append("</tr>")
-				.Append("<tr>")
-				.Append("<td class=\"title\" colspan=\"2\">")
-				.Append("<div class=\"titulo\">").Append(WebUtility.HtmlEncode(place.NamePlace)).Append("</div>")
-				.Append("</td>")
-				.Append("</tr>")
-				.Append("<tr>")
-				.Append("<td class=\"icon\"><i class=\"fa-solid fa-location-dot\"></i></td>")
-				.Append("<td class=\"iconn\">").Append(WebUtility.HtmlEncode(place.Address)).Append("</td>")
-				.Append("</tr>")
-				.Append("<tr>")
-				.Append("<td class=\"icon\"><i class=\"fa-solid fa-person-hiking\"></i></td>")
-				.Append("<td class=\"activity\">");
-
-			var activities = string.Join(", ", place.ActivityData.Select(a => WebUtility.HtmlEncode(a.Type)));
-			html.Append(activities);
-
-			html.Append("</td>")
-				.Append("</tr>")
-				.Append("<tr>")
-				.Append("<td class=\"icon\"><i class=\"fa-solid fa-file-lines\"></i></td>")
-				.Append("<td class=\"description\">").Append(WebUtility.HtmlEncode(place.Description)).Append("</td>")
-				.Append("</tr>")
-				.Append("<tr>")
-				.Append("<td class=\"icon\"><i class=\"fa-solid fa-star-half-stroke\"></i></td>")
-                .Append("<td class=\"rating\"><div class=\"ratingdiv\">").Append(WebUtility.HtmlEncode(place.Rating.ToString("0.0"))).Append(" / 5.0</div></td>")
-                .Append("</tr>")
-				.Append("<tr>")
-				.Append("<td class=\"iconWeb\"><i class=\"fa-solid fa-arrow-up-right-from-square\"></i></td>")
-				.Append("<td class=\"end\">")
-				.Append("<div class=\"button-container\">")
-				.Append("<a href=\"").Append(WebUtility.HtmlEncode(place.Link)).Append("\" class=\"pagina\">Pagina Web</a>")
-				.Append("<a href='#' onclick='showReviews(").Append(place.IdPlace).Append(")' class=\"linkre\">Ver reseñas</a>")
-				.Append("<a href=\"/Home/Index\" class=\"volver\">Volver al inicio</a>")
-				.Append("</div>")
-				.Append("</td>")
-				.Append("</tr>")
-				.Append("</table>");
-
-			return new ContentResult
-			{
-				Content = html.ToString(),
-				ContentType = "text/html"
-			};
-		}
-
-
-		// Bring information about the place for logged users.
-		public ContentResult GetInfoPlace(int placeId, HttpContext httpContext)
+        // Bring information about the place for logged users.
+        public ContentResult GetInfoPlace(int placeId, HttpContext httpContext)
         {
             var userIdClaim = httpContext.User.FindFirst(ClaimTypes.NameIdentifier);
             int idUser = 0;
@@ -265,8 +220,9 @@ namespace BioKudi.Services
                 if (int.TryParse(userIdClaim.Value, out int userId))
                     idUser = userId;
             var place = placesRepo.GetPlace(placeId);
-			var head = @"
+            var head = @"
                         <link rel=""stylesheet"" href=""https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"">
+                        <link rel=""stylesheet"" href=""~/lib/font-awesome/css/all.min.css"" />
                         <link rel=""preconnect"" href=""https://fonts.googleapis.com"">
                         <link rel=""preconnect"" href=""https://fonts.gstatic.com"" crossorigin>
                         <link href=""https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap"" rel=""stylesheet"">
@@ -276,590 +232,325 @@ namespace BioKudi.Services
                         <link rel=""preconnect"" href=""https://fonts.gstatic.com"" crossorigin>
                         <link href=""https://fonts.googleapis.com/css2?family=Asul:wght@400;700&family=Inter:wght@100..900&display=swap"" rel=""stylesheet"">
                         <link rel=""stylesheet"" href=""~/lib/font-awesome/css/all.min.css"" />";
-			var css = @"
-                        body {
-                            background-color: #FEECD6;
-                            margin: 0;
-                            padding: 0;
-                            overflow: hidden;
-                        }
+            var css = @"
+        body {
+            background-color: #FEECD6;
+        }
+        img {
+            min-width: 50%;
+            max-width: 100%;
+            height: auto;
+        }
+        table{
+            margin-left: 1%;
+        }
+        td {
+            padding: 5px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+        }
+        .titulo {
+            margin-bottom: 1%;
+        }
+        .icon {
+            min-width: 10px;
+            vertical-align: middle;
+            color: #476930;
+            font-size: 30px;
+            vertical-align: top;
+        }
+        .iconn {
+            text-align: left;
+            vertical-align: top;
+            font-size: 24px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+        }
+        .activity {
+            text-align: left;
+            vertical-align: top;
+            font-size: 24px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+        }
+        .description {
+            text-align: left;
+            vertical-align: top;
+            font-size: 24px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+        }
+        .rating {
+            display: flex;
+            text-align: left;
+            font-weight: bold;
+            vertical-align: top;
+            font-size: 28px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+            justify-content: space-between;
+        }
+        .review {
+            text-align: right;
+        }
+        .iconWeb {
+            color: #F67924;
+        }
+        .end {
+            display: flex;
+            text-align: left;
+            font-weight: bold;
+            vertical-align: top;
+            font-size: 28px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+            justify-content: space-between;
+        }
+        .pagina {
+            color: #F67924;
+        }
+        .volver {
+            color: #F67924;
+        }
+        .linkre {
+            color: #F67924;
+        }
+    ";
+
+            var html = "<head>" + head + "</head><style>" + css + "</style>" +
+                       "<table>" +
+                       "<tr>" +
+                       "<td class=\"image\" colspan=\"2\">";
+
+            if (place.PictureData.Any())
+            {
+                html += "<img src=\"" + place.PictureData.FirstOrDefault().Link + "\" " +
+                        "alt=\"" + place.PictureData.FirstOrDefault().Name + "\" />";
+            }
+            else
+            {
+                html += "<img src=\"https://cloudfront-us-east-1.images.arcpublishing.com/semana/UNB4UJO4OZEQZGEYGL6YQE74NM.jpg\" alt=\"No image\" />";
+            }
+
+            html += "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"title\" colspan=\"2\">" +
+                    "<div class=\"titulo\">" + place.NamePlace + "</div>" +
+                    "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"icon\"><i class=\"fa-solid fa-location-dot\"></i></td>" +
+                    "<td class=\"iconn\">" + place.Address + "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"icon\"><i class=\"fa-solid fa-person-hiking\"></i></td>" +
+                    "<td class=\"activity\">";
+
+            foreach (var item in place.ActivityData)
+            {
+                html += "<p>" + item.Type + "</p>";
+            }
+
+            html += "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"icon\"><i class=\"fa-solid fa-file-lines\"></i></td>" +
+                    "<td class=\"description\">" + place.Description + "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"icon\"><i class=\"fa-solid fa-star-half-stroke\"></i></td>" +
+                    "<td class=\"rating\"><div class=\"ratingdiv\">" + place.Rating + " / 5.0</div></td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"iconWeb\"><i class=\"fa-solid fa-arrow-up-right-from-square\"></i></td>" +
+                    "<td class=\"end\">" +
+                    "<a href=\"" + place.Link + "\" class=\"pagina\">Pagina Web</a>" +
+                    "<div class=\"review\"><a href='#' onclick='showReviews(" + place.IdPlace +"," + idUser + ")' class=\"linkre\">Ver reseñas</a></div>" +
+                    "<a href=\"/Home/Index\" class=\"volver\">Volver al inicio</a>" +
+                    "</td>" +
+                    "</tr>" +
+                    "</table>";
 
                         html, body {
                             height: 100%;
                             width: 100%;
                         }
 
-                        table {
-                            margin: 1%;
-                            width: 98%;
+        // Bring all reviews for non-logged users. 
+        public ContentResult GetReviews(int idPlace)
+        {
+            var reviews = reviewRepo.GetReviewPlace(idPlace);
+            var css = @"table{
+                            margin-left: 1%;
+                            min-width: 80%;
+                            max-width: 80%;
+                            text-colapse: collapse;
+                            word-wrap: break-word;
+                            word-break: break-all;
+                            margin-bottom: 2%;
                         }
-
-                        td {
-                            padding: 5px;
-                            word-wrap: break-word; 
+                        h1{
+                            margin-left: 1%;
+                            color: #476930;
+                            font-family: 'Bitter', serif;
+                            font-optical-sizing: auto;
+                            font-weight: bold;
                         }
-
-                        .img-container {
-                            width: 100%;
+                        body{
+                            background-color: #FEECD6;
+                        }
+                        td{
+                            padding: 10px;
                             text-align: center;
+                            //border: 1px solid black;
                         }
-
-                        img {
-                            min-width: 50%;
-                            max-width: 100%;
-                            height: auto;
-                        }
-
-                        .title {
-                            font-size: 36px;
+                        .rate {
+                            text-align: center;
                             font-weight: bold;
-                            text-align: left;
-                            color: #476930;
-                            margin-bottom: 2%;
-                            font-family: 'Bitter', serif;
-                            font-optical-sizing: auto;
-                        }
-
-                        .titulo {
-                            margin-bottom: 1%;
-                        }
-
-                        .icon {
-                            color: #476930;
-                            font-size: 30px;
-                            vertical-align: top;
-                        }
-
-                        .iconn, .activity, .description {
-                            text-align: left;
-                            vertical-align: top;
-                            font-size: 24px;
-                            color: #476930;
-                            margin-bottom: 2%;
-                            font-family: 'Bitter', serif;
-                            font-optical-sizing: auto;
-                        }
-
-                        .rating, .end {
-                            display: flex;
-                            text-align: left;
-                            font-weight: bold;
-                            vertical-align: top;
+                            
                             font-size: 28px;
-                            color: #476930;
-                            margin-bottom: 2%;
+                            color: #F67924;
                             font-family: 'Bitter', serif;
                             font-optical-sizing: auto;
+                        }
+                        .rate{
+                            min-width: 150px;
+                        }
+                        .end{
+                            font-weight: bold;
+                            font-size: 20px;
+                            color: #F67924;
+                            font-family: 'Bitter', serif;
+                            font-optical-sizing: auto;
+                            display: flex;
                             justify-content: space-between;
                         }
-
-                        .review {
+                        .backk{
+                            text-align: left;
+                            margin-left: 20%;
+                            color: #476930;
+                        }
+                        .index{
                             text-align: right;
+                            margin-right: 20%;
+                            color: #476930;
                         }
-
-                        .iconWeb {
-                            color: #F67924;
-                            font-size: 28px;
-                            align-content: center;
-                            text-align: center;
-                        }
-
-                        .info-container {
-                            height: 100%;
-                            width: 100%;
-                            overflow-y: auto;
-                        }
-
-                        .pagina, .volver, .linkre {
-                            color: #F67924;
-                            text-decoration: none; 
-                            margin: 0 10px; 
-                            text-align: center;
-                        }
-
-                        .button-container {
-                            display: flex;
-                            justify-content: center; 
-                            gap: 20px; 
-                            margin-top: 20px; 
-                        }
-
-                        .button-container .pagina, 
-                        .button-container .volver, 
-                        .button-container .linkre {
-                            font-size: 24px; /* Tamaño de fuente base para los botones */
-                        }
-
-                        @media (max-width: 1200px) {
-                            .button-container .pagina, 
-                            .button-container .volver, 
-                            .button-container .linkre {
-                                font-size: 18px;
-                            }
-                        }
-
-                        @media (max-width: 992px) {
-                            .button-container .pagina, 
-                            .button-container .volver, 
-                            .button-container .linkre {
-                                font-size: 16px;
-                            }
-                        }
-
-                        @media (max-width: 768px) {
-                            .button-container .pagina, 
-                            .button-container .volver, 
-                            .button-container .linkre {
-                                font-size: 14px;
-                            }
-                        }
-
-                        @media (max-width: 576px) {
-                            .button-container .pagina, 
-                            .button-container .volver, 
-                            .button-container .linkre {
-                                font-size: 12px;
-                            }
-                        }
-                        ";
-
-			var html = new StringBuilder();
-
-			html.Append("<head>").Append(head).Append("</head><style>").Append(css).Append("</style>")
-				.Append("<table>")
-				.Append("<tr>")
-				.Append("<td class=\"image\" colspan=\"2\">");
-
-			if (place.PictureData.Any())
-			{
-				var firstPicture = place.PictureData.FirstOrDefault();
-				html.Append("<img src=\"").Append(WebUtility.HtmlEncode(firstPicture.Link)).Append("\" ")
-					.Append("alt=\"").Append(WebUtility.HtmlEncode(firstPicture.Name)).Append("\" />");
-			}
-			else
-			{
-				html.Append("<img src=\"https://cloudfront-us-east-1.images.arcpublishing.com/semana/UNB4UJO4OZEQZGEYGL6YQE74NM.jpg\" alt=\"No image\" />");
-			}
-
-			html.Append("</td>")
-				.Append("</tr>")
-				.Append("<tr>")
-				.Append("<td class=\"title\" colspan=\"2\">")
-				.Append("<div class=\"titulo\">").Append(WebUtility.HtmlEncode(place.NamePlace)).Append("</div>")
-				.Append("</td>")
-				.Append("</tr>")
-				.Append("<tr>")
-				.Append("<td class=\"icon\"><i class=\"fa-solid fa-location-dot\"></i></td>")
-				.Append("<td class=\"iconn\">").Append(WebUtility.HtmlEncode(place.Address)).Append("</td>")
-				.Append("</tr>")
-				.Append("<tr>")
-				.Append("<td class=\"icon\"><i class=\"fa-solid fa-person-hiking\"></i></td>")
-				.Append("<td class=\"activity\">");
-
-			var activities = string.Join(", ", place.ActivityData.Select(a => WebUtility.HtmlEncode(a.Type)));
-			html.Append(activities);
-
-			html.Append("</td>")
-				.Append("</tr>")
-				.Append("<tr>")
-				.Append("<td class=\"icon\"><i class=\"fa-solid fa-file-lines\"></i></td>")
-				.Append("<td class=\"description\">").Append(WebUtility.HtmlEncode(place.Description)).Append("</td>")
-				.Append("</tr>")
-				.Append("<tr>")
-				.Append("<td class=\"icon\"><i class=\"fa-solid fa-star-half-stroke\"></i></td>")
-                .Append("<td class=\"rating\"><div class=\"ratingdiv\">").Append(WebUtility.HtmlEncode(place.Rating.ToString("0.0"))).Append(" / 5.0</div></td>")
-                .Append("</tr>")
-				.Append("<tr>")
-				.Append("<td class=\"iconWeb\"><i class=\"fa-solid fa-arrow-up-right-from-square\"></i></td>")
-				.Append("<td class=\"end\">")
-				.Append("<div class=\"button-container\">")
-				.Append("<a href=\"").Append(WebUtility.HtmlEncode(place.Link)).Append("\" class=\"pagina\">Pagina Web</a>")
-				.Append("<a href='#' onclick='showReviews(").Append(place.IdPlace).Append(", ").Append(idUser).Append(")' class=\"linkre\">Ver reseñas</a>")
-				.Append("<a href=\"/Home/Index\" class=\"volver\">Volver al inicio</a>")
-				.Append("</div>")
-				.Append("</td>")
-				.Append("</tr>")
-				.Append("</table>");
-
-			return new ContentResult
-			{
-				Content = html.ToString(),
-				ContentType = "text/html"
-			};
-		}
-
-		// Bring all reviews for non-logged users. 
-		public ContentResult GetReviews(int idPlace)
-		{
-			var reviews = reviewRepo.GetReviewPlace(idPlace);
-			var head = @"
-                        <link rel=""stylesheet"" href=""https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"">
-                        <link rel=""preconnect"" href=""https://fonts.googleapis.com"">
-                        <link rel=""preconnect"" href=""https://fonts.gstatic.com"" crossorigin>
-                        <link href=""https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap"" rel=""stylesheet"">
-                        <script src=""https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js""></script>
-                        <script src=""https://cdn.jsdelivr.net/npm/sweetalert2@10""></script>
-                        <link rel=""preconnect"" href=""https://fonts.googleapis.com"">
-                        <link rel=""preconnect"" href=""https://fonts.gstatic.com"" crossorigin>
-                        <link href=""https://fonts.googleapis.com/css2?family=Asul:wght@400;700&family=Inter:wght@100..900&display=swap"" rel=""stylesheet"">
-                        <link rel=""stylesheet"" href=""~/lib/font-awesome/css/all.min.css"" />";
-			var css = @"table {
-                    margin: 1%;
-                    min-width: 95%;
-                    table-layout: fixed;
-                    word-wrap: break-word;
-                    word-break: break-all;
-                    margin-bottom: 2%;
-                    }
-                    colgroup col:first-child {
-                        width: 20%;
-                    }
-                    colgroup col:not(:first-child) {
-                        width: 80%;
-                    }
-                    h1 {
-                        text-align: center;
-                        color: #476930;
-                        font-family: 'Bitter', serif;
-                        font-optical-sizing: auto;
-                        font-weight: bold;
-                    }
-                    p {
-                        text-align: center;
-                    }
-                    body {
-                        background-color: #FEECD6;
-                    }
-                    td, th {
-                        padding: 3px;
-                        vertical-align: top;    
-                    }
-                    .rate {
-                        text-align: center;
-                        font-weight: bold;
-                        font-size: 28px;
-                        color: #F67924;
-                        font-family: 'Bitter', serif;
-                        font-optical-sizing: auto;
-                    }
-                    .end {
-                        font-weight: bold;
-                        color: #F67924;
-                        font-family: 'Bitter', serif;
-                        font-optical-sizing: auto;
-                        display: flex;
-                        justify-content: space-between;
-                        margin: 5%;
-                        padding: 0 10%;
-                    }
-                    .backk {
-                        text-align: left;
-                        color: #476930;
-                        text-decoration: none;
-                    }
-                    .index {
-                        text-align: right;
-                        color: #476930;
-                        text-decoration: none;  
-                    }
-                    .user {
-                    text-align: left;
-                    font-weight: bold;
-                    font-size: 18px;
-                    font-family: 'Inter', sans-serif;
-                    }
-                    .comment {
-                        text-align: left;
-                        font-size: 17px;
-                        font-family: 'Inter', sans-serif;
-                    }
-                    @media (max-width: 1200px) {
-                        .rate {
-                            font-size: 24px;
-                        }
-                        .user, .end {
-                            font-size: 18px;
-                        }
-                    }
-                    @media (max-width: 992px) {
-                        .rate {
+                        .user{
+                            text-align: left;
+                            font-weight: bold;
                             font-size: 20px;
-                        }
-                        .user, .end {
-                            font-size: 16px;
-                        }
-                    }
-                    @media (max-width: 768px) {
-                        .rate {
-                            font-size: 18px;
-                        }
-                        .user, .end {
-                            font-size: 14px;
-                        }
-                    }
-                    @media (max-width: 576px) {
-                        .rate {
-                            font-size: 16px;
-                        }
-                        .user, .end {
-                            font-size: 12px;
-                        }
-                    }";
-			var html = new StringBuilder();
-			html.Append($"<head>{head}</head>");
-			html.Append($"<style>{css}</style>");
-			html.Append("<h1>Reseñas</h1>");
-
-			if (reviews.Any())
-			{
-				html.Append("<table><colgroup><col style='width: 20%'><col style='width: 80%'></colgroup>");
-				foreach (var review in reviews)
-				{
-					html.Append($"<tr><td rowspan='2'><div class='rate'>&#9733; {WebUtility.HtmlEncode(review.Rate.ToString())} / 5</div></td>");
-					html.Append($"<td class='user'>{WebUtility.HtmlEncode(review.UserName)}</td></tr>");
-					if (!string.IsNullOrWhiteSpace(review.Comment))
-					{
-						html.Append($"<tr><td class='comment'>{WebUtility.HtmlEncode(review.Comment)}</td></tr>");
-					}
-					html.Append("<tr><td></td></tr>");
-				}
-				html.Append("</table>");
-			}
-			else
-			{
-				html.Append("<p>No hay reseñas todavía.<br>Si desea dejar una reseña, por favor inicie sesión.</p>");
-			}
-
-			html.Append($"<div class='end'><a href='#' onclick='showPlaceInfo({idPlace})' class='backk'>Volver al lugar</a>");
-			html.Append("<a href='/Home/Index' class='index'>Volver al inicio</a></div>");
-
-			return new ContentResult
-			{
-				Content = html.ToString(),
-				ContentType = "text/html"
-			};
-		}
-
-
-		// Bring all the reviews, the first being those of the logged in user
-		public ContentResult GetReviews(int idPlace, int idUser)
-		{
-			var reviews = reviewRepo.GetReviewUser(idPlace, idUser);
-			var head = @"
-                        <link rel=""stylesheet"" href=""https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"">
-                        <link rel=""preconnect"" href=""https://fonts.googleapis.com"">
-                        <link rel=""preconnect"" href=""https://fonts.gstatic.com"" crossorigin>
-                        <link href=""https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap"" rel=""stylesheet"">
-                        <script src=""https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js""></script>
-                        <script src=""https://cdn.jsdelivr.net/npm/sweetalert2@10""></script>
-                        <link rel=""preconnect"" href=""https://fonts.googleapis.com"">
-                        <link rel=""preconnect"" href=""https://fonts.gstatic.com"" crossorigin>
-                        <link href=""https://fonts.googleapis.com/css2?family=Asul:wght@400;700&family=Inter:wght@100..900&display=swap"" rel=""stylesheet"">
-                        <link rel=""stylesheet"" href=""~/lib/font-awesome/css/all.min.css"" />";
-			var css = @"table {
-                margin: 1%;
-                min-width: 95%;
-                table-layout: fixed;
-                word-wrap: break-word;
-                word-break: break-all;
-                margin-bottom: 2%;
-                }
-                colgroup col:first-child {
-                    width: 20%;
-                }
-                colgroup col:not(:first-child) {
-                    width: 80%;
-                }
-                h1 {
-                    text-align: center;
-                    color: #476930;
-                    font-family: 'Bitter', serif;
-                    font-optical-sizing: auto;
-                    font-weight: bold;
-                }
-                p {
-                    text-align: center;
-                }
-                body {
-                    background-color: #FEECD6;
-                }
-                td, th {
-                    padding: 3px;
-                    vertical-align: top;
-                }
-                .rate {
-                    text-align: center;
-                    font-weight: bold;
-                    font-size: 28px;
-                    color: #F67924;
-                    font-family: 'Bitter', serif;
-                    font-optical-sizing: auto;
-                }
-                .end {
-                    font-weight: bold;
-                    color: #F67924;
-                    font-family: 'Bitter', serif;
-                    font-optical-sizing: auto;
-                    display: flex;
-                    justify-content: space-between;
-                    margin: 5%;
-                    padding: 0 10%;
-                }
-                .backk, .index {
-                    color: #476930;
-                    text-decoration: none;
-                }
-                .create-review {
-                    text-align: center;
-                    margin-bottom: 20px;
-                }
-                .user {
-                    text-align: left;
-                    font-weight: bold;
-                    font-size: 18px;
-                    font-family: 'Inter', sans-serif;
-                }
-                .comment {
-                    text-align: left;
-                    font-size: 17px;
-                    font-family: 'Inter', sans-serif;
-                }
-                .review-buttons {
-                    text-align: center;
-                    margin-top: 10px;
-                }
-                @media (max-width: 1200px) {
-                    .rate {
-                        font-size: 24px;
-                    }
-                    .user, .end {
-                        font-size: 18px;
+                        }";
+            var html = "<style>" + css + "</style>";
+            html += "<h1>Reseñas</h1>";
+            if (reviews.Any())
+            {
+                html += "<table>";
+                foreach (var review in reviews)
+                {
+                    html += "<tr><td rowspan='2'><div  class='rate'>  " + review.Rate + " / 5.0</div> </td>";
+                    html += "<td class='user'>" + review.UserName + "</td></tr>";
+                    if (!string.IsNullOrWhiteSpace(review.Comment))
+                    {
+                        html += "<tr><td>" + review.Comment + "</td></tr>";
                     }
                 }
-                @media (max-width: 992px) {
-                    .rate {
-                        font-size: 20px;
-                    }
-                    .user, .end {
-                        font-size: 16px;
-                    }
-                }
-                @media (max-width: 768px) {
-                    .rate {
-                        font-size: 18px;
-                    }
-                    .user, .end {
-                        font-size: 14px;
-                    }
-                }
-                @media (max-width: 576px) {
-                    .rate {
-                        font-size: 16px;
-                    }
-                    .user, .end {
-                        font-size: 12px;
-                    }
-                }
-                .create {
-                    text-align: center;
-                    color: #476930;
-                    text-decoration: none;
-                    font-weight: bold;
-                    font-family: 'Bitter', serif;
-                    font-optical-sizing: auto;
-                    display: block;
-                    margin-bottom: 20px;
-                }
-                .user-actions {
-                    float: right;
-                    margin-right: 10px;
-                    font-size: 18px;
-                    cursor: pointer;
-                    color: #F67924;
-                }
-                .user-actions .update-icon {
-                    margin-right: 10px;
-                }";
+                html += "</table>";
+            }
+            else
+            {
+                html += "<tr><td>No hay reseñas todavía. Si desea dejar una reseña, por favor inicie sesión.</td></tr>";
+            }
 
-			var html = new StringBuilder();
-			html.Append($"<head>{head}</head>");
-			html.Append($"<style>{css}</style>");
-			html.Append("<h1>Reseñas</h1>");
-			html.Append($"<div class='create-review'><a href='#' onclick='CreateReview({idPlace})' class='create'>Crear reseña</a></div>");
-
-			if (reviews.Any())
-			{
-				html.Append("<table><colgroup><col style='width: 20%'><col style='width: 80%'></colgroup>");
-				foreach (var review in reviews)
-				{
-					html.Append($"<tr><td rowspan='2'><div class='rate'>&#9733; {WebUtility.HtmlEncode(review.Rate.ToString())} / 5</div></td>");
-					html.Append($"<td class='user'>{WebUtility.HtmlEncode(review.UserName)}");
-
-					if (review.UserId == idUser)
-					{
-						html.Append($"<span class='user-actions'><i class='fa-solid fa-pen-to-square' onclick='updateReview({review.IdReview})'></i>");
-						html.Append($"<i class='update-icon'></i><i class='fa-solid fa-trash-can' onclick='deleteReview({review.IdReview}, {idPlace})'></i></span>");
-					}
-
-					html.Append("</td></tr>");
-
-					if (!string.IsNullOrWhiteSpace(review.Comment))
-					{
-						html.Append($"<tr><td class='comment'>{WebUtility.HtmlEncode(review.Comment)}</td></tr>");
-					}
-					html.Append("<tr><td></td></tr>");
-				}
-				html.Append("</table>");
-			}
-			else
-			{
-				html.Append("<p>No hay reseñas todavía. ¡Sé el primero en dejar una!</p>");
-			}
-
-			html.Append($"<div class='end'><a href='#' onclick='showPlaceInfo({idPlace})' class='backk'>Volver al lugar</a>");
-			html.Append("<a href='/Home/Index' class='index'>Volver al inicio</a></div>");
-
-			return new ContentResult
-			{
-				Content = html.ToString(),
-				ContentType = "text/html"
-			};
-		}
-
-		public ContentResult CreateReviewForm(int idPlace)
-		{
-			var css = @"
-                h1 {
-                    margin-top: 5%;
-                    text-align: center;
-                    color: #476930;
-                    font-family: 'Bitter', serif;
-                    font-optical-sizing: auto;
-                    font-weight: bold;
-                }
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 10%;
-            width: 70%;
-            margin: auto;
+            html += "<div class='end'><a href='#' onclick='showPlaceInfo(" + idPlace + ")' class='backk'>Volver al lugar</a>";
+            html += "<a href=\\\"/Home/Index\\\" class=\"index\">Volver al inicio</a></div>";
+            
+            return new ContentResult
+            {
+                Content = html,
+                ContentType = "text/html"
+            };
         }
 
-        form label, form input {
-            display: block;
-            margin-bottom: 10px;
-            width: 100%;
-            text-align: left;
-            font-weight: bold;
-            font-family: 'Inter', sans-serif;
+        // Bring all the reviews, the first being those of the logged in user
+        public ContentResult GetReviews(int idPlace, int idUser)
+        {
+            var reviews = reviewRepo.GetReviewUser(idPlace, idUser);
+            var html = "<h2>Reseñas</h2><ul>" +
+               "<a href='#' onclick='showPlaceInfo(" + idPlace + ")'>Volver al lugar</a>" +
+               "<a href='#' onclick='CreateReview(" + idPlace + ")'>Crear reseña</a>";
+            if (reviews.Any())
+            {
+                html += "<ul>";
+                foreach (var review in reviews)
+                {
+                    html += "<li>";
+                    html += "<strong>Calificación:</strong> " + review.Rate + "<br>";
+                    html += "<strong>Usuario:</strong> " + review.UserName + "<br>";
+                    if (!string.IsNullOrWhiteSpace(review.Comment))
+                    {
+                        html += review.Comment;
+                    }
+                    if (review.UserId == idUser)
+                    {
+                        html += "<br>";
+                        html += "<button onclick='updateReview(" + review.IdReview + ")'>Actualizar</button>";
+                        html += "<button onclick='deleteReview(" + review.IdReview + ")'>Eliminar</button>";
+                    }
+                    html += "</li>";
+                }
+                html += "</ul>";
+            }
+            else
+            {
+                html += "<p>No hay reseñas todavía. ¡Sé el primero en dejar una!</p>";
+            }
+            html += "<a href=\"/Home/Index\">Volver al inicio</a>";
+            return new ContentResult
+            {
+                Content = html,
+                ContentType = "text/html"
+            };
         }
-        form textarea {
-            display: block;
-            margin-bottom: 10px;
-            width: 100%;
-            text-align: left;
-            font-family: 'Inter', sans-serif;
+
+        public ContentResult CreateReviewForm(int idPlace)
+        {
+            var html = "<h2>Crear reseña</h2>" +
+                       "<form id='createReviewForm'>" +
+                       "<label for='Rate'>Calificación:</label>" +
+                       "<input type='number' id='Rate' name='Rate' min='1' max='5' required>" +
+                       "<label for='Comment'>Comentario:</label>" +
+                       "<textarea id='Comment' maxlength='250' name='Comment' rows='4' cols='50'></textarea>" +
+                       "<input type='hidden' name='PlaceId' value='" + idPlace + "'>" +
+                       "<input type='submit' value='Enviar'>" +
+                       "</form>";
+            return new ContentResult
+            {
+                Content = html,
+                ContentType = "text/html"
+            };
         }
 
         form input[type=""submit""] {

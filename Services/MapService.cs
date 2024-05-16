@@ -4,6 +4,7 @@ using BioKudi.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Sockets;
 using System.Security.Claims;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BioKudi.Services
 {
@@ -29,21 +30,179 @@ namespace BioKudi.Services
         public ContentResult GetInfoPlace(int placeId)
         {
             var place = placesRepo.GetPlace(placeId);
-            var html = "<table>" +
-                "<tr><th><span><h1>" + place.NamePlace + "</h1></span></th></tr>" +
-                "<tr><td><br><p>" + place.Rating + "</p></td></tr>" +
-                "<tr><td><span class='title'>Actividades</span><br><ul>";
-            foreach (var activity in place.ActivityData)
+            var head = @"
+                        <link rel=""stylesheet"" href=""https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"">
+                        <link rel=""stylesheet"" href=""~/lib/font-awesome/css/all.min.css"" />
+                        <link rel=""preconnect"" href=""https://fonts.googleapis.com"">
+                        <link rel=""preconnect"" href=""https://fonts.gstatic.com"" crossorigin>
+                        <link href=""https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap"" rel=""stylesheet"">
+                        <script src=""https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js""></script>
+                        <script src=""https://cdn.jsdelivr.net/npm/sweetalert2@10""></script>
+                        <link rel=""preconnect"" href=""https://fonts.googleapis.com"">
+                        <link rel=""preconnect"" href=""https://fonts.gstatic.com"" crossorigin>
+                        <link href=""https://fonts.googleapis.com/css2?family=Asul:wght@400;700&family=Inter:wght@100..900&display=swap"" rel=""stylesheet"">
+                        <link rel=""stylesheet"" href=""~/lib/font-awesome/css/all.min.css"" />";
+            var css = @"
+        body {
+            background-color: #FEECD6;
+        }
+        img {
+            min-width: 50%;
+            max-width: 100%;
+            height: auto;
+        }
+        table{
+            margin-left: 1%;
+        }
+        td {
+            padding: 5px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+        }
+        .titulo {
+            margin-bottom: 1%;
+        }
+        .icon {
+            min-width: 10px;
+            vertical-align: middle;
+            color: #476930;
+            font-size: 30px;
+            vertical-align: top;
+        }
+        .iconn {
+            text-align: left;
+            vertical-align: top;
+            font-size: 24px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+        }
+        .activity {
+            text-align: left;
+            vertical-align: top;
+            font-size: 24px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+        }
+        .description {
+            text-align: left;
+            vertical-align: top;
+            font-size: 24px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+        }
+        .rating {
+            display: flex;
+            text-align: left;
+            font-weight: bold;
+            vertical-align: top;
+            font-size: 28px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+            justify-content: space-between;
+        }
+        .review {
+            text-align: right;
+        }
+        .iconWeb {
+            color: #F67924;
+        }
+        .end {
+            display: flex;
+            text-align: left;
+            font-weight: bold;
+            vertical-align: top;
+            font-size: 28px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+            justify-content: space-between;
+        }
+        .pagina {
+            color: #F67924;
+        }
+        .volver {
+            color: #F67924;
+        }
+        .linkre {
+            color: #F67924;
+        }
+    ";
+
+            var html = "<head>"+head+ "</head><style>" + css + "</style>" +
+                       "<table>" +
+                       "<tr>" +
+                       "<td class=\"image\" colspan=\"2\">";
+
+            if (place.PictureData.Any())
             {
-                html += "<li>" + activity.Type + "</li>";
+                html += "<img src=\"" + place.PictureData.FirstOrDefault().Link + "\" " +
+                        "alt=\"" + place.PictureData.FirstOrDefault().Name + "\" />";
             }
-            html += "</ul></td></tr>" +
-                "<tr><td><span class='title'>Dirección</span><br><p>" + place.Address + "</p></td></tr>" +
-                "<tr><td><span class='title'>Descripción</span><br><p>" + place.Description + "</p></td></tr>" +
-                "<tr><td><span class='title'>Enlace</span><br><p>" + place.Link + "</p></td></tr>" +
-            "</table>" +
-                "<a href='#' onclick='showReviews(" + place.IdPlace +")'>Ver reseñas</a>" +
-                "<a href=\"/Home/Index\">Volver al inicio</a>";
+            else
+            {
+                html += "<img src=\"https://cloudfront-us-east-1.images.arcpublishing.com/semana/UNB4UJO4OZEQZGEYGL6YQE74NM.jpg\" alt=\"No image\" />";
+            }
+
+            html += "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"title\" colspan=\"2\">" +
+                    "<div class=\"titulo\">" + place.NamePlace + "</div>" +
+                    "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"icon\"><i class=\"fa-solid fa-location-dot\"></i></td>" +
+                    "<td class=\"iconn\">" + place.Address + "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"icon\"><i class=\"fa-solid fa-person-hiking\"></i></td>" +
+                    "<td class=\"activity\">";
+
+            foreach (var item in place.ActivityData)
+            {
+                html += "<p>" + item.Type + "</p>";
+            }
+
+            html += "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"icon\"><i class=\"fa-solid fa-file-lines\"></i></td>" +
+                    "<td class=\"description\">" + place.Description + "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"icon\"><i class=\"fa-solid fa-star-half-stroke\"></i></td>" +
+                    "<td class=\"rating\"><div class=\"ratingdiv\">" + place.Rating + " / 5.0</div></td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"iconWeb\"><i class=\"fa-solid fa-arrow-up-right-from-square\"></i></td>" +
+                    "<td class=\"end\">" +
+                    "<a href=\"" + place.Link + "\" class=\"pagina\">Pagina Web</a>" +
+                    "<div class=\"review\"><a href='#' onclick='showReviews(" + place.IdPlace + ")' class=\"linkre\">Ver reseñas</a></div>" +
+                    "<a href=\"/Home/Index\" class=\"volver\">Volver al inicio</a>" +
+                    "</td>" +
+                    "</tr>" +
+                    "</table>";
 
             return new ContentResult
             {
@@ -51,6 +210,7 @@ namespace BioKudi.Services
                 ContentType = "text/html"
             };
         }
+
 
         // Bring information about the place for logged users.
         public ContentResult GetInfoPlace(int placeId, HttpContext httpContext)
@@ -61,21 +221,179 @@ namespace BioKudi.Services
                 if (int.TryParse(userIdClaim.Value, out int userId))
                     idUser = userId;
             var place = placesRepo.GetPlace(placeId);
-            var html = "<table>" +
-                "<tr><th><span><h1>" + place.NamePlace + "</h1></span></th></tr>" +
-                "<tr><td><br><p>" + place.Rating + "</p></td></tr>" +
-                "<tr><td><span class='title'>Actividades</span><br><ul>";
-            foreach (var activity in place.ActivityData)
+            var head = @"
+                        <link rel=""stylesheet"" href=""https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"">
+                        <link rel=""stylesheet"" href=""~/lib/font-awesome/css/all.min.css"" />
+                        <link rel=""preconnect"" href=""https://fonts.googleapis.com"">
+                        <link rel=""preconnect"" href=""https://fonts.gstatic.com"" crossorigin>
+                        <link href=""https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap"" rel=""stylesheet"">
+                        <script src=""https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js""></script>
+                        <script src=""https://cdn.jsdelivr.net/npm/sweetalert2@10""></script>
+                        <link rel=""preconnect"" href=""https://fonts.googleapis.com"">
+                        <link rel=""preconnect"" href=""https://fonts.gstatic.com"" crossorigin>
+                        <link href=""https://fonts.googleapis.com/css2?family=Asul:wght@400;700&family=Inter:wght@100..900&display=swap"" rel=""stylesheet"">
+                        <link rel=""stylesheet"" href=""~/lib/font-awesome/css/all.min.css"" />";
+            var css = @"
+        body {
+            background-color: #FEECD6;
+        }
+        img {
+            min-width: 50%;
+            max-width: 100%;
+            height: auto;
+        }
+        table{
+            margin-left: 1%;
+        }
+        td {
+            padding: 5px;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+        }
+        .titulo {
+            margin-bottom: 1%;
+        }
+        .icon {
+            min-width: 10px;
+            vertical-align: middle;
+            color: #476930;
+            font-size: 30px;
+            vertical-align: top;
+        }
+        .iconn {
+            text-align: left;
+            vertical-align: top;
+            font-size: 24px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+        }
+        .activity {
+            text-align: left;
+            vertical-align: top;
+            font-size: 24px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+        }
+        .description {
+            text-align: left;
+            vertical-align: top;
+            font-size: 24px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+        }
+        .rating {
+            display: flex;
+            text-align: left;
+            font-weight: bold;
+            vertical-align: top;
+            font-size: 28px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+            justify-content: space-between;
+        }
+        .review {
+            text-align: right;
+        }
+        .iconWeb {
+            color: #F67924;
+        }
+        .end {
+            display: flex;
+            text-align: left;
+            font-weight: bold;
+            vertical-align: top;
+            font-size: 28px;
+            text-align: left;
+            color: #476930;
+            margin-bottom: 2%;
+            font-family: 'Bitter', serif;
+            font-optical-sizing: auto;
+            justify-content: space-between;
+        }
+        .pagina {
+            color: #F67924;
+        }
+        .volver {
+            color: #F67924;
+        }
+        .linkre {
+            color: #F67924;
+        }
+    ";
+
+            var html = "<head>" + head + "</head><style>" + css + "</style>" +
+                       "<table>" +
+                       "<tr>" +
+                       "<td class=\"image\" colspan=\"2\">";
+
+            if (place.PictureData.Any())
             {
-                html += "<li>" + activity.Type + "</li>";
+                html += "<img src=\"" + place.PictureData.FirstOrDefault().Link + "\" " +
+                        "alt=\"" + place.PictureData.FirstOrDefault().Name + "\" />";
             }
-            html += "</ul></td></tr>" +
-                "<tr><td><span class='title'>Dirección</span><br><p>" + place.Address + "</p></td></tr>" +
-                "<tr><td><span class='title'>Descripción</span><br><p>" + place.Description + "</p></td></tr>" +
-                "<tr><td><span class='title'>Enlace</span><br><p>" + place.Link + "</p></td></tr>" +
-            "</table>" +
-                "<a href='#' onclick='showReviews(" + place.IdPlace + "," + idUser + ")'>Ver reseñas</a>" +
-                "<a href=\"/Home/Index\">Volver al inicio</a>";
+            else
+            {
+                html += "<img src=\"https://cloudfront-us-east-1.images.arcpublishing.com/semana/UNB4UJO4OZEQZGEYGL6YQE74NM.jpg\" alt=\"No image\" />";
+            }
+
+            html += "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"title\" colspan=\"2\">" +
+                    "<div class=\"titulo\">" + place.NamePlace + "</div>" +
+                    "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"icon\"><i class=\"fa-solid fa-location-dot\"></i></td>" +
+                    "<td class=\"iconn\">" + place.Address + "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"icon\"><i class=\"fa-solid fa-person-hiking\"></i></td>" +
+                    "<td class=\"activity\">";
+
+            foreach (var item in place.ActivityData)
+            {
+                html += "<p>" + item.Type + "</p>";
+            }
+
+            html += "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"icon\"><i class=\"fa-solid fa-file-lines\"></i></td>" +
+                    "<td class=\"description\">" + place.Description + "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"icon\"><i class=\"fa-solid fa-star-half-stroke\"></i></td>" +
+                    "<td class=\"rating\"><div class=\"ratingdiv\">" + place.Rating + " / 5.0</div></td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td class=\"iconWeb\"><i class=\"fa-solid fa-arrow-up-right-from-square\"></i></td>" +
+                    "<td class=\"end\">" +
+                    "<a href=\"" + place.Link + "\" class=\"pagina\">Pagina Web</a>" +
+                    "<div class=\"review\"><a href='#' onclick='showReviews(" + place.IdPlace +"," + idUser + ")' class=\"linkre\">Ver reseñas</a></div>" +
+                    "<a href=\"/Home/Index\" class=\"volver\">Volver al inicio</a>" +
+                    "</td>" +
+                    "</tr>" +
+                    "</table>";
 
             return new ContentResult
             {
@@ -88,28 +406,90 @@ namespace BioKudi.Services
         public ContentResult GetReviews(int idPlace)
         {
             var reviews = reviewRepo.GetReviewPlace(idPlace);
-            var html = "<h2>Reseñas</h2><ul>"+
-                "<a href='#' onclick='showPlaceInfo(" + idPlace + ")'>Volver al lugar</a>";
+            var css = @"table{
+                            margin-left: 1%;
+                            min-width: 80%;
+                            max-width: 80%;
+                            text-colapse: collapse;
+                            word-wrap: break-word;
+                            word-break: break-all;
+                            margin-bottom: 2%;
+                        }
+                        h1{
+                            margin-left: 1%;
+                            color: #476930;
+                            font-family: 'Bitter', serif;
+                            font-optical-sizing: auto;
+                            font-weight: bold;
+                        }
+                        body{
+                            background-color: #FEECD6;
+                        }
+                        td{
+                            padding: 10px;
+                            text-align: center;
+                            //border: 1px solid black;
+                        }
+                        .rate {
+                            text-align: center;
+                            font-weight: bold;
+                            
+                            font-size: 28px;
+                            color: #F67924;
+                            font-family: 'Bitter', serif;
+                            font-optical-sizing: auto;
+                        }
+                        .rate{
+                            min-width: 150px;
+                        }
+                        .end{
+                            font-weight: bold;
+                            font-size: 20px;
+                            color: #F67924;
+                            font-family: 'Bitter', serif;
+                            font-optical-sizing: auto;
+                            display: flex;
+                            justify-content: space-between;
+                        }
+                        .backk{
+                            text-align: left;
+                            margin-left: 20%;
+                            color: #476930;
+                        }
+                        .index{
+                            text-align: right;
+                            margin-right: 20%;
+                            color: #476930;
+                        }
+                        .user{
+                            text-align: left;
+                            font-weight: bold;
+                            font-size: 20px;
+                        }";
+            var html = "<style>" + css + "</style>";
+            html += "<h1>Reseñas</h1>";
             if (reviews.Any())
             {
-                html += "<ul>";
+                html += "<table>";
                 foreach (var review in reviews)
                 {
-                    html += "<strong>Calificación:</strong> " + review.Rate + "<br>";
-                    html += "<strong>Usuario:</strong> " + review.UserName + "<br>";
+                    html += "<tr><td rowspan='2'><div  class='rate'>  " + review.Rate + " / 5.0</div> </td>";
+                    html += "<td class='user'>" + review.UserName + "</td></tr>";
                     if (!string.IsNullOrWhiteSpace(review.Comment))
                     {
-                        html += review.Comment;
+                        html += "<tr><td>" + review.Comment + "</td></tr>";
                     }
-                    html += "</li>";
                 }
-                html += "</ul>";
+                html += "</table>";
             }
             else
             {
-                html += "<p>No hay reseñas todavía. Si desea dejar una reseña, por favor inicie sesión.</p>";
+                html += "<tr><td>No hay reseñas todavía. Si desea dejar una reseña, por favor inicie sesión.</td></tr>";
             }
-            html += "<a href=\"/Home/Index\">Volver al inicio</a>";
+
+            html += "<div class='end'><a href='#' onclick='showPlaceInfo(" + idPlace + ")' class='backk'>Volver al lugar</a>";
+            html += "<a href=\\\"/Home/Index\\\" class=\"index\">Volver al inicio</a></div>";
+            
             return new ContentResult
             {
                 Content = html,
@@ -122,8 +502,8 @@ namespace BioKudi.Services
         {
             var reviews = reviewRepo.GetReviewUser(idPlace, idUser);
             var html = "<h2>Reseñas</h2><ul>" +
-               "<a href='#' onclick='showPlaceInfo(" + idPlace +")'>Volver al lugar</a>" +
-               "<a href='#' onclick='CreateReview(" + idPlace+")'>Crear reseña</a>"; 
+               "<a href='#' onclick='showPlaceInfo(" + idPlace + ")'>Volver al lugar</a>" +
+               "<a href='#' onclick='CreateReview(" + idPlace + ")'>Crear reseña</a>";
             if (reviews.Any())
             {
                 html += "<ul>";
@@ -148,7 +528,7 @@ namespace BioKudi.Services
             }
             else
             {
-                html += "<p>No hay reseñas todavía. ¡Sé el primero en dejar una!</p>"; 
+                html += "<p>No hay reseñas todavía. ¡Sé el primero en dejar una!</p>";
             }
             html += "<a href=\"/Home/Index\">Volver al inicio</a>";
             return new ContentResult
@@ -165,7 +545,7 @@ namespace BioKudi.Services
                        "<label for='Rate'>Calificación:</label>" +
                        "<input type='number' id='Rate' name='Rate' min='1' max='5' required>" +
                        "<label for='Comment'>Comentario:</label>" +
-                       "<textarea id='Comment' name='Comment' rows='4' cols='50'></textarea>" +
+                       "<textarea id='Comment' maxlength='250' name='Comment' rows='4' cols='50'></textarea>" +
                        "<input type='hidden' name='PlaceId' value='" + idPlace + "'>" +
                        "<input type='submit' value='Enviar'>" +
                        "</form>";

@@ -129,3 +129,6 @@ td.address{
 .link:hover {
     color: #476930;
 }
+.Error{
+    text-align: center;
+}

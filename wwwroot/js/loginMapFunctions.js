@@ -39,9 +39,14 @@ function CreateReview(placeId) {
     });
 }
 
-$(document).on('submit', '#createReviewForm', function (event) {
+$(document).off('submit', '#createReviewForm').on('submit', '#createReviewForm', function (event) {
     event.preventDefault();
-    placeId = $(this).find('input[name="PlaceId"]').val(); 
+    var $submitButton = $(this).find('input[type="submit"]');
+    if ($submitButton.prop('disabled')) {
+        return;
+    }
+    $submitButton.prop('disabled', true);
+    var placeId = $(this).find('input[name="PlaceId"]').val();
     var formData = $(this).serialize();
     $.ajax({
         url: '/Map/CreateReview',
@@ -55,6 +60,8 @@ $(document).on('submit', '#createReviewForm', function (event) {
         }
     });
 });
+
+
 
 function updateReview(reviewId) {
     $.ajax({

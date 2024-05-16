@@ -86,7 +86,7 @@ $(document).on('submit', '#updateReviewForm', function (event) {
     });
 });
 
-function deleteReview(reviewId) {
+function deleteReview(reviewId, placeId) {
     $.ajax({
         url: '/Map/DeleteReview?idReview=' + reviewId,
         method: 'POST',

@@ -11,10 +11,19 @@
     }
     ViewData["Title"] = "Reseñas";
 }
+<head>
+    <link href="/css/review/review.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-<h1>Index</h1>
+</head>
 
-<table class="table">
+<h1>Reseñas</h1>
+<table>
     <thead>
         <tr>
             <th>
@@ -29,37 +38,70 @@
             <th>
                 @Html.DisplayNameFor(model => model.PlaceId)
             </th>
-            <th></th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
         @if (!Model.Any())
-            {
-                <tr>
-                    <td colspan="4" class="Error">No hay datos para mostrar</td>
-                </tr>
-            }
+        {
+            <tr>
+                <td colspan="4" class="Error">No hay datos para mostrar</td>
+            </tr>
+        }
         else
+        {
+            @foreach (var item in Model)
             {
-            @foreach (var item in Model) {
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Rate)
                     </td>
-                    <td>
+                    <td class="comment">
                         @Html.DisplayFor(modelItem => item.Comment)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.UserId)
                     </td>
-                    <td>
+                    <td class="place">
                         <p>@item.PlaceId - @item.PlaceName</p>
                     </td>
-                    <td>
-                        <a asp-action="Delete" asp-route-id="@item.IdReview">Delete</a>
+                    <td class="acciones">
+                        <a href="#" onclick="showConfirmationDialog(@item.IdReview)"><i class="fa-solid fa-trash"></i></a>
                     </td>
                 </tr>
-                }
             }
+        }
     </tbody>
 </table>
+@Html.AntiForgeryToken()
+<script>
+    // Popup window function
+    function showConfirmationDialog(id) {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: '¿Deseas eliminar esta reseña?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Make the delete request to the controller
+                $.ajax({
+                    url: '@Url.Action("Delete", "Review")/' + id,
+                    type: 'POST',
+                    data: { '__RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
+                    success: function (result) {
+                        // Refresh view after successful deletion
+                        window.location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    }
+                });
+            }
+        });
+    }
+</script>

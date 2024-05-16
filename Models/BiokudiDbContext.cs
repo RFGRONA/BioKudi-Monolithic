@@ -36,15 +36,15 @@ public partial class BiokudiDbContext : DbContext
 
     //Data base connection string
     //public static string ConnectionString = "Data Source=biokudi-server.database.windows.net,1433;Initial Catalog=biokudi-database;User ID=biokudi-server-admin;Password=8Zc3nq1B$xAUlb4R";
-    public static string ConnectionString = "server=localhost; database=BIOKUDI-DB; integrated security=true;    TrustServerCertificate=Yes;";
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public static string ConnectionString = "server=localhost; database=BIOKUDI-DB; user id=sysbiokudi; password=BK2a2; TrustServerCertificate=Yes;";
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
             optionsBuilder.UseSqlServer(ConnectionString);
         base.OnConfiguring(optionsBuilder);
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Activity>(entity =>
         {
@@ -354,5 +354,23 @@ public partial class BiokudiDbContext : DbContext
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-public DbSet<BioKudi.dto.TicketDto> TicketDto { get; set; } = default!;
+    public DbSet<BioKudi.dto.PictureDto> PictureDto { get; set; } = default!;
+
+    public DbSet<BioKudi.dto.TicketDto> TicketDto { get; set; } = default!;
+
+public DbSet<BioKudi.dto.StateDto> StateDto { get; set; } = default!;
+
+public DbSet<BioKudi.dto.RoleDto> RoleDto { get; set; } = default!;
+
+public DbSet<BioKudi.dto.ActivityDto> ActivityDto { get; set; } = default!;
+
+public DbSet<BioKudi.dto.AuditDto> AuditDto { get; set; } = default!;
+
+public DbSet<BioKudi.dto.ReviewDto> ReviewDto { get; set; } = default!;
+
+public DbSet<BioKudi.dto.UserDto> UserDto { get; set; } = default!;
+
+public DbSet<BioKudi.dto.PlaceDto> PlaceDto { get; set; } = default!;
+
+public DbSet<BioKudi.dto.ViewModel.ReportAuditViewModel> ReportAuditViewModel { get; set; } = default!;
 }

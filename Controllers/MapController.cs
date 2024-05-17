@@ -69,7 +69,7 @@ namespace BioKudi.Controllers
         [ValidateAuthentication]
         public ContentResult CreateReview(int idPlace)
         {
-            return mapService.CreateReviewForm(idPlace);
+            return mapService.CreateReviewForm(idPlace, HttpContext);
         }
 
         [HttpPost]
@@ -82,7 +82,7 @@ namespace BioKudi.Controllers
         [ValidateAuthentication]
         public ContentResult UpdateReview(int idReview)
         {
-            return mapService.UpdateReviewForm(idReview);
+            return mapService.UpdateReviewForm(idReview, HttpContext);
         }
 
         [HttpPost]

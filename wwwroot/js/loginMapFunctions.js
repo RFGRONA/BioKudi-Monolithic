@@ -39,30 +39,6 @@ function CreateReview(placeId) {
     });
 }
 
-$(document).off('submit', '#createReviewForm').on('submit', '#createReviewForm', function (event) {
-    event.preventDefault();
-    var $submitButton = $(this).find('input[type="submit"]');
-    if ($submitButton.prop('disabled')) {
-        return;
-    }
-    $submitButton.prop('disabled', true);
-    var placeId = $(this).find('input[name="PlaceId"]').val();
-    var formData = $(this).serialize();
-    $.ajax({
-        url: '/Map/CreateReview',
-        method: 'POST',
-        data: formData,
-        success: function (data) {
-            showPlaceInfo(placeId);
-        },
-        error: function (err) {
-            console.error('Error al cargar el formulario de creación de reseñas:', err);
-        }
-    });
-});
-
-
-
 function updateReview(reviewId) {
     $.ajax({
         url: '/Map/UpdateReview?idReview=' + reviewId,
@@ -72,36 +48,6 @@ function updateReview(reviewId) {
         },
         error: function (err) {
             console.error('Error al cargar el formulario de actualizar reseña:', err);
-        }
-    });
-}
-
-$(document).on('submit', '#updateReviewForm', function (event) {
-    event.preventDefault();
-    placeId = $(this).find('input[name="PlaceId"]').val();
-    var formData = $(this).serialize();
-    $.ajax({
-        url: '/Map/UpdateReview',
-        method: 'POST',
-        data: formData,
-        success: function (data) {
-            showPlaceInfo(placeId);
-        },
-        error: function (err) {
-            console.error('Error al cargar el formulario de actualizar reseña:', err);
-        }
-    });
-});
-
-function deleteReview(reviewId, placeId) {
-    $.ajax({
-        url: '/Map/DeleteReview?idReview=' + reviewId,
-        method: 'POST',
-        success: function (data) {
-            showPlaceInfo(placeId); 
-        },
-        error: function (err) {
-            console.error('Error al eliminar la reseña:', err);
         }
     });
 }

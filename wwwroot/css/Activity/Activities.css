@@ -122,12 +122,12 @@ p{
 td.address{
     max-width: 500px;
 }
-.link {
+.maps {
     color: #F67924;
     font-size: 24px;
     text-align: left;
 }
-.link:hover {
+.maps:hover {
     color: #476930;
 }
 .Error{

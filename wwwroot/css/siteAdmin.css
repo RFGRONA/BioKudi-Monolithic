@@ -49,7 +49,7 @@ header {
             color: #476930;
             font-size: 36px;
             text-decoration: none;
-            font-family: "Asul", serif;
+            font-family: "Bitter", serif;
             font-weight: bold;
             font-style: normal;
         }
@@ -58,7 +58,7 @@ header {
                 color: #476930;
                 font-size: 36px;
                 text-decoration: none;
-                font-family: "Asul", serif;
+                font-family: "Bitter", serif;
                 font-weight: bold;
                 font-style: normal;
             }
@@ -67,7 +67,7 @@ header {
                 color: #476930;
                 font-size: 36px;
                 text-decoration: none;
-                font-family: "Asul", serif;
+                font-family: "Bitter", serif;
                 font-weight: bold;
                 font-style: normal;
                 transform: scale(1.1);
@@ -118,7 +118,7 @@ header {
                 text-align: center;
                 margin-top: 6px;
                 font-size: 16px;
-                font-family: "Asul", serif;
+                font-family: "Bitter", serif;
                 font-weight: bold;
                 font-style: normal;
                 text-transform: uppercase;
@@ -219,7 +219,7 @@ footer {
     padding-left: 10px;
     margin-top: 0px;
     font-size: 16px;
-    font-family: "Asul", serif;
+    font-family: "Bitter", serif;
     font-weight: bold;
     font-style: normal;
     text-transform: uppercase;

@@ -25,7 +25,15 @@ public partial class Ticket
     /// </summary>
     public int UserId { get; set; }
 
+    /// <summary>
+    /// ID of the state in which the ticket is located (integer).
+    /// </summary>
     public int State { get; set; }
+
+    /// <summary>
+    /// Answer provided for the ticket (character string, maximum 255).
+    /// </summary>
+    public string? Answer { get; set; }
 
     public virtual State StateNavigation { get; set; } = null!;
 

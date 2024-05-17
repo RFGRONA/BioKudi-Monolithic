@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Elfie.Serialization;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using BioKudi.dto;
 
 namespace BioKudi.Models;
 
@@ -14,22 +12,15 @@ public partial class BiokudiDbContext : DbContext
     }
 
     public BiokudiDbContext(DbContextOptions<BiokudiDbContext> options)
-	: base(options)
-	{
-	}
-
-	//Data base connection string
-	public static string ConnectionString = "Data Source=biokudi-server.database.windows.net,1433;Initial Catalog=biokudi-database;User ID=biokudi-server-admin;Password=8Zc3nq1B$xAUlb4R";
-	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        : base(options)
     {
-		if (!optionsBuilder.IsConfigured)
-			optionsBuilder.UseSqlServer(ConnectionString);
-        base.OnConfiguring(optionsBuilder);
-	}
+    }
 
-	public virtual DbSet<Activity> Activities { get; set; }
-	public virtual DbSet<Audit> Audits { get; set; }
-	public virtual DbSet<Picture> Pictures { get; set; }
+    public virtual DbSet<Activity> Activities { get; set; }
+
+    public virtual DbSet<Audit> Audits { get; set; }
+
+    public virtual DbSet<Picture> Pictures { get; set; }
 
     public virtual DbSet<Place> Places { get; set; }
 
@@ -43,7 +34,17 @@ public partial class BiokudiDbContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    //Data base connection string
+    //public static string ConnectionString = "Data Source=biokudi-server.database.windows.net,1433;Initial Catalog=biokudi-database;User ID=biokudi-server-admin;Password=8Zc3nq1B$xAUlb4R";
+    public static string ConnectionString = "Data Source=biokudi-server.database.windows.net,1433;Initial Catalog=biokudi-database;User ID=biokudi-server-admin;Password=8Zc3nq1B$xAUlb4R";
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+            optionsBuilder.UseSqlServer(ConnectionString);
+        base.OnConfiguring(optionsBuilder);
+    }
+
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Activity>(entity =>
         {
@@ -63,19 +64,24 @@ public partial class BiokudiDbContext : DbContext
 
         modelBuilder.Entity<Audit>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__AUDIT__3213E83F45F049A7");
+            entity.HasKey(e => e.IdAudit).HasName("PK__AUDIT__3213E83F45F049A7");
 
             entity.ToTable("AUDIT");
 
-            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.IdAudit)
+                .HasComment("Unique identifier of audit (integer).")
+                .HasColumnName("id_audit");
             entity.Property(e => e.Action)
                 .HasMaxLength(250)
+                .HasComment("Type of action performed (character string, maximun 500).")
                 .HasColumnName("action");
             entity.Property(e => e.Date)
+                .HasComment("Date the audit was done (date).")
                 .HasColumnType("datetime")
                 .HasColumnName("date");
             entity.Property(e => e.ViewAction)
                 .HasMaxLength(250)
+                .HasComment("Table in which some modification was made (character string, maximum 500).")
                 .HasColumnName("view_action");
         });
 
@@ -98,6 +104,13 @@ public partial class BiokudiDbContext : DbContext
                 .IsUnicode(false)
                 .HasComment("Name of the picture (character string, maximum 128).")
                 .HasColumnName("name");
+            entity.Property(e => e.PlaceId)
+                .HasComment("Identifier of the place to which the picture belongs (integer).")
+                .HasColumnName("place_id");
+
+            entity.HasOne(d => d.Place).WithMany(p => p.Pictures)
+                .HasForeignKey(d => d.PlaceId)
+                .HasConstraintName("FK_PICTURE_PLACE");
         });
 
         modelBuilder.Entity<Place>(entity =>
@@ -147,73 +160,27 @@ public partial class BiokudiDbContext : DbContext
                 .HasForeignKey(d => d.StateId)
                 .HasConstraintName("FK__PLACE__state_id__5535A963");
 
-            entity.HasMany(d => d.Activities).WithMany(p => p.Places)
+            entity.HasMany(d => d.IdActivities).WithMany(p => p.IdPlaces)
                 .UsingEntity<Dictionary<string, object>>(
                     "ActivityPlace",
                     r => r.HasOne<Activity>().WithMany()
-                        .HasForeignKey("ActivityId")
+                        .HasForeignKey("IdActivity")
                         .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__ACTIVITY___activ__4F7CD00D"),
+                        .HasConstraintName("FK__ACTIVITY___id_ac__114A936A"),
                     l => l.HasOne<Place>().WithMany()
-                        .HasForeignKey("PlaceId")
+                        .HasForeignKey("IdPlace")
                         .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__ACTIVITY___place__4E88ABD4"),
+                        .HasConstraintName("FK__ACTIVITY___id_pl__10566F31"),
                     j =>
                     {
-                        j.HasKey("PlaceId", "ActivityId").HasName("PK__ACTIVITY__9BA9939C1918C499");
+                        j.HasKey("IdPlace", "IdActivity").HasName("PK_Activity_Place");
                         j.ToTable("ACTIVITY_PLACE");
-                        j.IndexerProperty<int>("PlaceId")
+                        j.IndexerProperty<int>("IdPlace")
                             .HasComment("ID of the place associated with the activity (integer).")
-                            .HasColumnName("place_id");
-                        j.IndexerProperty<int>("ActivityId")
+                            .HasColumnName("id_place");
+                        j.IndexerProperty<int>("IdActivity")
                             .HasComment("ID of the activity associated with the place (integer).")
-                            .HasColumnName("activity_id");
-                    });
-
-            entity.HasMany(d => d.Pictures).WithMany(p => p.Places)
-                .UsingEntity<Dictionary<string, object>>(
-                    "PicturePlace",
-                    r => r.HasOne<Picture>().WithMany()
-                        .HasForeignKey("PictureId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__PICTURE_P__pictu__4D94879B"),
-                    l => l.HasOne<Place>().WithMany()
-                        .HasForeignKey("PlaceId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__PICTURE_P__place__4CA06362"),
-                    j =>
-                    {
-                        j.HasKey("PlaceId", "PictureId").HasName("PK__PICTURE___64F9E9DAEA8FA6DB");
-                        j.ToTable("PICTURE_PLACE");
-                        j.IndexerProperty<int>("PlaceId")
-                            .HasComment("ID of the place associated with the picture (integer).")
-                            .HasColumnName("place_id");
-                        j.IndexerProperty<int>("PictureId")
-                            .HasComment("ID of the picture associated with the place (integer).")
-                            .HasColumnName("picture_id");
-                    });
-
-            entity.HasMany(d => d.Reviews).WithMany(p => p.Places)
-                .UsingEntity<Dictionary<string, object>>(
-                    "ReviewPlace",
-                    r => r.HasOne<Review>().WithMany()
-                        .HasForeignKey("ReviewId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__REVIEW_PL__revie__5441852A"),
-                    l => l.HasOne<Place>().WithMany()
-                        .HasForeignKey("PlaceId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__REVIEW_PL__place__534D60F1"),
-                    j =>
-                    {
-                        j.HasKey("PlaceId", "ReviewId").HasName("PK__REVIEW_P__A923EB93308825A1");
-                        j.ToTable("REVIEW_PLACE");
-                        j.IndexerProperty<int>("PlaceId")
-                            .HasComment("ID of the place associated with the review (integer).")
-                            .HasColumnName("place_id");
-                        j.IndexerProperty<int>("ReviewId")
-                            .HasComment("ID of the review associated with the place (integer).")
-                            .HasColumnName("review_id");
+                            .HasColumnName("id_activity");
                     });
         });
 
@@ -231,12 +198,19 @@ public partial class BiokudiDbContext : DbContext
                 .IsUnicode(false)
                 .HasComment("Comment of the review (character string, maximum 255).")
                 .HasColumnName("comment");
+            entity.Property(e => e.PlaceId)
+                .HasComment("ID of the place being reviewed (integer).")
+                .HasColumnName("place_id");
             entity.Property(e => e.Rate)
                 .HasComment("Rating of the review (float, precision of 2 digits).")
                 .HasColumnName("rate");
             entity.Property(e => e.UserId)
                 .HasComment("ID of the user who made the review (integer).")
                 .HasColumnName("user_id");
+
+            entity.HasOne(d => d.Place).WithMany(p => p.Reviews)
+                .HasForeignKey(d => d.PlaceId)
+                .HasConstraintName("FK_REVIEW_PLACE");
 
             entity.HasOne(d => d.User).WithMany(p => p.Reviews)
                 .HasForeignKey(d => d.UserId)
@@ -274,6 +248,11 @@ public partial class BiokudiDbContext : DbContext
                 .IsUnicode(false)
                 .HasComment("Name of the state (character string, maximum 30).")
                 .HasColumnName("name_state");
+            entity.Property(e => e.Table)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasComment("Table related to the type of status (character string, maximum 20)")
+                .HasColumnName("table");
         });
 
         modelBuilder.Entity<Ticket>(entity =>
@@ -290,7 +269,14 @@ public partial class BiokudiDbContext : DbContext
                 .IsUnicode(false)
                 .HasComment("Subject of the ticket (character string, maximum 1024).")
                 .HasColumnName("affair");
-            entity.Property(e => e.State).HasColumnName("state");
+            entity.Property(e => e.Answer)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasComment("Answer provided for the ticket (character string, maximum 255).")
+                .HasColumnName("answer");
+            entity.Property(e => e.State)
+                .HasComment("ID of the state in which the ticket is located (integer).")
+                .HasColumnName("state");
             entity.Property(e => e.Type)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -328,6 +314,7 @@ public partial class BiokudiDbContext : DbContext
             entity.Property(e => e.Key)
                 .HasMaxLength(255)
                 .IsUnicode(false)
+                .HasComment("Key of the user (character string, maximun 255).")
                 .HasColumnName("key");
             entity.Property(e => e.NameUser)
                 .HasMaxLength(65)
@@ -345,6 +332,7 @@ public partial class BiokudiDbContext : DbContext
             entity.Property(e => e.Salt)
                 .HasMaxLength(255)
                 .IsUnicode(false)
+                .HasComment("Salt of the user (character string, maximun 255).")
                 .HasColumnName("salt");
             entity.Property(e => e.StateId)
                 .HasComment("ID of the user's state (integer).")
@@ -365,4 +353,24 @@ public partial class BiokudiDbContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+    public DbSet<BioKudi.dto.PictureDto> PictureDto { get; set; } = default!;
+
+    public DbSet<BioKudi.dto.TicketDto> TicketDto { get; set; } = default!;
+
+public DbSet<BioKudi.dto.StateDto> StateDto { get; set; } = default!;
+
+public DbSet<BioKudi.dto.RoleDto> RoleDto { get; set; } = default!;
+
+public DbSet<BioKudi.dto.ActivityDto> ActivityDto { get; set; } = default!;
+
+public DbSet<BioKudi.dto.AuditDto> AuditDto { get; set; } = default!;
+
+public DbSet<BioKudi.dto.ReviewDto> ReviewDto { get; set; } = default!;
+
+public DbSet<BioKudi.dto.UserDto> UserDto { get; set; } = default!;
+
+public DbSet<BioKudi.dto.PlaceDto> PlaceDto { get; set; } = default!;
+
+public DbSet<BioKudi.dto.ViewModel.ReportAuditViewModel> ReportAuditViewModel { get; set; } = default!;
 }

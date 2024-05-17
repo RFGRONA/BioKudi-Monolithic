@@ -20,5 +20,10 @@ public partial class Picture
     /// </summary>
     public string Link { get; set; } = null!;
 
-    public virtual ICollection<Place> Places { get; set; } = new List<Place>();
+    /// <summary>
+    /// Identifier of the place to which the picture belongs (integer).
+    /// </summary>
+    public int? PlaceId { get; set; }
+
+    public virtual Place? Place { get; set; }
 }

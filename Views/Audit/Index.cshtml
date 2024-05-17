@@ -1,0 +1,62 @@
+﻿@model IEnumerable<BioKudi.dto.AuditDto>
+
+@{
+    ViewData["Title"] = "Auditoria";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<head>
+    <link href="~/css/Audit/Audit.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<div class="body">
+
+    <h1>Registros de auditoría</h1>
+
+    <p>
+        <a asp-action="Report">Ver Reporte</a>
+        <a asp-action="PrintReport">Generar Reporte</a>
+    </p>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Fecha
+                </th>
+                <th>
+                    ViewAction
+                </th>
+                <th>
+                    Accion
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="3" class="Error">No hay datos para mostrar</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ViewAction)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Action)
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

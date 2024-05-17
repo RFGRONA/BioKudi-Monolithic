@@ -1,4 +1,5 @@
 ﻿using BioKudi.dto;
+using BioKudi.dto.ViewModel;
 using BioKudi.Models;
 
 namespace BioKudi.Repository
@@ -13,12 +14,40 @@ namespace BioKudi.Repository
 
         public IEnumerable<AuditDto> GetListAudit()
         {
-            return _context.Audits.Select(a => new AuditDto
+            try
             {
-                Id = a.Id,
-                Action = a.Action,
-                Date = a.Date
-            }).ToList();
+                return _context.Audits.Select(a => new AuditDto
+                {
+                    AuditId = a.IdAudit,
+                    Action = a.Action,
+                    Date = a.Date,
+                    ViewAction = a.ViewAction
+                }).OrderByDescending(a => a.Date).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        public IEnumerable<ReportAuditViewModel> GetAuditReport()
+        {
+            try
+            {
+                return _context.Audits.Select(a => new ReportAuditViewModel
+                {
+                    AuditId = a.IdAudit,
+                    Action = a.Action,
+                    Date = a.Date,
+                    ViewAction = a.ViewAction
+                }).OrderByDescending(a => a.Date).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
     }
 }

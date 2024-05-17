@@ -79,6 +79,9 @@
         font-size: 28px;
         font-weight: bold;
     }
+        .login form button:hover {
+            background-color: #F67924;
+        }
 
 .check {
     display: grid;

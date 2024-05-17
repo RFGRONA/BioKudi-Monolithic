@@ -1,0 +1,125 @@
+﻿@model BioKudi.dto.PlaceDto
+
+@{
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutEditor.cshtml";
+    }
+    ViewData["Title"] = "Detalles lugar";
+}
+<head>
+    <link href="/css/Place/PlaceDetails.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+
+<div class="body">
+
+
+    <h1>Details</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Coordenadas
+                </th>
+                <th>
+                    Dirección
+                </th>
+                <th>
+                    Descripción
+                </th>
+                <th>
+                    Enlace
+                </th>
+                <th>
+                    Estado
+                </th>
+                <th>
+                    Imágenes
+                </th>
+                <th>
+                    Reseñas
+                </th>
+                <th>
+                    Actividades
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <p>
+                        @Html.DisplayFor(model => model.NamePlace)
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        @Html.DisplayFor(model => model.Latitude),
+                        @Html.DisplayFor(model => model.Longitude)
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        @Html.DisplayFor(model => model.Address)
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        @Html.DisplayFor(model => model.Description)
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        @Html.DisplayFor(model => model.Link)
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        @Html.DisplayFor(model => model.StateName)
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        @Html.DisplayFor(model => model.Pictures)
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        @Html.DisplayFor(model => model.Reviews)
+                    </p>
+                </td>
+                <td class="text">
+                    @if (Model.ActivityData == null || Model.ActivityData.Count == 0)
+                    {
+                        <p>Sin actividades asociadas</p>
+                    }
+                    else
+                    {
+                        <ul>
+                            @foreach (var activity in Model.ActivityData)
+                            {
+                                <li>
+                                    @activity.IdActivity - @activity.Type
+                                </li>
+                            }
+                        </ul>
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="acciones">
+        <a asp-action="Edit" asp-route-id="@Model?.IdPlace" class="edit">Editar</a>
+        <a asp-action="Index" class="back">Volver a lista</a>
+    </div>
+</div>

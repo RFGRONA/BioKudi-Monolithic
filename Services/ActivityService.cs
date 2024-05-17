@@ -1,5 +1,6 @@
 ﻿using BioKudi.dto;
 using BioKudi.Repository;
+using NuGet.Protocol;
 
 namespace BioKudi.Services
 {
@@ -26,7 +27,7 @@ namespace BioKudi.Services
 
 		public IEnumerable<ActivityDto> GetAllActivities()
 		{
-			return activityRepo.GetListActivity();
+			return activityRepo.GetListActivity() ?? new List<ActivityDto>();
 		}
 
 		public ActivityDto GetActivity(int activityId)
@@ -34,14 +35,19 @@ namespace BioKudi.Services
 			return activityRepo.GetActivity(activityId);
 		}
 
-		/*public ActivityDto UpdateActivity(ActivityDto activity)
+		public ActivityDto UpdateActivity(ActivityDto activity)
 		{
 			var result = activityRepo.Update(activity);
 			if (result == null)
-			{
+            {
 				return null;
 			}
 			return activity;
-		}*/
-	}
+		}
+
+        public bool DeleteActivity(int activityId)
+        {
+            return activityRepo.Delete(activityId);
+        }
+    }
 }

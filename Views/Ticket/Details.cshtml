@@ -1,0 +1,74 @@
+﻿@model BioKudi.dto.TicketDto
+
+@{
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutEditor.cshtml";
+    }
+    ViewData["Title"] = "Detalles Ticket";
+}
+<head>
+    <link href="/css/Ticket/TicketDetails.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<div class="body">
+
+
+    <h1>Detalles Ticket</h1>
+    <h2>@Html.DisplayFor(model => model.Type)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Asunto
+                </th>
+                <th>
+                    ID Usuario
+                </th>
+                <th>
+                    Estado
+                </th>
+                <th>
+                    Respuesta
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Affair)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.StateName)
+                </td>
+                <td>
+                    @if(!string.IsNullOrEmpty(Model.Answer)){
+                    @Html.DisplayFor(model => model.Answer)
+                    }else{
+                        <p>Sin respuesta</p>
+                    }
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+    <div class="acciones">
+        @if (string.IsNullOrEmpty(Model.Answer))
+        {
+            <a asp-action="Edit" asp-route-id="@Model?.IdTicket" class="edit">Editar</a>
+        }
+        
+        <a asp-action="Index" class="back">Volver a lista</a>
+    </div>
+
+</div>

@@ -15,6 +15,11 @@ public partial class State
     /// </summary>
     public string? NameState { get; set; }
 
+    /// <summary>
+    /// Table related to the type of status (character string, maximum 20)
+    /// </summary>
+    public string? Table { get; set; }
+
     public virtual ICollection<Place> Places { get; set; } = new List<Place>();
 
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();

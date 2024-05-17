@@ -1,0 +1,66 @@
+﻿@model BioKudi.dto.ActivityDto
+
+@{
+	if (User.IsInRole("Admin"))
+	{
+		Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+	}
+	else
+	{
+		Layout = "~/Views/Shared/_LayoutEditor.cshtml";
+	}
+	ViewData["Title"] = "Detalles Actividad";
+}
+<head>
+	<link href="/css/Activity/ActivityDetails.css" rel="stylesheet" />
+	<link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<div class="body">
+	<h1>Detalles de actividad</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>
+					Actividad
+				</th>
+				<th>
+					Asociaciones
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+
+				<td>
+					<p>
+						@Html.DisplayFor(model => model.Type)
+					</p>
+				</td>
+				<td class="text">
+					@if (Model.PlacesData == null || Model.PlacesData.Count == 0)
+					{
+						<p>Sin lugares asociados</p>
+					}
+					else
+					{
+						<ul>
+							@foreach (var place in Model.PlacesData)
+							{
+								<li>
+									@place.IdPlace - @place.NamePlace
+								</li>
+							}
+						</ul>
+					}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="acciones">
+		<a asp-action="Edit" asp-route-id="@Model?.IdActivity" class="edit">Editar</a>
+		<a asp-action="Index" class="back">Volver a lista</a>
+	</div>
+</div>

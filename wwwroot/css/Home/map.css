@@ -1,0 +1,63 @@
+body {
+    display: grid;
+    grid-template-columns: 65% 35%;
+    margin: 0;
+    padding: 0;
+    background-color: #FEECD6;
+}
+
+.iframeContainer {
+    width: 99%; 
+    height: 99%;
+}
+
+#map {
+    height: 100vh;
+    width: 100%;
+    padding: 0;
+}
+
+.geojson-layer {
+    stroke: #6cfe71;
+    stroke-width: 1px;
+    fill-opacity: 1;
+}
+
+.mostrarInfo {
+    display: none;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.mostrarInfo h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.mostrarInfo div {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+#goHomeBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+}
+.info-container {
+    position: relative;
+}
+
+.logo {
+    max-width: 60%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}

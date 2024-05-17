@@ -35,7 +35,8 @@ public partial class BiokudiDbContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     //Data base connection string
-    public static string ConnectionString = "Data Source=biokudi-server.database.windows.net,1433;Initial Catalog=biokudi-database;User ID=biokudi-server-admin;Password=8Zc3nq1B$xAUlb4R";
+    //public static string ConnectionString = "Data Source=biokudi-server.database.windows.net,1433;Initial Catalog=biokudi-database;User ID=biokudi-server-admin;Password=8Zc3nq1B$xAUlb4R";
+    public static string ConnectionString = "server=FREDYPC\\MSSQLSERVER01; database=BIOKUDI-DB; integrated security=true; TrustServerCertificate=Yes;";
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)

@@ -1,0 +1,60 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    width: 80%;
+    margin: auto;
+    padding: 20px 0;
+    text-align: left;
+    overflow: hidden; /* Evita que el contenido flote alrededor del encabezado */
+}
+
+    header img {
+        width: 71px;
+        height: 72px;
+        float: left; /* Hace que el logo se alinee a la izquierda */
+        margin-right: 20px; /* Espacio entre el logo y el título */
+    }
+
+    header h1 {
+        margin: 0; /* Elimina el margen predeterminado del h1 */
+        line-height: 100px; /* Centra verticalmente el texto con el logo */
+        margin-bottom: -10%;
+    }
+
+.table {
+    width: 80%;
+    margin: auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+    .table th,
+    .table td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    .table th {
+        background-color: #343a40;
+        color: #fff;
+        margin-bottom: 10%;
+    }
+
+    .table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .table tbody tr:hover {
+        background-color: #e2e6ea;
+    }
+p{
+    text-align: right;
+    margin-right: 10%;
+}

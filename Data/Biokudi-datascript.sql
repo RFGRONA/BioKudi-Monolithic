@@ -48,14 +48,14 @@ INSERT INTO ACTIVITY (type) VALUES
 ('Asados'),
 ('Glamping');
 GO
-INSERT INTO [STATE] (name_state) VALUES
-('Activo'),
-('Inactivo'),
-('Disponible'),
-('Remodelación'),
-('Cerrado'),
-('Pendiente'),
-('Revisado');
+INSERT INTO [STATE] (name_state, table) VALUES
+('Activo', 'USER'),
+('Inactivo', 'USER'),
+('Disponible', 'PLACE'),
+('Remodelación', 'PLACE'),
+('Cerrado', 'PLACE'),
+('Pendiente', 'TICKET'),
+('Revisado', 'TICKET');
 GO
 INSERT INTO [ROLE] (name_role) VALUES
 ('User'),

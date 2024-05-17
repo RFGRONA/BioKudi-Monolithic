@@ -1,7 +1,10 @@
-﻿namespace BioKudi.dto
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BioKudi.dto
 {
     public class PlaceDto
     {
+        [Key]
         public int IdPlace { get; set; }
         public string NamePlace { get; set; } = null!;
         public string? Latitude { get; set; }
@@ -10,9 +13,13 @@
         public string Description { get; set; } = null!;
         public string Link { get; set; } = null!;
         public int? StateId { get; set; }
-        public List<int> ActivityId { get; set; } = new List<int>();
-        public List<int> PictureId { get; set; } = new List<int>();
-        public List<int> ReviewId { get; set; } = new List<int>();
-
+		public string? StateName { get; set; }
+		public List<int> ActivityId { get; set; } = new List<int>();
+        public List<ActivityDto> ActivityData { get; set; } = new List<ActivityDto>();
+        public int Pictures { get; set; }
+        public List<PictureDto> PictureData { get; set; } = new List<PictureDto>();
+        public int Reviews { get; set; }
+        public double Rating { get; set; }
+        public List<ReviewDto> ReviewData { get; set; } = new List<ReviewDto>();
     }
 }

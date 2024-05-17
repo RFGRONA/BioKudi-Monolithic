@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 namespace BioKudi.dto;
 
 public partial class UserDto
 {
+    [Key]
     public int UserId { get; set; }
 
     public string NameUser { get; set; } = null!;

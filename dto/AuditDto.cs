@@ -1,8 +1,11 @@
-﻿namespace BioKudi.dto
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BioKudi.dto
 {
     public class AuditDto
     {
-        public int Id { get; set; }
+        [Key]
+        public int AuditId { get; set; }
 
         public DateTime? Date { get; set; }
 

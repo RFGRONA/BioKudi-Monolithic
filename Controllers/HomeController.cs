@@ -1,5 +1,5 @@
 using BioKudi.dto;
-using BioKudi.Models;
+using BioKudi.dto.ViewModel;
 using BioKudi.Repository;
 using BioKudi.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using BioKudi.Utilities;
 using System.Security.Claims;
+using System.Composition;
+using BioKudi.Models;
 
 namespace BioKudi.Controllers
 {
@@ -16,15 +18,20 @@ namespace BioKudi.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly UserService userService;
-
-        public HomeController(ILogger<HomeController> logger, UserService userService)
+        private readonly MapService mapService;
+        private readonly PlacesService placeService;
+        private readonly TicketService ticketService;
+        public HomeController(ILogger<HomeController> logger, UserService userService, MapService mapService, PlacesService placesService, TicketService ticketService)
         {
             _logger = logger;
             this.userService = userService;
+            this.mapService = mapService;
+            this.placeService = placesService;
+            this.ticketService = ticketService;
         }
 
-		[ValidateLogin]
-		public IActionResult Index()
+        [ValidateLogin]
+        public IActionResult Index()
         {
             return View();
         }
@@ -33,21 +40,25 @@ namespace BioKudi.Controllers
             return View();
         }
 
-		[ValidateLogin]
-		public IActionResult Login()
+        [ValidateLogin]
+        public IActionResult Login()
         {
-			UserDto user = new UserDto();
-			return View(user);
-			
-		}
+            UserDto user = new UserDto();
+            if (user == null)
+                return RedirectToAction("Error", "Home");
+            return View(user);
 
-		public IActionResult Register()
-		{
-			UserDto user = new UserDto();
-			return View(user);
-		}
+        }
 
-		public IActionResult Logout()
+        public IActionResult Register()
+        {
+            UserDto user = new UserDto();
+            if (user == null)
+                return RedirectToAction("Error", "Home");
+            return View(user);
+        }
+
+        public IActionResult Logout()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
@@ -66,6 +77,8 @@ namespace BioKudi.Controllers
                     return RedirectToAction("IndexUser", "User", new { userId = user.UserId });
                 if (result.RoleName == "Admin") // Admin
                     return RedirectToAction("IndexAdmin", "Admin", new { userId = user.UserId });
+                if (result.RoleName == "Editor") // Admin
+                    return RedirectToAction("IndexEditor", "Editor", new { userId = user.UserId });
             }
             return View(user);
         }
@@ -80,6 +93,23 @@ namespace BioKudi.Controllers
                     return RedirectToAction("Login", "Home");
             }
             return View(user);
+        }
+
+        [ValidateAuthentication]
+        public IActionResult Ticket()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateAuthentication]
+        public IActionResult Ticket(TicketDto ticket)
+        {
+            var result = ticketService.CreateTicket(ticket, HttpContext);
+            if (result == null)
+                return RedirectToAction("Error", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

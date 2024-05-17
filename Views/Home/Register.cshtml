@@ -6,10 +6,16 @@
 }
 <head>
     <link href="~/css/Register.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <div class="register">
     <h1>Crear Usuario</h1>
-    <form asp-controller="Home" asp-action="Register" method="post">
+    <form  id="registerForm" asp-controller="Home" asp-action="Register" method="post">
         <div class="form-group">
             <label asp-for="NameUser">Nombre</label>
             <input asp-for="NameUser" class="form-control" type="text" required placeholder="Jose Perez" />
@@ -24,7 +30,42 @@
             <input asp-for="Password" class="form-control" type="password" required minlength="8" />
             <span class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-primary" asp-controller="Home" asp-action="Register">Crear</button>
+        <button type="submit" class="btn" asp-controller="Home" id="createButton" asp-action="Register">Crear</button>
     </form>
     <p>Si ya tienes una cuenta <a asp-controller="Home" asp-action="Login"><i>Ingresa aqui</i></a></p>
 </div>
+<script>
+    $('#createButton').click(function (e) {
+        e.preventDefault();
+
+        // Manually check if fields meet requirements
+        var nameUser = $('#NameUser').val();
+        var email = $('#Email').val();
+        var password = $('#Password').val();
+
+        if (nameUser.trim() === '' || email.trim() === '' || password.trim() === '') {
+            // Show an error message if any field is empty
+            Swal.fire({
+                title: 'Error',
+                text: 'Por favor, completa todos los campos obligatorios.',
+                icon: 'error'
+            });
+        } else {
+            // If all fields are complete, show confirmation
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: '¿Deseas crear esta cuenta de usuario?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, crear cuenta',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#registerForm').submit();
+                }
+            });
+        }
+    });
+</script>

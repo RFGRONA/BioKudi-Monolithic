@@ -1,0 +1,65 @@
+﻿@model BioKudi.dto.PictureDto
+
+@{
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutEditor.cshtml";
+    }
+    ViewData["Title"] = "Detalles de imagen";
+}
+<head>
+    <link href="/css/Picture/PictureDetails.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<div class="body">
+    <h1>Detalles de imagen</h1>
+    <h2>@Model.Name</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Imagen
+                </th>
+                <th>
+                    Lugar asociado
+                </th>
+                <th>
+                    Link
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="Imagen">
+                <img src="@Model.Link" alt="@Model.Name" />
+                </td>
+                <td>
+                    @if (Model.PlaceId == null)
+                    {
+                        <p>Sin lugar asociado</p>
+                    }
+                    else
+                    {
+                        <p>@Model.PlaceId - @Model.PlaceName</p>
+                    }
+                </td>
+                <td>
+                    <p>@Model.Link</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="acciones">
+        <a asp-action="Edit" asp-route-id="@Model?.IdPicture" class="edit">Editar</a>
+        <a asp-action="Index" class="back">Volver a lista</a>
+    </div>
+</div>

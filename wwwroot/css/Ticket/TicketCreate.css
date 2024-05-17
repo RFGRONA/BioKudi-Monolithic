@@ -1,0 +1,113 @@
+﻿body {
+    font-family: "Bitter", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    background-color: #FEECD6;
+}
+
+.body {
+    max-width: 80%;
+    min-width: 80%;
+    margin: 0 auto;
+    margin-top: 5%;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+h1 {
+    text-align: center;
+    color: #F67924;
+    font-weight: bold;
+    margin-bottom: 5%;
+}
+
+p {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    color: black;
+    line-height: 1.5;
+    font-size: 32px;
+    font-family: "Inter";
+    text-align: center;
+    margin-bottom: 6%;
+}
+select option[value="pqrs"] {
+    color: red;
+}
+
+hr {
+    color: #F67924;
+}
+
+form {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    background-color: #F5D4AC;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    margin-bottom: 15%;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    padding: 3%;
+}
+
+.Affair {
+    margin-top: -4%;
+}
+
+.btn {
+    background-color: #F67924;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    border: none;
+}
+
+    .btn:focus {
+        outline: none;
+    }
+
+
+    .btn:hover {
+        background-color: #EC5F00;
+    }
+
+    .btn:active {
+        background-color: #F67924;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 20px;
+        text-decoration: none;
+        border: none;
+    }
+.submit {
+    
+    margin-bottom: 5%;
+    display: flex;
+    justify-content: center;
+}
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 24px;
+}
+.input{
+    border-radius: 30px;
+}
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.seleccion{
+    border-radius: 30px;
+    max-width: 20%;
+}

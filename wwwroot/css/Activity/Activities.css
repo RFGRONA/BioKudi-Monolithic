@@ -1,0 +1,135 @@
+﻿body {
+    font-family: "Bitter", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    background-color: #D8EECE;
+}
+.body{
+    margin-bottom: 10%;
+}
+
+td {
+    text-align: center;
+}
+
+.table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 100%;
+}
+
+table {
+    padding: 10px;
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 2%;
+    border-radius: 50px;
+    overflow: hidden;
+    background-color: #F5F5F5;
+    min-height: 358px;
+}
+
+h1 {
+    font-size: 48px;
+    font-weight: bold;
+    color: #476930;
+    text-align: center;
+    padding: 10px;
+    margin-top: 2%;
+}
+
+.image {
+    min-width: 359px;
+    min-height: 358px;
+    max-width: 359px;
+    max-height: 358px;
+    text-align: center;
+    border-right: 1px solid #F67924;
+}
+
+img {
+    width: 359px;
+    height: 358px;
+}
+
+.title {
+    color: #476930;
+    font-size: 36px;
+    font-weight: bold;
+    width: 100%;
+    border-bottom: 1px solid #F67924;
+}
+
+.name {
+    text-align: left;
+}
+
+.arrow {
+    text-align: right;
+    margin-right: 2%;
+}
+
+.title-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+}
+.description {
+    font-size: 20px;
+    color: black;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    border-right: 1px solid #F67924;
+    max-width: 500px;
+    text-align: justify;
+    
+}
+.descriptionn {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+p{
+    font-size: 20px;
+    font-weight: bold;
+    font-style: italic;
+    color: black;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+}
+.activity {
+    text-align: left;
+    border-top: 1px solid #F67924;
+    color: #476930;
+    font-size: 24px;
+}
+.act{
+    margin-left: 10%;
+    margin-top: 4%;
+
+}
+.fa-location-dot {
+    margin-right: 2%;
+    font-size: 30px;
+    color: #476930;
+}
+.address {
+    color: #476930;
+    font-size: 30px;
+    font-weight: bold;
+}
+td.address{
+    max-width: 500px;
+}
+.link {
+    color: #F67924;
+    font-size: 24px;
+    text-align: left;
+}
+.link:hover {
+    color: #476930;
+}
+.Error{
+    text-align: center;
+}

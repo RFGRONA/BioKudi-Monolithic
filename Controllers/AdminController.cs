@@ -1,5 +1,5 @@
 using BioKudi.dto;
-using BioKudi.Models;
+using BioKudi.dto.ViewModel;
 using BioKudi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,42 +13,38 @@ namespace BioKudi.Controllers
     {
         private readonly ILogger<AdminController> _logger;
 		private readonly UserService userService;
-        private readonly ActivityService activityService;
+        private readonly MapService mapService;
+        private readonly PlacesService placeService;
+        public AdminController(ILogger<AdminController> logger, UserService userService, MapService mapService, PlacesService placeService)
+        {
+            _logger = logger;
+            this.userService = userService;
+            this.mapService = mapService;
+            this.placeService = placeService;
+        }
 
-		public AdminController(ILogger<AdminController> logger, UserService userService, ActivityService activityService)
-		{
-			_logger = logger;
-			this.userService = userService;
-            this.activityService = activityService;
-		}
-
-		public IActionResult IndexAdmin(UserDto user)
+        public IActionResult IndexAdmin(UserDto user)
         {
 			user = userService.GetUser(user.UserId);
+            if (user == null)
+                return RedirectToAction("Error", "Admin");
             return View(user);
         }
-        public IActionResult ListUsers()
+
+        public IActionResult Map()
         {
-            var users = userService.GetAllUsers();
-            return View(users);
+            var markers = mapService.GetMarkers();
+            if (markers == null)
+                return RedirectToAction("Error", "Admin");
+            return View(markers);
         }
-        public IActionResult ListPlaces()
+
+        public IActionResult Activities()
         {
-            return View();
-        }
-        public IActionResult ListActivities()
-        {
-            var activities = activityService.GetAllActivities();
-            return View(activities);
-        }
-        public IActionResult ListPictures()
-        {
-            return View();
-        }
-        public IActionResult ListTickets(UserDto user)
-        {
-            user = userService.GetUser(user.UserId);
-            return View(user);
+            var places = placeService.GetAllPlaces();
+            if (places == null)
+                return RedirectToAction("Error", "Admin");
+            return View(places);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

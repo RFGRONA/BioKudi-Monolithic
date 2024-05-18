@@ -37,6 +37,7 @@ li{
     display: flex;
     justify-content: center;
     margin-top: 1%;
+    margin-bottom: 15%;
 }
 .back, .edit {
     background-color: #F98F46;

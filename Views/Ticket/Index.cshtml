@@ -21,9 +21,9 @@
 <div class="body">
     <h1>Tickets</h1>
     <p>
-        <a asp-action="">Todos</a>
-        <a asp-action="">Pendientes</a>
-        <a asp-action="">Revisados</a>
+        <a asp-action="Index" asp-route-filter="All">Todos</a>
+        <a asp-action="Index" asp-route-filter="Pending">Pendientes</a>
+        <a asp-action="Index" asp-route-filter="Answer">Revisados</a>
     </p>
     <table>
         <thead>

@@ -68,3 +68,13 @@ p a {
         color: white;
         padding: 10px 12px;
     }
+.name {
+    overflow: hidden;
+    max-width: 200px;
+    word-wrap: break-word;
+}
+.link{
+    overflow: hidden;
+    max-width: 200px;
+    word-wrap: break-word;
+}

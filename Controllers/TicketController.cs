@@ -22,9 +22,15 @@ namespace BioKudi.Controllers
         }
 
         // GET: TicketController
-        public ActionResult Index()
+        public ActionResult Index(string filter)
         {
-            var tickets = ticketService.GetAllTickets();
+            IEnumerable<TicketDto> tickets;
+            if(filter=="Pending") 
+                tickets = ticketService.GetTicketsPending();
+            else if (filter == "Answer")
+                tickets = ticketService.GetTicketsAnswers();
+            else
+                tickets = ticketService.GetAllTickets();
             return View(tickets);
         }
 

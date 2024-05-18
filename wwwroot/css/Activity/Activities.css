@@ -4,12 +4,14 @@
     font-style: normal;
     background-color: #D8EECE;
 }
-.body{
+
+.body {
     margin-bottom: 10%;
 }
 
 td {
     text-align: center;
+    word-wrap: break-word; /* Asegura que el texto en todas las celdas haga saltos de línea si es necesario */
 }
 
 .table-container {
@@ -51,6 +53,7 @@ h1 {
 img {
     width: 359px;
     height: 358px;
+    border-radius: 50px;
 }
 
 .title {
@@ -76,6 +79,7 @@ img {
     width: 100%;
     padding: 10px;
 }
+
 .description {
     font-size: 20px;
     color: black;
@@ -84,13 +88,17 @@ img {
     border-right: 1px solid #F67924;
     max-width: 500px;
     text-align: justify;
-    
+    word-wrap: break-word; /* Asegura que el texto haga saltos de línea */
+    min-width: 500px;
+    overflow: hidden;
 }
+
 .descriptionn {
     margin-left: 2%;
     margin-right: 2%;
 }
-p{
+
+p {
     font-size: 20px;
     font-weight: bold;
     font-style: italic;
@@ -98,38 +106,47 @@ p{
     font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
 }
+
 .activity {
     text-align: left;
     border-top: 1px solid #F67924;
     color: #476930;
     font-size: 24px;
+    word-wrap: break-word; /* Asegura que el texto haga saltos de línea */
+    max-width: 500px;
 }
-.act{
+
+.act {
     margin-left: 10%;
     margin-top: 4%;
-
 }
+
 .fa-location-dot {
     margin-right: 2%;
     font-size: 30px;
     color: #476930;
 }
+
 .address {
     color: #476930;
     font-size: 30px;
     font-weight: bold;
 }
-td.address{
+
+td.address {
     max-width: 500px;
 }
+
 .maps {
     color: #F67924;
     font-size: 24px;
     text-align: left;
 }
-.maps:hover {
-    color: #476930;
-}
-.Error{
+
+    .maps:hover {
+        color: #476930;
+    }
+
+.Error {
     text-align: center;
 }

@@ -43,6 +43,16 @@ namespace BioKudi.Services
             return ticketRepo.GetListTicket() ?? new List<TicketDto>();
         }
 
+        public IEnumerable<TicketDto> GetTicketsAnswers()
+        {
+            return ticketRepo.GetTicketsAnswer() ?? new List<TicketDto>();
+        }
+
+        public IEnumerable<TicketDto> GetTicketsPending()
+        {
+            return ticketRepo.GetTicketsPending() ?? new List<TicketDto>();
+        }
+
         public TicketDto GetTicket(int id)
         {
             return ticketRepo.GetTicket(id);

@@ -46,6 +46,18 @@ table td, th {
     text-align: center;
     border: none;
 }
+.direccion{
+    max-width: 200px;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+.descripcion{
+    max-width: 400px;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
 
 
 .acciones {

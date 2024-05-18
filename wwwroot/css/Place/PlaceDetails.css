@@ -9,6 +9,7 @@
     background: #FEECD6;
 }
 h1 {
+    margin-left: -10%;
     margin-top: 4%;
     color: #F67924;
     font-weight: bold;
@@ -17,7 +18,7 @@ p {
     color: black;
 }
 table {
-    margin: 0 auto;
+    margin-left: -10%;
     min-width: 100%;
     background: #F5D4AC;
     border-radius: 15px;
@@ -26,6 +27,31 @@ table {
 td, th{
     padding: 10px;
     text-align: center;
+}
+.direccion {
+    max-width: 200px;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+.descripcion{
+    max-width: 350px;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+
+}
+.enlace {
+    max-width: 300px;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+.name {
+    max-width: 150px;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 .text{
     text-align: initial;

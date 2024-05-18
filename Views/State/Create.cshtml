@@ -19,12 +19,12 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group input-container">
             <label class="control-label">Nombre</label>
-            <input asp-for="NameState" required class="form-control" />
+            <input asp-for="NameState" maxlength="30" required class="form-control" />
             <span asp-validation-for="NameState" class="text-danger"></span>
         </div>
         <div class="form-group input-container">
             <label class="control-label">Tabla</label>
-            <input asp-for="Table" class="form-control" />
+            <input asp-for="Table" maxlength="20" class="form-control" />
             <span asp-validation-for="Table" class="tdext-danger"></span>
         </div>
         <div class="form-group submit">

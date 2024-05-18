@@ -18,16 +18,16 @@
     <form  id="registerForm" asp-controller="Home" asp-action="Register" method="post">
         <div class="form-group">
             <label asp-for="NameUser">Nombre</label>
-            <input asp-for="NameUser" class="form-control" type="text" required placeholder="Jose Perez" />
+            <input asp-for="NameUser" class="form-control" maxlength="65" type="text" required placeholder="Jose Perez" />
         </div>
         <div class="form-group">
             <label asp-for="Email">Correo Electronico</label>
-            <input asp-for="Email" class="form-control" type="email" required placeholder="alguien@dominio.com" />
+            <input asp-for="Email" class="form-control" maxlength="75" type="email" required placeholder="alguien@dominio.com" />
             <div class="text-danger">@Html.ValidationMessage("Email")</div>
         </div>
         <div class="form-group">
             <label asp-for="Password">Contraseña</label>
-            <input asp-for="Password" class="form-control" type="password" required minlength="8" />
+            <input asp-for="Password" class="form-control" maxlength="255" type="password" required minlength="8" />
             <span class="text-danger"></span>
         </div>
         <button type="submit" class="btn" asp-controller="Home" id="createButton" asp-action="Register">Crear</button>

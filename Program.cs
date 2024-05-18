@@ -65,7 +65,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 	});
 
 var wkhtmltopdfPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "wwwroot", "Rotativa");
-builder.Services.AddWkhtmltopdf(wkhtmltopdfPath);
+builder.Services.AddWkhtmltopdf("/home/site/wwwroot/wwwroot/Rotativa");
 
 var app = builder.Build();
 

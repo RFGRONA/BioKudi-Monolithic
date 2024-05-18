@@ -23,7 +23,6 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthorization();
 builder.Services.AddLogging();
 builder.Services.AddRazorPages();
-builder.Services.AddWkhtmltopdf();
 
 builder.Services.AddScoped<PasswordUtility>();
 builder.Services.AddScoped<EmailUtility>();
@@ -64,6 +63,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         option.Cookie.IsEssential = true; 
         option.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 	});
+
+var wkHtmlToPdfRelativePath = Path.Combine(Directory.GetCurrentDirectory(), "Rotativa");
+builder.Services.AddWkhtmltopdf(wkHtmlToPdfRelativePath);
 
 var app = builder.Build();
 

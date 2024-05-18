@@ -35,4 +35,10 @@
     </Content>
   </ItemGroup>
 
+	<ItemGroup>
+		<None Update="wwwroot/Rotativa/wkhtmltopdf">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
 </Project>

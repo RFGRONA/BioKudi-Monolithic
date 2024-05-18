@@ -64,7 +64,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         option.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 	});
 
-var wkhtmltopdfPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "wwwroot", "Rotativa");
+var wkhtmltopdfPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Rotativa");
 builder.Services.AddWkhtmltopdf(wkhtmltopdfPath);
 
 var app = builder.Build();

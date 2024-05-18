@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BioKudi.Services;
-using Rotativa.AspNetCore;
+using Wkhtmltopdf.NetCore;
 using BioKudi.dto;
 
 namespace BioKudi.Controllers
@@ -13,11 +13,13 @@ namespace BioKudi.Controllers
     public class AuditController : Controller
     {
         private readonly AuditService auditService;
+        private readonly IGeneratePdf _generatePdf;
 
-        public AuditController(AuditService auditService)
+        public AuditController(AuditService auditService, IGeneratePdf generatePdf)
         {
             this.auditService = auditService;
-        }
+            _generatePdf = generatePdf;
+        }   
         public ActionResult Index()
         {
             var audits = auditService.GetAllAudits();
@@ -31,7 +33,7 @@ namespace BioKudi.Controllers
             return View(report);
         }
 
-        public IActionResult PrintReport()
+        public async Task<IActionResult> PrintReport()
         {
             var reports = auditService.GetAuditReport(HttpContext);
             if (reports.Any())
@@ -39,7 +41,14 @@ namespace BioKudi.Controllers
                 var firstReport = reports.First();
                 DateTime? timePrint = firstReport.TimePrint;
                 string fileName = "ReporteAuditoria_" + timePrint?.ToString("yyyyMMdd_HHmmss") + ".pdf";
-                return new ViewAsPdf("Report", reports) { FileName = fileName };
+
+                var pdfBytes = await _generatePdf.GetByteArray("Views/Audit/Report.cshtml", reports);
+                var pdfStream = new MemoryStream(pdfBytes);
+
+                return new FileStreamResult(pdfStream, "application/pdf")
+                {
+                    FileDownloadName = fileName
+                };
             }
             else
             {

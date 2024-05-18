@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.DotNet.Scaffolding.Shared;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.FileProviders;
-using Rotativa.AspNetCore;
+using Wkhtmltopdf.NetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +23,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthorization();
 builder.Services.AddLogging();
 builder.Services.AddRazorPages();
+builder.Services.AddWkhtmltopdf();
 
 builder.Services.AddScoped<PasswordUtility>();
 builder.Services.AddScoped<EmailUtility>();
@@ -91,7 +92,5 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.UseRotativa();
 
 app.Run();
